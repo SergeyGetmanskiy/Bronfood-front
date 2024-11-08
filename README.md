@@ -1,4 +1,4 @@
-[https://bronfood-com.github.io/front/](https://bronfood-com.github.io/front/) - Превью-билд из main бранча
+[https://sergeygetmanskiy.github.io/Bronfood-front/](https://sergeygetmanskiy.github.io/Bronfood-front/) - Превью-билд из main бранча
 
 # Бронфут.ком - фронтенд
 
