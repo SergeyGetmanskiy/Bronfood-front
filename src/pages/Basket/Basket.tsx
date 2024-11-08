@@ -25,7 +25,7 @@ function Basket() {
     const restaurant: Restaurant | Record<string, never> = isSuccess ? data.data.restaurant : {};
     const meals: MealInBasket[] = isSuccess ? data.data.meals : [];
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
-    const isEmpty = Object.keys(restaurant).length === 0;
+    const isEmpty = Object.keys(restaurant).length === 1;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features && current.meal.features.length > 0) {
             return (
