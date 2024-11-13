@@ -1,5 +1,11 @@
+import Orders from './Orders/Orders';
+
 function Admin() {
-    return <></>;
+    return (
+        <>
+            <Orders />
+        </>
+    );
 }
 
 export default Admin;
