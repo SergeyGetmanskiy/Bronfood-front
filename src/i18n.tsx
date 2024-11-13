@@ -261,6 +261,10 @@ i18n
                             failedToFetchRestaurants: 'Не удалось загрузить рестораны',
                             noRestaurantIdProvided: 'Не указан ID ресторана',
                         },
+                        admin: {
+                            orders: 'Заказы',
+                            workStatus: 'Рабочий статус',
+                        },
                     },
                     errors: {
                         anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
