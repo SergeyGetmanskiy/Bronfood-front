@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import OrdersPopup from './OrdersPopup/OrdersPopup';
+import AdminPopup from '../AdminPopup/AdminPopup';
 
 function Orders() {
     const navigate = useNavigate();
@@ -8,7 +8,7 @@ function Orders() {
     };
     return (
         <>
-            <OrdersPopup close={close}></OrdersPopup>
+            <AdminPopup close={close}></AdminPopup>
         </>
     );
 }

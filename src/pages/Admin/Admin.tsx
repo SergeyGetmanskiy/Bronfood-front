@@ -1,10 +1,10 @@
+import { Outlet } from 'react-router-dom';
 import AdminFooter from './AdminFooter/AdminFooter';
-import Orders from './Orders/Orders';
 
 function Admin() {
     return (
         <>
-            <Orders />
+            <Outlet />
             <AdminFooter />
         </>
     );

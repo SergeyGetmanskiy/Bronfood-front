@@ -23,6 +23,7 @@ import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 import Admin from './pages/Admin/Admin';
+import Orders from './pages/Admin/Orders/Orders';
 
 function App() {
     const [city, setCity] = useState('');
@@ -54,7 +55,9 @@ function App() {
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/search" element={<Search />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="orders" element={<Orders />} />
+                </Route>
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
