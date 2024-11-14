@@ -8,7 +8,7 @@ function Admin() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     return (
         <>
-            {isPopupOpen && <Outlet context={{ setIsPopupOpen } satisfies OutletContextType} />}
+            <Outlet context={{ setIsPopupOpen } satisfies OutletContextType} />
             <AdminFooter isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
         </>
     );

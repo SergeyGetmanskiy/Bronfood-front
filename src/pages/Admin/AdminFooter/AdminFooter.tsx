@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './AdminFooter.module.scss';
 
@@ -12,6 +12,7 @@ function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
     const [isOrdersActive, setIsOrdersActive] = useState(false);
     const [isWorkStatusActive, setIsWorkStatusActive] = useState(false);
     const { t } = useTranslation();
+    const location = useLocation();
     const handleOrdersClick = () => {
         if (isPopupOpen && isOrdersActive) {
             setIsPopupOpen(false);
@@ -41,7 +42,13 @@ function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
             setIsOrdersActive(false);
             setIsWorkStatusActive(false);
         }
-    }, [isPopupOpen]);
+        if (location.pathname === '/admin/orders') {
+            setIsOrdersActive(true);
+        }
+        if (location.pathname === '/admin/work-status') {
+            setIsWorkStatusActive(true);
+        }
+    }, [isPopupOpen, location.pathname]);
 
     return (
         <footer className={styles.admin_footer}>

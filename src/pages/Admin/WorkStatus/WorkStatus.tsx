@@ -9,6 +9,7 @@ function WorkStatus() {
         navigate('/admin');
         setIsPopupOpen(false);
     };
+
     return (
         <>
             <AdminPopup close={close}></AdminPopup>
