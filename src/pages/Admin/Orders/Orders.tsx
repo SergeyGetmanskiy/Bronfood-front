@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import AdminPopup from '../AdminPopup/AdminPopup';
+import OrdersTabs from './OrdersTabs/OrdersTabs';
 
 function Orders() {
     const navigate = useNavigate();
@@ -9,7 +10,9 @@ function Orders() {
 
     return (
         <>
-            <AdminPopup close={close}></AdminPopup>
+            <AdminPopup close={close}>
+                <OrdersTabs />
+            </AdminPopup>
         </>
     );
 }
