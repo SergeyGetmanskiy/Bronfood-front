@@ -1,7 +1,7 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import AdminPopup from '../AdminPopup/AdminPopup';
 
-function Orders() {
+function WorkStatus() {
     const navigate = useNavigate();
     const [setIsPopupOpen] = useOutletContext();
     const close = () => {
@@ -15,4 +15,4 @@ function Orders() {
     );
 }
 
-export default Orders;
+export default WorkStatus;
