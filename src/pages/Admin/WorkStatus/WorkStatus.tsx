@@ -1,9 +1,10 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AdminPopup from '../AdminPopup/AdminPopup';
+import { useAdminPopup } from '../../../utils/hooks/useAdminPopup/useAdminPopup';
 
 function WorkStatus() {
     const navigate = useNavigate();
-    const [setIsPopupOpen] = useOutletContext();
+    const { setIsPopupOpen } = useAdminPopup();
     const close = () => {
         navigate('/admin');
         setIsPopupOpen(false);
