@@ -1,59 +1,32 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './AdminFooter.module.scss';
 
-type AdminFooterProps = {
-    isPopupOpen: boolean;
-    setIsPopupOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
+function AdminFooter() {
     const [isOrdersActive, setIsOrdersActive] = useState(false);
     const [isWorkStatusActive, setIsWorkStatusActive] = useState(false);
     const { t } = useTranslation();
     const location = useLocation();
-    const handleOrdersClick = () => {
-        if (isPopupOpen && isOrdersActive) {
-            setIsPopupOpen(false);
-            setIsOrdersActive(false);
-        } else if (isPopupOpen && isWorkStatusActive) {
-            setIsWorkStatusActive(false);
-            setIsOrdersActive(true);
-        } else {
-            setIsPopupOpen(true);
-            setIsOrdersActive(!isOrdersActive);
-        }
-    };
-    const handleWorkStatusClick = () => {
-        if (isPopupOpen && isWorkStatusActive) {
-            setIsPopupOpen(false);
-            setIsWorkStatusActive(false);
-        } else if (isPopupOpen && isOrdersActive) {
-            setIsOrdersActive(false);
-            setIsWorkStatusActive(true);
-        } else {
-            setIsPopupOpen(true);
-            setIsWorkStatusActive(!isWorkStatusActive);
-        }
-    };
     useEffect(() => {
-        if (!isPopupOpen) {
+        if (location.pathname === '/admin') {
             setIsOrdersActive(false);
             setIsWorkStatusActive(false);
         }
         if (location.pathname === '/admin/orders') {
             setIsOrdersActive(true);
+            setIsWorkStatusActive(false);
         }
         if (location.pathname === '/admin/work-status') {
             setIsWorkStatusActive(true);
+            setIsOrdersActive(false);
         }
-    }, [isPopupOpen, location.pathname]);
+    }, [location.pathname]);
 
     return (
         <footer className={styles.admin_footer}>
             <div className={`${styles.admin_footer__container}`}>
-                <Link to={isOrdersActive ? '/admin' : '/admin/orders'} onClick={handleOrdersClick}>
+                <Link to={isOrdersActive ? '/admin' : '/admin/orders'}>
                     <div className={styles.admin_footer__element_container}>
                         <button
                             title={t('pages.admin.orders')}
@@ -66,7 +39,7 @@ function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
                         <h3 className={`${styles.admin_footer__element_title} ${isOrdersActive ? styles.admin_footer__element_title_active : ''}`}>{t('pages.admin.orders')}</h3>
                     </div>
                 </Link>
-                <Link to={isWorkStatusActive ? '/admin' : '/admin/work-status'} onClick={handleWorkStatusClick}>
+                <Link to={isWorkStatusActive ? '/admin' : '/admin/work-status'}>
                     <div className={styles.admin_footer__element_container}>
                         <button
                             title={t('pages.admin.workStatus')}
