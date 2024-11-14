@@ -13,10 +13,10 @@ function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
     const [isWorkStatusActive, setIsWorkStatusActive] = useState(false);
     const { t } = useTranslation();
     const handleOrdersClick = () => {
-        if (isPopupOpen & isOrdersActive) {
+        if (isPopupOpen && isOrdersActive) {
             setIsPopupOpen(false);
             setIsOrdersActive(false);
-        } else if (isPopupOpen & isWorkStatusActive) {
+        } else if (isPopupOpen && isWorkStatusActive) {
             setIsWorkStatusActive(false);
             setIsOrdersActive(true);
         } else {
@@ -25,10 +25,10 @@ function AdminFooter({ isPopupOpen, setIsPopupOpen }: AdminFooterProps) {
         }
     };
     const handleWorkStatusClick = () => {
-        if (isPopupOpen & isWorkStatusActive) {
+        if (isPopupOpen && isWorkStatusActive) {
             setIsPopupOpen(false);
             setIsWorkStatusActive(false);
-        } else if (isPopupOpen & isOrdersActive) {
+        } else if (isPopupOpen && isOrdersActive) {
             setIsOrdersActive(false);
             setIsWorkStatusActive(true);
         } else {
