@@ -1,14 +1,15 @@
 import styles from './OrdersTabs.module.scss';
+import OrdersTab from '../OrdersTab/OrdersTab';
 
-const tabNames = ['Not accepted', 'Cooking', 'Archive'];
+const tabNames = ['notAccepted', 'cooking', 'archive'];
 
 function OrdersTabs() {
     return (
-        <ul className={`${styles.orders_tabs}`}>
+        <form className={`${styles.orders_tabs}`}>
             {tabNames.map((name, index) => {
-                return <li key={`${name}-${index}`}>asdf</li>;
+                return <OrdersTab key={`${name}-${index}`} name={name} />;
             })}
-        </ul>
+        </form>
     );
 }
 
