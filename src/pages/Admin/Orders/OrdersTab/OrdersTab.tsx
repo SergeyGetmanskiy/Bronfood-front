@@ -1,7 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import styles from './OrdersTab.module.scss';
 
-function OrdersTab({ name, tab, selectTab }) {
+type OrdersTabProps = {
+    name: string;
+    tab: string;
+    selectTab: (tab: string) => void;
+};
+
+function OrdersTab({ name, tab, selectTab }: OrdersTabProps) {
     const { t } = useTranslation();
     const handleChange = () => {
         selectTab(name);

@@ -120,7 +120,7 @@ export type Restaurant = {
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ data: Restaurant[] }>;
     getRestaurantById(id: string): Promise<{ data: Restaurant }>;
-    getMeals(restaurantId: string): Promise<{ data: Meal[] }>;
+    getMeals(restaurantId: string): Promise<{ meals: Meal[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

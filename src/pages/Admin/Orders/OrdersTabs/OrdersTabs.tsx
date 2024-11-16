@@ -6,7 +6,7 @@ const tabNames = ['notAccepted', 'cooking', 'archive'];
 
 function OrdersTabs() {
     const [tab, setTab] = useState('notAccepted');
-    const selectTab = (nextTab) => setTab(nextTab);
+    const selectTab = (nextTab: string) => setTab(nextTab);
 
     return (
         <form className={`${styles.orders_tabs}`}>
