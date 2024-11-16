@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './OrdersTab.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 type OrdersTabProps = {
     name: string;
@@ -9,8 +10,10 @@ type OrdersTabProps = {
 
 function OrdersTab({ name, tab, selectTab }: OrdersTabProps) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const handleChange = () => {
         selectTab(name);
+        navigate(`/admin/orders/${name}`);
     };
     const isActive = tab === name;
 

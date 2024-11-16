@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import AdminPopup from '../AdminPopup/AdminPopup';
 import OrdersTabs from './OrdersTabs/OrdersTabs';
 
@@ -12,6 +12,7 @@ function Orders() {
         <>
             <AdminPopup close={close}>
                 <OrdersTabs />
+                <Outlet />
             </AdminPopup>
         </>
     );

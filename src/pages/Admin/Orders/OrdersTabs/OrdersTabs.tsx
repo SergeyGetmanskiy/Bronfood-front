@@ -1,12 +1,17 @@
 import styles from './OrdersTabs.module.scss';
 import OrdersTab from '../OrdersTab/OrdersTab';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
 const tabNames = ['notAccepted', 'cooking', 'archive'];
 
 function OrdersTabs() {
+    const [, startTransition] = useTransition();
     const [tab, setTab] = useState('notAccepted');
-    const selectTab = (nextTab: string) => setTab(nextTab);
+    function selectTab(nextTab: string) {
+        startTransition(() => {
+            setTab(nextTab);
+        });
+    }
 
     return (
         <form className={`${styles.orders_tabs}`}>
