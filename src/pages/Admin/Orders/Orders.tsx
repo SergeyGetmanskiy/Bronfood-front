@@ -29,7 +29,7 @@ function Orders() {
                 {isPending && <Preloader />}
                 {tab === 'notAccepted' && <OrdersNotAccepted />}
                 {tab === 'cooking' && <OrdersCooking />}
-                {tab === 'notAccepted' && <OrdersArchive />}
+                {tab === 'archive' && <OrdersArchive />}
             </AdminPopup>
         </>
     );
