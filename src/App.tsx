@@ -25,9 +25,6 @@ import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 import Admin from './pages/Admin/Admin';
 import Orders from './pages/Admin/Orders/Orders';
 import WorkStatus from './pages/Admin/WorkStatus/WorkStatus';
-import OrdersNotAccepted from './pages/Admin/Orders/OrdersNotAccepted/OrdersNotAccepted';
-import OrdersCooking from './pages/Admin/Orders/OrdersCooking/OrdersCooking';
-import OrdersArchive from './pages/Admin/Orders/OrdersArchive/OrdersArchive';
 
 function App() {
     const [city, setCity] = useState('');
@@ -60,11 +57,7 @@ function App() {
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/admin" element={<Admin />}>
-                    <Route path="orders" element={<Orders />}>
-                        <Route path="notAccepted" element={<OrdersNotAccepted />} />
-                        <Route path="cooking" element={<OrdersCooking />} />
-                        <Route path="archive" element={<OrdersArchive />} />
-                    </Route>
+                    <Route path="orders" element={<Orders />} />
                     <Route path="work-status" element={<WorkStatus />} />
                 </Route>
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
