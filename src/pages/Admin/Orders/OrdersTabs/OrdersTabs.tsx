@@ -1,7 +1,13 @@
 import styles from './OrdersTabs.module.scss';
 import OrdersTab from '../OrdersTab/OrdersTab';
 
-function OrdersTabs({ tabNames, tab, selectTab }) {
+type OrdersTabsProps = {
+    tabNames: string[];
+    tab: string;
+    selectTab: (tab: string) => void;
+};
+
+function OrdersTabs({ tabNames, tab, selectTab }: OrdersTabsProps) {
     return (
         <form className={`${styles.orders_tabs}`}>
             {tabNames.map((name, index) => {
