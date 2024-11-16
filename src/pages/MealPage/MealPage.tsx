@@ -22,7 +22,7 @@ function MealPage() {
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
-    const meals = isSuccess && data.data;
+    const meals = isSuccess && data.meals;
     const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);

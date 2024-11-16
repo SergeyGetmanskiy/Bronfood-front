@@ -1,14 +1,12 @@
 @import '../../../../styles/variables.scss';
 
 .orders_tab {
-    position: relative;
     display: flex;
-    box-sizing: content-box;
     justify-content: center;
     align-items: center;
     width: fit-content;
     height: 38px;
-    border-bottom: 2px solid $orange;
+    margin-bottom: -2px;
     user-select: none;
     cursor: pointer;
 
@@ -24,11 +22,12 @@
         font-weight: 500;
         line-height: 1.4;
         color: $grey;
-    }
-    &_text_active {
-        color: $orange;
+
+        &_active {
+            color: $orange;
+        }
     }
     &_active {
-        background: $orange;
+        border-bottom: 2px solid $orange;
     }
 }
