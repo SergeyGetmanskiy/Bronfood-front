@@ -1,5 +1,7 @@
+import Accordion from '../Accordion/Accordion';
+
 function OrdersNotAccepted() {
-    return <p>Not accepted</p>;
+    return <Accordion />;
 }
 
 export default OrdersNotAccepted;
