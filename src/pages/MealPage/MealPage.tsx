@@ -80,7 +80,7 @@ function MealPage() {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {
-                emptyBasket.mutateAsync();
+                await emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             }
