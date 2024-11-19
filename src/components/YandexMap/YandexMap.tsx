@@ -16,7 +16,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     const { restaurantsFiltered, inView } = useRestaurants();
     const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
     const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
-    const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+    const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -37,7 +37,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
         }
     }, [inView, restaurantsFiltered]);
 
-    const handlePlacemarkClick = (placeId: string, latitude: number, longitude: number) => {
+    const handlePlacemarkClick = (placeId: number, latitude: number, longitude: number) => {
         setLocation({ latitude, longitude });
         navigate(`/restaurants/${placeId}`);
     };

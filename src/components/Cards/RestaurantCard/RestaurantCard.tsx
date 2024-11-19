@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 
-function RestaurantCard({ card, isTheOnlyOne, lastClickedRestaurantId }: { card: Restaurant; isTheOnlyOne: boolean; lastClickedRestaurantId: string | null }) {
+function RestaurantCard({ card, isTheOnlyOne, lastClickedRestaurantId }: { card: Restaurant; isTheOnlyOne: boolean; lastClickedRestaurantId: number | null }) {
     const ref = useRef(null);
 
     const isClicked = card.id === lastClickedRestaurantId;

@@ -9,13 +9,13 @@ import PopupFeedbackThanks from '../PopupFeedbackThanks/PopupFeedbackThanks';
 import Preloader from '../../components/Preloader/Preloader';
 
 interface LocationState {
-    restaurantId: string;
+    restaurantId: number;
 }
 
 const LeaveOrderFeedback: FC = () => {
     const { t } = useTranslation();
     const location = useLocation();
-    const [restaurantId, setRestaurantId] = useState<string | null>(null);
+    const [restaurantId, setRestaurantId] = useState<number | null>(null);
     const [showThanksPopup, setShowThanksPopup] = useState(false);
 
     useEffect(() => {

@@ -17,7 +17,9 @@ import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
-    const { restaurantId = '', mealId = '' } = useParams();
+    const params = useParams();
+    const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
+    const mealId = parseInt(params.mealId ? params.mealId : '');
     const { addMeal, emptyBasket } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
@@ -74,7 +76,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            if (restaurantId === basket?.data.restaurant.id) {
+            if (restaurantId == basket?.data.restaurant.id) {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {
