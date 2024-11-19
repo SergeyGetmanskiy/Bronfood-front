@@ -22,7 +22,7 @@ const Drawer = () => {
     }, [refetch]);
 
     const handleClick = (id: string) => {
-        if (lastClickedRestaurantId === id) {
+        if (lastClickedRestaurantId == id) {
             navigate(`/restaurants/${id}`);
         } else {
             setActiveRestaurant(id);
