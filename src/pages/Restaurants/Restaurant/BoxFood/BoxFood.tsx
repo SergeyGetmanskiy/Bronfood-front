@@ -24,7 +24,7 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
             if (hasFeatures) {
                 navigate(`${pathname}/meal/${id}`);
                 setIsMealPageOpen(true);
-            } else if (restaurant.id == basket?.data.restaurant.id) {
+            } else if (restaurant.id === basket?.data.restaurant.id) {
                 addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: id, features: features || [] });
             } else if (restaurant) {
                 emptyBasket.mutateAsync();
