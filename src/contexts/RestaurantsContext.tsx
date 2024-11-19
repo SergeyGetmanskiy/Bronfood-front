@@ -34,11 +34,11 @@ export type RestaurantsContext = {
     /**
      * Sets clicked restaurant page
      */
-    setActiveRestaurant: (id: string) => void;
+    setActiveRestaurant: (id: number) => void;
     /**
      * Restaurant which is clicked in a list
      */
-    inView?: string;
+    inView?: number;
     /**
      * List of restaurants currently on map
      */
@@ -74,15 +74,15 @@ export type RestaurantsContext = {
     /**
      * Sets restaurant which is clicked in a list
      */
-    setInView: (id: string) => void;
+    setInView: (id: number) => void;
     /**
      * Restaurant which is last clicked in a list
      */
-    lastClickedRestaurantId: string | null;
+    lastClickedRestaurantId: number | null;
     /**
      * Sets restaurant which is last clicked in a list
      */
-    setLastClickedRestaurantId: (id: string | null) => void;
+    setLastClickedRestaurantId: (id: number | null) => void;
     /**
      * Options' states and controls. Options come from user's input
      */
@@ -156,11 +156,11 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [inView, setInView] = useState<string | undefined>(undefined);
+    const [inView, setInView] = useState<number | undefined>(undefined);
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
     const queryClient = useQueryClient();
-    const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
-    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
+    const [restaurantId, setRestaurantId] = useState<number | undefined>(undefined);
+    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
@@ -200,7 +200,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [fetchedRestaurant]);
     const setActiveRestaurant = useCallback(
-        (id: string) => {
+        (id: number) => {
             setRestaurantId(id);
             setInView(id);
             queryClient.invalidateQueries({ queryKey: ['restaurant', id] });

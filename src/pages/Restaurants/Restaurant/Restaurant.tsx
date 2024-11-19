@@ -17,7 +17,8 @@ function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
-    const { restaurantId = '' } = useParams();
+    const params = useParams();
+    const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.meals;

@@ -21,7 +21,7 @@ const Drawer = () => {
         refetch();
     }, [refetch]);
 
-    const handleClick = (id: string) => {
+    const handleClick = (id: number) => {
         if (lastClickedRestaurantId == id) {
             navigate(`/restaurants/${id}`);
         } else {
