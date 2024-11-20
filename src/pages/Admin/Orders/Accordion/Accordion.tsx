@@ -3,14 +3,16 @@ import styles from './Accordion.module.scss';
 
 function Accordion() {
     const [isOpen, setIsOpen] = useState(false);
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
-        if (ref.current.style.maxHeight) {
-            ref.current.style.maxHeight = null;
-        } else {
-            ref.current.style.maxHeight = ref.current.scrollHeight + 'px';
+        if (ref.current!) {
+            if (ref.current.style.maxHeight) {
+                ref.current.style.maxHeight = '';
+            } else {
+                ref.current.style.maxHeight = ref.current.scrollHeight + 'px';
+            }
+            setIsOpen(!isOpen);
         }
-        setIsOpen(!isOpen);
     };
 
     return (
