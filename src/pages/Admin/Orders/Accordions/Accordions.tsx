@@ -1,7 +1,8 @@
 import styles from './Accordions.module.scss';
 import Accordion from './Accordion/Accordion';
+import { MockOrder } from '../OrdersNotAccepted/OrdersNotAccepted';
 
-function Accordions({ data }) {
+function Accordions({ data }: { data: MockOrder[] }) {
     return (
         <ul className={styles.accordions}>
             {data.map((order, index) => {

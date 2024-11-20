@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import styles from './Accordion.module.scss';
+import { MockOrder } from '../../OrdersNotAccepted/OrdersNotAccepted';
 
-function Accordion({ order }) {
+function Accordion({ order }: { order: MockOrder }) {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
