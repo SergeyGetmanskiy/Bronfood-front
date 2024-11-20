@@ -76,11 +76,11 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            if (restaurantId == basket?.data.restaurant.id) {
+            if (restaurantId === basket?.data.restaurant.id) {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {
-                emptyBasket.mutateAsync();
+                await emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             }
