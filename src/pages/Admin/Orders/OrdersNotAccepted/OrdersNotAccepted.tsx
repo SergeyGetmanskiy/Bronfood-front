@@ -1,7 +1,8 @@
-import Accordion from '../Accordion/Accordion';
+import Accordions from '../Accordions/Accordions';
+import { mockOrders } from './MockOrdersNotAccepted';
 
 function OrdersNotAccepted() {
-    return <Accordion />;
+    return <Accordions data={mockOrders} />;
 }
 
 export default OrdersNotAccepted;
