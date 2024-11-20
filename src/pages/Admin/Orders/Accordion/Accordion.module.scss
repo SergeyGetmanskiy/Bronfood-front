@@ -5,15 +5,13 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100px;
     background-color: $background;
     z-index: map-get($zIndexes, footer);
-    transition: 0.3s;
+    /* transition: 0.4s; */
 
     &_active {
         border: 1px solid $orange;
         border-radius: 25px;
-        height: 270px;
     }
     &__summary {
         display: flex;
@@ -23,23 +21,44 @@
         border-radius: 25px;
         padding: 10px 27px 10px 15px;
         background-color: $orange;
+
+        &_active {
+            background-color: $background;
+        }
     }
     &__username {
         font-size: 15px;
         font-weight: 500;
         line-height: 1.4;
         color: $white;
+
+        &_active {
+            color: $black;
+        }
     }
     &__ordercode {
         font-size: 15px;
         font-weight: 600;
         line-height: 1.4;
         color: $white;
+
+        &_active {
+            color: $black;
+        }
     }
     &__icon {
         width: 24px;
         height: 24px;
         background-image: url(../../../../vendor/images/icons/admin/arrow-down.svg);
         cursor: pointer;
+
+        &_active {
+            background-image: url(../../../../vendor/images/icons/admin/arrow-up.svg);
+        }
+    }
+    &__details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
     }
 }

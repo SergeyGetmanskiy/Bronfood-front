@@ -1,18 +1,28 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './Accordion.module.scss';
 
 function Accordion() {
     const [isOpen, setIsOpen] = useState(false);
-    const toggleAccordion = () => setIsOpen(!isOpen);
+    const ref = useRef(null);
+    const toggleAccordion = () => {
+        if (ref.current.style.maxHeight) {
+            ref.current.style.maxHeight = null;
+        } else {
+            ref.current.style.maxHeight = ref.current.scrollHeight + 'px';
+        }
+        setIsOpen(!isOpen);
+    };
 
     return (
         <li className={`${styles.accordion} ${isOpen ? styles.accordion_active : ''}`}>
-            <div className={styles.accordion__summary} onClick={toggleAccordion}>
-                <h3 className={styles.accordion__username}>Ермек</h3>
-                <h3 className={styles.accordion__ordercode}>LKJ65</h3>
-                <div className={styles.accordion__icon} />
+            <div className={`${styles.accordion__summary} ${isOpen ? styles.accordion__summary_active : ''}`} onClick={toggleAccordion}>
+                <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''}`}>Ермек</h3>
+                <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''}`}>LKJ65</h3>
+                <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
             </div>
-            {isOpen && <div>dfghdfthdfhdfghdfghdfgh</div>}
+            <div ref={ref} className={styles.accordion__details}>
+                dfghdfthdfhdfghdfghdfgh
+            </div>
         </li>
     );
 }
