@@ -1,8 +1,14 @@
 import { useRef, useState } from 'react';
 import styles from './Accordion.module.scss';
 import { MockOrder } from '../../OrdersNotAccepted/OrdersNotAccepted';
+import AccordionDetails from '../AccordionDetails/AccordionDetails';
+import { MealInBasket } from '../../../../../utils/api/basketService/basketService';
+import { useGetBasket } from '../../../../../utils/hooks/useBasket/useBasket';
 
 function Accordion({ order }: { order: MockOrder }) {
+    /* next 2 lines temporary. meals need to be replaced by order.meals */
+    const { data, isSuccess } = useGetBasket();
+    const meals: MealInBasket[] = isSuccess ? data.data.meals.map((meal) => meal.meal) : [];
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
@@ -24,7 +30,7 @@ function Accordion({ order }: { order: MockOrder }) {
                 <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
-                dfghdfthdfhdfghdfghdfgh
+                <AccordionDetails meals={meals} />
             </div>
         </li>
     );

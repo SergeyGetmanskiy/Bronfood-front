@@ -1,0 +1,24 @@
+@import '../../../../../styles/variables.scss';
+
+.details {
+    display: flex;
+
+    &__meals {
+        display: flex;
+    }
+    &__meal {
+        display: flex;
+
+        &_name {
+            display: block;
+        }
+
+        &_feature {
+            display: block;
+        }
+
+        &_price {
+            display: block;
+        }
+    }
+}
