@@ -16,18 +16,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
     }
 
     async getRestaurantById(id: number): Promise<{ data: Restaurant }> {
-        if (this._restaurantsCache !== null) {
-            const restaurant = this._restaurantsCache.find((r) => r.id === id);
-            if (restaurant) {
-                return {
-                    data: restaurant,
-                };
-            }
-        }
-        const restaurant = await handleFetch(`api/restaurant/${id}/`);
-        return {
-            data: restaurant.data,
-        };
+        return handleFetch(`api/restaurant/${id}/`);
     }
 
     async getMeals(restaurantId: number): Promise<{ meals: Meal[] }> {

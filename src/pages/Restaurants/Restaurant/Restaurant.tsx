@@ -12,6 +12,7 @@ import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
+import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
@@ -19,15 +20,11 @@ function Restaurant() {
     const navigate = useNavigate();
     const params = useParams();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
-    const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
+    const { setActiveRestaurant } = useRestaurants();
+    const { data: restaurantData, isLoading: restaurantLoading, error: restaurantError, isSuccess: isRestaurantSuccess } = useRestaurant(restaurantId);
+    const restaurant = isRestaurantSuccess && restaurantData.data;
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.meals;
-    useEffect(() => {
-        if (restaurantId) {
-            setActiveRestaurant(restaurantId);
-        }
-    }, [restaurantId, setActiveRestaurant]);
-
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
 
     const close = () => {
@@ -41,6 +38,11 @@ function Restaurant() {
     const deleteMealType = (mealType: MealType) => {
         setSelectedMealTypes(selectedMealTypes.filter((type) => type !== mealType));
     };
+    useEffect(() => {
+        if (restaurantId) {
+            setActiveRestaurant(restaurantId);
+        }
+    }, [restaurantId, setActiveRestaurant]);
     if (restaurantLoading || favoritesLoading) {
         return (
             <div className={styles.restaurant_popup_overlay}>
