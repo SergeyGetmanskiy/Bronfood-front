@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { FC, PropsWithChildren, createContext, useCallback, useState } from 'react';
 import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
@@ -136,7 +136,6 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<number | undefined>(undefined);
-    const queryClient = useQueryClient();
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
@@ -157,13 +156,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
 
                   return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
               });
-    const setActiveRestaurant = useCallback(
-        (id: number) => {
-            setInView(id);
-            queryClient.invalidateQueries({ queryKey: ['restaurant', id] });
-        },
-        [queryClient]
-    );
+    const setActiveRestaurant = useCallback((id: number) => {
+        setInView(id);
+    }, []);
     const addOption = (option: Option) => {
         if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
             setSelectedOptions([...selectedOptions, option]);
