@@ -11,11 +11,10 @@ import PageNotFound from '../../PageNotFound/PageNotFound';
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered, restaurantLoading, restaurantError, refetch, lastClickedRestaurantId, setLastClickedRestaurantId } = useRestaurants();
+    const { restaurantsFiltered, isLoading, isError, refetch, lastClickedRestaurantId, setLastClickedRestaurantId, setActiveRestaurant } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
-    const { setActiveRestaurant } = useRestaurants();
 
     useEffect(() => {
         refetch();
@@ -30,7 +29,7 @@ const Drawer = () => {
         }
     };
 
-    if (restaurantError) {
+    if (isError) {
         return <PageNotFound />;
     } else {
         return (
@@ -43,7 +42,7 @@ const Drawer = () => {
                         <p className={styles.drawer__title}>{t('pages.restaurants.selectPlace')}</p>
                         <button onClick={() => setIsFilterOpen(true)} type="button" className={styles.drawer__icon} title={t('pages.restaurants.filters')} />
                     </div>
-                    {restaurantLoading && <Preloader />}
+                    {isLoading && <Preloader />}
                     <ul ref={container} className={`${styles.drawer__list} bronfood-scrollbar`}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.drawer__list_item} onClick={() => handleClick(card.id)}>
