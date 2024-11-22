@@ -18,16 +18,22 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
     const hasFeatures = features && features.length > 0;
     const { isLogin } = useCurrentUser();
     const queryClient = useQueryClient();
-    const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const restaurant: undefined | { data: Restaurant } = queryClient.getQueryData(['restaurant', restaurantId]);
     const handleClick = async () => {
+        const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
+        console.log(basket);
         if (isLogin && restaurant) {
             if (hasFeatures) {
                 navigate(`${pathname}/meal/${id}`);
                 setIsMealPageOpen(true);
             } else if (restaurant.data.id === basket?.data.restaurant.id) {
+                console.log('тот же ресторан');
+                addMeal.mutateAsync({ restaurantId: restaurant.data.id, mealId: id, features: features || [] });
+            } else if (JSON.stringify(basket?.data.restaurant) === JSON.stringify({})) {
+                console.log('пустая корзина');
                 addMeal.mutateAsync({ restaurantId: restaurant.data.id, mealId: id, features: features || [] });
             } else if (restaurant) {
+                console.log('другой ресторан');
                 await emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId: restaurant.data.id, mealId: id, features: features || [] });
             }
