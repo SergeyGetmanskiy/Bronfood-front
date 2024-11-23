@@ -13,12 +13,18 @@ import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
 import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
+import { Basket } from '../../../utils/api/basketService/basketService';
+import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
     const params = useParams();
+    const queryClient = useQueryClient();
+    const { isLogin } = useCurrentUser();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
     const { setActiveRestaurant } = useRestaurants();
     const { data: restaurantData, isLoading: restaurantLoading, error: restaurantError, isSuccess: isRestaurantSuccess } = useRestaurant(restaurantId);
@@ -26,6 +32,31 @@ function Restaurant() {
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.meals;
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
+    const { addMeal, emptyBasket } = useBasketMutations();
+
+    const handleAddMealClick = async (meal) => {
+        const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
+        const hasFeatures = meal.features && meal.features.length > 0;
+        console.log(basket, restaurant);
+        if (isLogin && restaurant) {
+            if (hasFeatures) {
+                navigate(`meal/${meal.id}`);
+                setIsMealPageOpen(true);
+            } else if (restaurant.id === basket?.data.restaurant.id) {
+                console.log('тот же ресторан');
+                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
+            } else if (JSON.stringify(basket?.data.restaurant) === JSON.stringify({})) {
+                console.log('пустая корзина');
+                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
+            } else if (restaurant) {
+                console.log('другой ресторан');
+                await emptyBasket.mutateAsync();
+                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
+            }
+        } else {
+            navigate(`/signin`);
+        }
+    };
 
     const close = () => {
         navigate('/restaurants');
@@ -69,7 +100,7 @@ function Restaurant() {
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />}
+                {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} handleClick={handleAddMealClick} isActive={addMeal.isPending} />}
             </RestaurantPopup>
             <Outlet />
         </>

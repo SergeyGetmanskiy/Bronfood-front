@@ -8,6 +8,7 @@ export class BasketServiceReal implements BasketService {
         return handleFetch('api/basket/');
     }
     async addMeal(restaurant_id: number, meal_id: number, features: Feature[] | never[]): Promise<{ data: Basket }> {
+        setTimeout(() => console.log('Выполнено с задержкой...'), 3000);
         return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurant_id, meal_id, features } });
     }
     async deleteMeal(restaurant_id: number, meal_id: number, features: Feature[] | never[]): Promise<{ data: Basket }> {
