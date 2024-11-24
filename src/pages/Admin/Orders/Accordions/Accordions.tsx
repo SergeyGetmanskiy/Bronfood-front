@@ -4,7 +4,7 @@ import { MockOrder } from '../OrdersNotAccepted/OrdersNotAccepted';
 
 function Accordions({ data }: { data: MockOrder[] }) {
     return (
-        <ul className={styles.accordions}>
+        <ul className={`${styles.accordion} bronfood-scrollbar`}>
             {data.map((order, index) => {
                 return <Accordion key={`${order.summary.orderCode}-${index}`} order={order} />;
             })}
