@@ -1,4 +1,4 @@
-import Accordions from '../Accordions/Accordions';
+import Accordions from '../AccordionList/AccordionList';
 import { mockOrders } from './MockOrdersNotAccepted';
 
 export interface MockOrder {

@@ -1,4 +1,4 @@
-import styles from './Accordions.module.scss';
+import styles from './AccordionList.module.scss';
 import Accordion from './Accordion/Accordion';
 import { MockOrder } from '../OrdersNotAccepted/OrdersNotAccepted';
 
