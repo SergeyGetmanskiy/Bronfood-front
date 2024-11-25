@@ -1,3 +1,4 @@
+import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import { sumBy } from 'lodash';
 
@@ -16,7 +17,7 @@ function Meal({ meal }) {
                     );
                 })}
             </p>
-            <span className={styles.details__meal_price}></span>
+            <span className={styles.details__meal_price}>{`${meal.price} ₸`}</span>
         </li>
     );
 }
@@ -47,8 +48,11 @@ function AccordionDetails({ meals }) {
                 })}
             </ul>
             <hr />
-            <div className={styles.details__total}>{price}</div>
-            <button className={styles.details__button}></button>
+            <div className={styles.details__total}>
+                <p>Итого:</p>
+                <span className={styles.details__total_price}>{`${price} ₸`}</span>
+            </div>
+            <Button>Принять</Button>
         </div>
     );
 }
