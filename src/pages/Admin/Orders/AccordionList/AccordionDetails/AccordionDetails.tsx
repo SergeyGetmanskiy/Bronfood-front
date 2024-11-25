@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import { sumBy } from 'lodash';
@@ -25,6 +26,7 @@ function Meal({ meal, count }) {
 }
 
 function AccordionDetails({ meals }) {
+    const { t } = useTranslation();
     const price = meals.reduce((acc, current) => {
         if (current.meal.features && current.meal.features.length > 0) {
             return (
@@ -51,10 +53,10 @@ function AccordionDetails({ meals }) {
             </ul>
             <hr />
             <div className={styles.details__total}>
-                <p>Итого:</p>
+                <p>{t('pages.admin.total')}</p>
                 <span className={styles.details__total_price}>{`${price} ₸`}</span>
             </div>
-            <Button>Принять</Button>
+            <Button>{t('pages.admin.accept')}</Button>
         </div>
     );
 }
