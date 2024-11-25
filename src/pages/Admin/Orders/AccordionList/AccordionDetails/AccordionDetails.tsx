@@ -1,4 +1,5 @@
 import styles from './AccordionDetails.module.scss';
+import { sumBy } from 'lodash';
 
 function Meal({ meal }) {
     const featureNames = meal.features.map((feature) => feature.name);
@@ -21,15 +22,32 @@ function Meal({ meal }) {
 }
 
 function AccordionDetails({ meals }) {
+    const price = meals.reduce((acc, current) => {
+        if (current.meal.features && current.meal.features.length > 0) {
+            return (
+                acc +
+                current.count *
+                    sumBy(current.meal.features, (feature) => {
+                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        if (isChosen) {
+                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                        } else {
+                            return feature.choices.filter((choice) => choice.default)[0].price;
+                        }
+                    })
+            );
+        }
+        return acc + current.count * current.meal.price;
+    }, 0);
     return (
         <div className={styles.details}>
             <ul className={styles.details__meals}>
                 {meals.map((meal, index) => {
-                    return <Meal key={`${meal.name}-${index}`} meal={meal} />;
+                    return <Meal key={`${meal.name}-${index}`} meal={meal.meal} />;
                 })}
             </ul>
             <hr />
-            <div className={styles.details__total}></div>
+            <div className={styles.details__total}>{price}</div>
             <button className={styles.details__button}></button>
         </div>
     );

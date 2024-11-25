@@ -7,8 +7,8 @@ import { useGetBasket } from '../../../../../utils/hooks/useBasket/useBasket';
 
 function Accordion({ order }: { order: MockOrder }) {
     /* next 2 lines temporary. meals need to be replaced by order.meals */
-    const { data, isSuccess } = useGetBasket();
-    const meals: MealInBasket[] = isSuccess ? data.data.meals.map((meal) => meal.meal) : [];
+    const { data: basket, isSuccess } = useGetBasket();
+    const meals: MealInBasket = isSuccess ? basket.data.meals : [];
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
