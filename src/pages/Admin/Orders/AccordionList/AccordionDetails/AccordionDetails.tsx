@@ -2,21 +2,23 @@ import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import { sumBy } from 'lodash';
 
-function Meal({ meal }) {
-    const featureNames = meal.features.map((feature) => feature.name);
-
+function Meal({ meal, count }) {
     return (
         <li className={styles.details__meal}>
             <p className={styles.details__meal_name}>
                 {meal.name}
-                {featureNames.map((featureName, index) => {
-                    return (
-                        <span key={`${featureName}-${index}`} className={styles.details__meal_feature}>
-                            {featureName}
-                        </span>
-                    );
+                {meal.features.map((feature, index) => {
+                    const choice = feature.choices.find((choice) => choice.default);
+                    if (choice) {
+                        return (
+                            <span key={`${choice.name}-${index}`} className={styles.details__meal_feature}>
+                                {choice.name}
+                            </span>
+                        );
+                    }
                 })}
             </p>
+            {count > 1 ? <span className={styles.details__meal_count}>{`(${count})`}</span> : null}
             <span className={styles.details__meal_price}>{`${meal.price} ₸`}</span>
         </li>
     );
@@ -44,7 +46,7 @@ function AccordionDetails({ meals }) {
         <div className={styles.details}>
             <ul className={styles.details__meals}>
                 {meals.map((meal, index) => {
-                    return <Meal key={`${meal.name}-${index}`} meal={meal.meal} />;
+                    return <Meal key={`${meal.name}-${index}`} meal={meal.meal} count={meal.count} />;
                 })}
             </ul>
             <hr />
