@@ -2,7 +2,7 @@ import styles from './AccordionList.module.scss';
 import Accordion from './Accordion/Accordion';
 import { MockOrder } from '../OrdersNotAccepted/OrdersNotAccepted';
 
-function Accordions({ data }: { data: MockOrder[] }) {
+function AccordionList({ data }: { data: MockOrder[] }) {
     return (
         <ul className={`${styles.accordion} bronfood-scrollbar`}>
             {data.map((order, index) => {
@@ -12,4 +12,4 @@ function Accordions({ data }: { data: MockOrder[] }) {
     );
 }
 
-export default Accordions;
+export default AccordionList;

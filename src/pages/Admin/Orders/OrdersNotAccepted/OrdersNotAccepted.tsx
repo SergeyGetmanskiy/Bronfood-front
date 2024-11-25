@@ -1,4 +1,4 @@
-import Accordions from '../AccordionList/AccordionList';
+import AccordionList from '../AccordionList/AccordionList';
 import { mockOrders } from './MockOrdersNotAccepted';
 
 export interface MockOrder {
@@ -9,7 +9,7 @@ export interface MockOrder {
 }
 
 function OrdersNotAccepted() {
-    return <Accordions data={mockOrders} />;
+    return <AccordionList data={mockOrders} />;
 }
 
 export default OrdersNotAccepted;
