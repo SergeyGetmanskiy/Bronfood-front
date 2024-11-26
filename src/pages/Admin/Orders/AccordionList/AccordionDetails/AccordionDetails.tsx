@@ -3,22 +3,24 @@ import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import { sumBy } from 'lodash';
 import { MealInBasket } from '../../../../../utils/api/basketService/basketService';
+import { Meal as MealInterface } from '../../../../../utils/api/restaurantsService/restaurantsService';
 
-function Meal({ meal, count }) {
+function Meal({ meal, count }: { meal: MealInterface; count: number }) {
     return (
         <li className={styles.details__meal}>
             <p className={styles.details__meal_name}>
                 {meal.name}
-                {meal.features.map((feature, index) => {
-                    const choice = feature.choices.find((choice) => choice.default);
-                    if (choice) {
-                        return (
-                            <span key={`${choice.name}-${index}`} className={styles.details__meal_feature}>
-                                {choice.name}
-                            </span>
-                        );
-                    }
-                })}
+                {meal.features &&
+                    meal.features.map((feature, index) => {
+                        const choice = feature.choices.find((choice) => choice.default);
+                        if (choice) {
+                            return (
+                                <span key={`${choice.name}-${index}`} className={styles.details__meal_feature}>
+                                    {choice.name}
+                                </span>
+                            );
+                        }
+                    })}
             </p>
             {count > 1 ? <span className={styles.details__meal_count}>{`(${count})`}</span> : null}
             <span className={styles.details__meal_price}>{`${meal.price} ₸`}</span>
@@ -26,7 +28,7 @@ function Meal({ meal, count }) {
     );
 }
 
-function AccordionDetails({ details }: { details: { meals: MealInBasket } }) {
+function AccordionDetails({ details }: { details: { meals: MealInBasket[] } }) {
     const { t } = useTranslation();
     const price = details.meals.reduce((acc, current) => {
         if (current.meal.features && current.meal.features.length > 0) {
@@ -49,7 +51,7 @@ function AccordionDetails({ details }: { details: { meals: MealInBasket } }) {
         <div className={styles.details}>
             <ul className={styles.details__meals}>
                 {details.meals.map((meal, index) => {
-                    return <Meal key={`${meal.name}-${index}`} meal={meal.meal} count={meal.count} />;
+                    return <Meal key={`${meal.meal.name}-${index}`} meal={meal.meal} count={meal.count} />;
                 })}
             </ul>
             <hr />

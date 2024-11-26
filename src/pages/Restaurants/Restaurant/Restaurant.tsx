@@ -7,7 +7,7 @@ import MealsList from './MealsList/MealsList';
 import MealsFilter from './MealsFilter/MealsFilter';
 import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
-import { MealType } from '../../../utils/api/restaurantsService/restaurantsService';
+import { Meal, MealType } from '../../../utils/api/restaurantsService/restaurantsService';
 import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
@@ -34,7 +34,7 @@ function Restaurant() {
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
     const { addMeal, emptyBasket } = useBasketMutations();
 
-    const handleAddMealClick = async (meal) => {
+    const handleAddMealClick = async (meal: Meal) => {
         const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
         const hasFeatures = meal.features && meal.features.length > 0;
         if (isLogin && restaurant) {
