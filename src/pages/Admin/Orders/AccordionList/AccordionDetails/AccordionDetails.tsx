@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import { sumBy } from 'lodash';
+import { MealInBasket } from '../../../../../utils/api/basketService/basketService';
 
 function Meal({ meal, count }) {
     return (
@@ -25,9 +26,9 @@ function Meal({ meal, count }) {
     );
 }
 
-function AccordionDetails({ meals }) {
+function AccordionDetails({ details }: { details: { meals: MealInBasket } }) {
     const { t } = useTranslation();
-    const price = meals.reduce((acc, current) => {
+    const price = details.meals.reduce((acc, current) => {
         if (current.meal.features && current.meal.features.length > 0) {
             return (
                 acc +
@@ -47,7 +48,7 @@ function AccordionDetails({ meals }) {
     return (
         <div className={styles.details}>
             <ul className={styles.details__meals}>
-                {meals.map((meal, index) => {
+                {details.meals.map((meal, index) => {
                     return <Meal key={`${meal.name}-${index}`} meal={meal.meal} count={meal.count} />;
                 })}
             </ul>
