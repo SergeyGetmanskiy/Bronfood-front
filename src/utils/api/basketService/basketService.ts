@@ -25,8 +25,8 @@ export type Basket = {
 
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
-    addMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
-    deleteMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    addMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    deleteMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
     emptyBasket: () => Promise<{ data: Basket }>;
 }
 

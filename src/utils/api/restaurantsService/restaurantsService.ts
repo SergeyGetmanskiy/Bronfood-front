@@ -4,7 +4,7 @@ export type Choice = {
     /**
      * Choice's id
      */
-    id: string;
+    id: number;
     /**
      * Choice's name
      */
@@ -27,7 +27,7 @@ export type Feature = {
     /**
      * Feature's id
      */
-    id: string;
+    id: number;
     /**
      * Feature's name
      */
@@ -44,7 +44,7 @@ export type Meal = {
     /**
      * Meal's id
      */
-    id: string;
+    id: number;
     /**
      * Meal's name
      */
@@ -79,7 +79,7 @@ export type Restaurant = {
     /**
      * Venue's id
      */
-    id: string;
+    id: number;
     /**
      * Link to venue's image
      */
@@ -119,8 +119,8 @@ export type Restaurant = {
 
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ data: Restaurant[] }>;
-    getRestaurantById(id: string): Promise<{ data: Restaurant }>;
-    getMeals(restaurantId: string): Promise<{ data: Meal[] }>;
+    getRestaurantById(id: number): Promise<{ data: Restaurant }>;
+    getMeals(restaurantId: number): Promise<{ meals: Meal[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

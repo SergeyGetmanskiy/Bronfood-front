@@ -17,12 +17,14 @@ import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
-    const { restaurantId = '', mealId = '' } = useParams();
+    const params = useParams();
+    const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
+    const mealId = parseInt(params.mealId ? params.mealId : '');
     const { addMeal, emptyBasket } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
-    const meals = isSuccess && data.data;
+    const meals = isSuccess && data.meals;
     const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
@@ -78,7 +80,7 @@ function MealPage() {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {
-                emptyBasket.mutateAsync();
+                await emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             }
