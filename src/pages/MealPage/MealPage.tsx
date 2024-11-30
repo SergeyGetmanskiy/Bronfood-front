@@ -34,6 +34,7 @@ function MealPage() {
             return feature.choices.filter((choice) => choice.default)[0].price;
         }
     });
+    const percentage = ((price * 7) / 100).toFixed(0);
     const queryClient = useQueryClient();
     const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
@@ -92,7 +93,7 @@ function MealPage() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={features} />
-                        <MealTotal price={price} buttonDisabled={addMeal.isPending} />
+                        <MealTotal price={price} percentage={percentage} buttonDisabled={addMeal.isPending} />
                         {addMeal.isPending && <Preloader />}
                     </MealPopup>
                 </form>
