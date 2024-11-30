@@ -34,7 +34,7 @@ function MealPage() {
             return feature.choices.filter((choice) => choice.default)[0].price;
         }
     });
-    const percentage = ((price * 7) / 100).toFixed(0);
+    const percentage = parseInt(((price * 7) / 100).toFixed(0));
     const queryClient = useQueryClient();
     const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
