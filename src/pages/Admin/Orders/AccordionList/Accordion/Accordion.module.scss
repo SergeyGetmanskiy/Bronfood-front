@@ -6,7 +6,7 @@
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background-color: $background;
 
     &_active {
@@ -60,7 +60,10 @@
     }
     &__details {
         max-height: 0;
+        width: 100%;
         overflow: hidden;
+        padding: 1px 6px 1px 6px;
+        margin-bottom: 10px;
         transition: max-height 0.2s ease-out;
     }
 }

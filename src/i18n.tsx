@@ -267,6 +267,8 @@ i18n
                             cooking: 'Готовятся',
                             archive: 'Архив',
                             workStatus: 'Рабочий статус',
+                            total: 'Итого:',
+                            accept: 'Принять',
                         },
                     },
                     errors: {
