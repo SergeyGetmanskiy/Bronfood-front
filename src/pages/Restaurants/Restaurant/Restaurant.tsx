@@ -36,9 +36,8 @@ function Restaurant() {
 
     const handleAddMealClick = async (meal: Meal) => {
         const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
-        const hasFeatures = meal.features && meal.features.length > 0;
         if (isLogin && restaurant) {
-            if (hasFeatures) {
+            if (meal.hasFeatures) {
                 navigate(`meal/${meal.id}`);
                 setIsMealPageOpen(true);
             } else if (restaurant.id === basket?.data.restaurant.id) {
