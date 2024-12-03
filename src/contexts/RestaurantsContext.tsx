@@ -1,6 +1,5 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { FC, PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
-import i18n from '../i18n';
+import { useQuery } from '@tanstack/react-query';
+import { FC, PropsWithChildren, createContext, useCallback, useState } from 'react';
 import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 
@@ -34,11 +33,11 @@ export type RestaurantsContext = {
     /**
      * Sets clicked restaurant page
      */
-    setActiveRestaurant: (id: string) => void;
+    setActiveRestaurant: (id: number) => void;
     /**
      * Restaurant which is clicked in a list
      */
-    inView?: string;
+    inView?: number;
     /**
      * List of restaurants currently on map
      */
@@ -56,33 +55,17 @@ export type RestaurantsContext = {
      */
     isError: boolean;
     /**
-     * Restaurant to add all meals to it
-     */
-    restaurant: Restaurant | null;
-    /**
-     * Indicates whether restaurant are loading
-     */
-    restaurantLoading: boolean;
-    /**
-     * Indicates whether query encountered an error
-     */
-    restaurantError: boolean;
-    /**
-     * Reload data restaurant
-     */
-    refetchRestaurant: () => void;
-    /**
      * Sets restaurant which is clicked in a list
      */
-    setInView: (id: string) => void;
+    setInView: (id: number) => void;
     /**
      * Restaurant which is last clicked in a list
      */
-    lastClickedRestaurantId: string | null;
+    lastClickedRestaurantId: number | null;
     /**
      * Sets restaurant which is last clicked in a list
      */
-    setLastClickedRestaurantId: (id: string | null) => void;
+    setLastClickedRestaurantId: (id: number | null) => void;
     /**
      * Options' states and controls. Options come from user's input
      */
@@ -133,11 +116,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
-    restaurant: null,
     refetch: () => {},
-    restaurantLoading: false,
-    restaurantError: false,
-    refetchRestaurant: () => {},
     setInView: () => {},
     lastClickedRestaurantId: null,
     setLastClickedRestaurantId: () => {},
@@ -156,11 +135,8 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [inView, setInView] = useState<string | undefined>(undefined);
-    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-    const queryClient = useQueryClient();
-    const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
-    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
+    const [inView, setInView] = useState<number | undefined>(undefined);
+    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
@@ -180,33 +156,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
 
                   return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
               });
-    const {
-        isLoading: restaurantLoading,
-        isError: restaurantError,
-        data: fetchedRestaurant,
-        refetch: refetchRestaurant,
-    } = useQuery({
-        queryKey: ['restaurant', restaurantId],
-        queryFn: async () => {
-            if (!restaurantId) throw new Error(i18n.t('pages.restaurantsContext.noRestaurantIdProvided'));
-            const response = await restaurantsService.getRestaurantById(restaurantId);
-            return response.data;
-        },
-        enabled: !!restaurantId,
-    });
-    useEffect(() => {
-        if (fetchedRestaurant) {
-            setRestaurant(fetchedRestaurant);
-        }
-    }, [fetchedRestaurant]);
-    const setActiveRestaurant = useCallback(
-        (id: string) => {
-            setRestaurantId(id);
-            setInView(id);
-            queryClient.invalidateQueries({ queryKey: ['restaurant', id] });
-        },
-        [queryClient]
-    );
+    const setActiveRestaurant = useCallback((id: number) => {
+        setInView(id);
+    }, []);
     const addOption = (option: Option) => {
         if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
             setSelectedOptions([...selectedOptions, option]);
@@ -229,13 +181,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             value={{
                 isLoading,
                 isError,
-                restaurant,
-                restaurantLoading,
-                restaurantError,
                 setActiveRestaurant,
                 restaurantsFiltered,
                 refetch: refetch,
-                refetchRestaurant,
                 restaurantsOnMap,
                 inView,
                 setInView,

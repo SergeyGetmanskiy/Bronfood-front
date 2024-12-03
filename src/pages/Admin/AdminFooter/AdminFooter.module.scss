@@ -1,0 +1,55 @@
+@import '../../../styles/variables.scss';
+
+.admin_footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 15px 22px;
+    border-radius: 25px 25px 0px 0px;
+    box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
+    background-color: $background;
+    z-index: map-get($zIndexes, footer);
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.2s ease-in-out;
+    }
+    &__element_container {
+        width: 165px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+    }
+    &__element_title {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: $black;
+    }
+    &__element_title_active {
+        color: $orange;
+    }
+    &__icon {
+        width: 35px;
+        height: 35px;
+        border: none;
+        background-color: $background;
+        cursor: pointer;
+    }
+    &__orders {
+        background-image: url(../../../vendor/images/admin/footer/orders.svg);
+    }
+    &__orders_active {
+        background-image: url(../../../vendor/images/admin/footer/orders-active.svg);
+    }
+    &__work_status {
+        background-image: url(../../../vendor/images/admin/footer/work-status.svg);
+    }
+    &__work_status_active {
+        background-image: url(../../../vendor/images/admin/footer/work-status-active.svg);
+    }
+}

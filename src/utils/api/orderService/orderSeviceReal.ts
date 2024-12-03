@@ -22,7 +22,7 @@ export class OrderServiceReal {
         return handleFetch(`api/orders?id=${orderId}`);
     }
 
-    async submitOrderFeedback(restaurantId: string, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
+    async submitOrderFeedback(restaurantId: number, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
         const options = {
             method: 'POST',
             data: { rating, comment },

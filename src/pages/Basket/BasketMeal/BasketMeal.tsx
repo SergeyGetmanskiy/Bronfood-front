@@ -4,7 +4,7 @@ import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
-function BasketMeal({ mealInBasket, restaurantId }: { mealInBasket: MealInBasket; restaurantId: string }) {
+function BasketMeal({ mealInBasket, restaurantId }: { mealInBasket: MealInBasket; restaurantId: number }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price, features = [] } = meal;
     const mealPrice =

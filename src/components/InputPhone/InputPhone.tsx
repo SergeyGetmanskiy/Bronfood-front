@@ -50,8 +50,10 @@ const InputPhone: FC<InputPhone> = (props) => {
                         value: regexPhoneNumberKazakhstan,
                         message: t('components.inputPhone.invalidPhoneNumberFormat'),
                     },
+                    onChange(e) {
+                        handleInputChange(e);
+                    },
                 })}
-                onChange={handleInputChange}
                 value={inputValue}
                 mask="+7 (999) 999-99-99"
             ></InputMask>

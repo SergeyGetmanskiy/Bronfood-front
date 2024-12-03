@@ -13,17 +13,22 @@ import { Basket } from '../../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
+import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
-    const { restaurantId = '', mealId = '' } = useParams();
+    const params = useParams();
+    const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
+    const mealId = parseInt(params.mealId ? params.mealId : '');
     const { addMeal, emptyBasket } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
     const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
+    const featuress = useFeatures(restaurantId, meal.id);
+    console.log(featuress);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
@@ -32,6 +37,7 @@ function MealPage() {
             return feature.choices.filter((choice) => choice.default)[0].price;
         }
     });
+    const percentage = parseInt(((price * 7) / 100).toFixed(0));
     const queryClient = useQueryClient();
     const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
@@ -78,7 +84,7 @@ function MealPage() {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {
-                emptyBasket.mutateAsync();
+                await emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             }
@@ -90,7 +96,7 @@ function MealPage() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={features} />
-                        <MealTotal price={price} buttonDisabled={addMeal.isPending} />
+                        <MealTotal price={price} percentage={percentage} buttonDisabled={addMeal.isPending} />
                         {addMeal.isPending && <Preloader />}
                     </MealPopup>
                 </form>

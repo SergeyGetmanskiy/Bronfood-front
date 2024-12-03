@@ -10,7 +10,7 @@ type RestaurantCardLargeProps = {
 
 function RestaurantCardLarge({ card, isFavorite = false, onRestaurantClick }: RestaurantCardLargeProps) {
     const { deleteFavorite } = useFavoritesMutations();
-    const handleDeleteFavorite = (id: string) => deleteFavorite.mutate(id);
+    const handleDeleteFavorite = (id: number) => deleteFavorite.mutate(id);
 
     return (
         <div className={styles.card} onClick={onRestaurantClick}>

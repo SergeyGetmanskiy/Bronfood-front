@@ -17,7 +17,8 @@ type RestaurantPopupProps = {
 
 const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, restaurant }: RestaurantPopupProps) => {
     const { addFavorite, deleteFavorite } = useFavoritesMutations();
-    const { mealId } = useParams();
+    const params = useParams();
+    const mealId = parseInt(params.mealId ? params.mealId : '');
     const { isLogin } = useCurrentUser();
 
     const handleOverlayClick = (e: MouseEvent) => {
