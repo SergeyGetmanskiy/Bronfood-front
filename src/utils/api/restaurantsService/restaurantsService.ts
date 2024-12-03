@@ -121,6 +121,7 @@ export interface RestaurantsService {
     getRestaurants: () => Promise<{ data: Restaurant[] }>;
     getRestaurantById(id: number): Promise<{ data: Restaurant }>;
     getMeals(restaurantId: number): Promise<{ meals: Meal[] }>;
+    getFeatures(restaurantId: number, mealId: number): Promise<{ features: Feature[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();
