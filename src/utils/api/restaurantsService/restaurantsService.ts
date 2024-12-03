@@ -70,9 +70,9 @@ export type Meal = {
      */
     waitingTime: number;
     /**
-     * Meal's additions
+     * If meal has features
      */
-    features?: Feature[];
+    hasFeatures: boolean;
 };
 
 export type Restaurant = {
