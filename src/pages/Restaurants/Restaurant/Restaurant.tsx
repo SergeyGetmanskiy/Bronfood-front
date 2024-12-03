@@ -30,7 +30,7 @@ function Restaurant() {
     const { data: restaurantData, isLoading: restaurantLoading, error: restaurantError, isSuccess: isRestaurantSuccess } = useRestaurant(restaurantId);
     const restaurant = isRestaurantSuccess && restaurantData.data;
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
-    const meals = isSuccess && data.meals;
+    const meals = isSuccess && data.data;
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
     const { addMeal, emptyBasket } = useBasketMutations();
 
