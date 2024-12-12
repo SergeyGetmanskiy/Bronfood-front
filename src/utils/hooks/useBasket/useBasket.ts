@@ -17,7 +17,7 @@ export const useBasketMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const queryClient = useQueryClient();
     const addMeal = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: Feature[] }) => basketService.addMeal(restaurantId, mealId, features),
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: Feature[] | never[] }) => basketService.addMeal(restaurantId, mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);

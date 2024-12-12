@@ -3,13 +3,25 @@ import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsServ
 
 export type MealInBasket = {
     /**
-     * Meal in basket
+     * meal's id
+     */
+    id: number;
+    /**
+     * meal
      */
     meal: Meal;
     /**
-     * Quantity of meal in basket
+     * quantity of meals
      */
     count: number;
+    /**
+     * meal's choices
+     */
+    choices: Choice[] | never[];
+    /**
+     * meal's price
+     */
+    price: number;
 };
 
 export type Basket = {
@@ -25,7 +37,7 @@ export type Basket = {
 
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
-    addMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    addMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: MealInBasket }>;
     deleteMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
     emptyBasket: () => Promise<{ data: Basket }>;
 }

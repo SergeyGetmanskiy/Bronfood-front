@@ -13,17 +13,14 @@ import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
 import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
-import { useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
-import { Basket } from '../../../utils/api/basketService/basketService';
-import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
+import { useBasketMutations, useGetBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const queryClient = useQueryClient();
     const { isLogin } = useCurrentUser();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
     const { setActiveRestaurant } = useRestaurants();
@@ -32,21 +29,17 @@ function Restaurant() {
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
-    const { addMeal, emptyBasket } = useBasketMutations();
+    const { addMeal } = useBasketMutations();
+    const { refetch: refetchBasket } = useGetBasket();
 
     const handleAddMealClick = async (meal: Meal) => {
-        const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
         if (isLogin && restaurant) {
             if (meal.hasFeatures) {
                 navigate(`meal/${meal.id}`);
                 setIsMealPageOpen(true);
-            } else if (restaurant.id === basket?.data.restaurant.id) {
-                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
-            } else if (JSON.stringify(basket?.data.restaurant) === JSON.stringify({})) {
-                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
-            } else if (restaurant) {
-                await emptyBasket.mutateAsync();
-                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: meal.features || [] });
+            } else {
+                await addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: meal.id, features: [] });
+                refetchBasket();
             }
         } else {
             navigate(`/signin`);
