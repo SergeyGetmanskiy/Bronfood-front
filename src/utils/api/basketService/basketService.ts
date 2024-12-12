@@ -1,5 +1,5 @@
 import { BasketServiceReal } from './basketServiceReal';
-import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { Feature, Meal, Restaurant, Choice } from '../restaurantsService/restaurantsService';
 
 export type MealInBasket = {
     /**

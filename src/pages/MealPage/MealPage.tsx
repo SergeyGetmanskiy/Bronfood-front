@@ -13,7 +13,7 @@ import { Basket } from '../../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
-import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures';
+/* import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures'; */
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
@@ -27,8 +27,8 @@ function MealPage() {
     const { data, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
     const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
-    const featuress = useFeatures(restaurantId, meal.id);
-    console.log(featuress);
+    /* const featuress = useFeatures(restaurantId, meal.id); */
+
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
