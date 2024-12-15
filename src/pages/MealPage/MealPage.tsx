@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import MealPopup from './MealPopup/MealPopup';
 import MealImage from './MealImage/MealImage';
 import MealDescription from './MealDescription/MealDescription';
@@ -9,11 +8,10 @@ import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
-import { Basket } from '../../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
-/* import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures'; */
+import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
@@ -21,14 +19,13 @@ function MealPage() {
     const params = useParams();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
     const mealId = parseInt(params.mealId ? params.mealId : '');
-    const { addMeal, emptyBasket } = useBasketMutations();
+    const { addMeal } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
     const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
-    /* const featuress = useFeatures(restaurantId, meal.id); */
-
+    const featuresData = useFeatures(restaurantId, meal.id);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
@@ -38,8 +35,6 @@ function MealPage() {
         }
     });
     const percentage = parseInt(((price * 7) / 100).toFixed(0));
-    const queryClient = useQueryClient();
-    const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
         navigate(`/restaurants/${restaurantId}`);
     };
@@ -62,32 +57,32 @@ function MealPage() {
     }, [watch, features]);
 
     useEffect(() => {
-        if (meal && meal?.features) {
-            setFeatures(meal.features);
+        if (featuresData.isSuccess) {
+            const initialFeatures = featuresData.data.data.map((feature) => {
+                const choices = feature.choices.map((choice) => {
+                    return { ...choice, chosen: false };
+                });
+                return { ...feature, choices };
+            });
+            setFeatures(initialFeatures);
         } else {
             setFeatures([]);
         }
-    }, [meal]);
+    }, [featuresData.isSuccess, featuresData.data]);
 
     if (meal && features.length > 0) {
-        const onSubmit: SubmitHandler<FieldValues> = async () => {
+        const onSubmit: SubmitHandler<FieldValues> = async (data) => {
             const newFeatures = features.map((feature: Feature) => {
-                const choiceChosen = feature.choices.filter((choice) => choice.chosen)[0];
-                if (choiceChosen) {
-                    return feature;
-                } else {
-                    const choices = feature.choices.map((choice) => ({ ...choice, chosen: choice.default }));
-                    return { ...feature, choices };
-                }
+                const { id, name } = feature.choices.filter((choice) => choice.name === data[feature.name])[0];
+                return {
+                    featureId: feature.id,
+                    featureName: feature.name,
+                    choiceId: id,
+                    choiceName: name,
+                };
             });
-            if (restaurantId === basket?.data.restaurant.id) {
-                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
-                goBack();
-            } else {
-                await emptyBasket.mutateAsync();
-                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
-                goBack();
-            }
+            await addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+            goBack();
         };
         return (
             <FormProvider {...methods}>
