@@ -32,7 +32,7 @@ export const useBasketMutations = () => {
     });
     const emptyBasket = useMutation({
         mutationFn: () => basketService.emptyBasket(),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
+        onSuccess: () => queryClient.resetQueries({ queryKey: ['basket'], exact: true }),
         onError: (error) => {
             setErrorMessage(error.message);
         },

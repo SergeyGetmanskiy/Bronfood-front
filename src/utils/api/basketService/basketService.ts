@@ -39,7 +39,7 @@ export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
     addMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: MealInBasket }>;
     deleteMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
-    emptyBasket: () => Promise<{ data: Basket }>;
+    emptyBasket: () => Promise<void>;
 }
 
 export const basketService = new BasketServiceReal();

@@ -13,8 +13,8 @@ export class BasketServiceReal implements BasketService {
     async deleteMeal(restaurant_id: number, meal_id: number, features: Feature[] | never[]): Promise<{ data: Basket }> {
         return handleFetch('api/basket/delete_meal', { method: 'POST', data: { restaurant_id, meal_id, features } });
     }
-    async emptyBasket(): Promise<{ data: Basket }> {
-        return handleFetch('api/basket/empty', { method: 'POST' });
+    async emptyBasket(): Promise<void> {
+        return handleFetch('api/basket/', { method: 'DELETE' });
     }
     async placeOrder(userId: string, restaurantId: number): Promise<OrderState> {
         return handleFetch('api/orders', { method: 'POST', data: { restaurantId, userId } });
