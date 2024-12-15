@@ -10,7 +10,7 @@ import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
-import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
+import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 import { useFeatures } from '../../utils/hooks/useFeatures/useFeatures';
 
 function MealPage() {
@@ -19,6 +19,7 @@ function MealPage() {
     const params = useParams();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
     const mealId = parseInt(params.mealId ? params.mealId : '');
+    const { refetch: refetchBasket } = useGetBasket();
     const { addMeal } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
@@ -82,6 +83,7 @@ function MealPage() {
                 };
             });
             await addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+            refetchBasket();
             goBack();
         };
         return (
