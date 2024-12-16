@@ -6,11 +6,13 @@ import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 export const useGetBasket = () => {
     const { isLogin } = useCurrentUser();
-    return useQuery({
+    const basket = useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
         enabled: isLogin,
+        retry: (count, error) => (error.message === 'Basket not found' ? false : 3),
     });
+    return basket;
 };
 
 export const useBasketMutations = () => {
