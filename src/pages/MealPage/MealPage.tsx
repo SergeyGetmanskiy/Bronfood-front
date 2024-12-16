@@ -7,7 +7,7 @@ import MealDescription from './MealDescription/MealDescription';
 import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
-import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
+import { Feature } from '../../utils/api/restaurantsService/restaurantsService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
@@ -24,9 +24,8 @@ function MealPage() {
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
-    const meals = isSuccess && data.data;
-    const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
-    const featuresData = useFeatures(restaurantId, meal.id);
+    const meal = isSuccess && data.data.filter((meal) => meal.id == mealId)[0];
+    const featuresData = useFeatures(restaurantId, mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {

@@ -1,25 +1,24 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { basketService } from '../../api/basketService/basketService';
+import { basketService, FeatureInPayload } from '../../api/basketService/basketService';
 import { Feature } from '../../api/restaurantsService/restaurantsService';
 import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 export const useGetBasket = () => {
     const { isLogin } = useCurrentUser();
-    const basket = useQuery({
+    return useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
         enabled: isLogin,
-        retry: (count, error) => (error.message === 'Basket not found' ? false : 3),
+        retry: 0,
     });
-    return basket;
 };
 
 export const useBasketMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const queryClient = useQueryClient();
     const addMeal = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: Feature[] | never[] }) => basketService.addMeal(restaurantId, mealId, features),
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: FeatureInPayload[] | never[] }) => basketService.addMeal(restaurantId, mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);

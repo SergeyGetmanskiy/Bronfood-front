@@ -23,7 +23,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         return handleFetch(`api/restaurant/${restaurantId}/meals/`);
     }
 
-    async getFeatures(restaurantId: number, mealId: number): Promise<{ features: Feature[] }> {
+    async getFeatures(restaurantId: number, mealId: number): Promise<{ data: Feature[] }> {
         return handleFetch(`api/restaurant/${restaurantId}/meal/${mealId}/features/`);
     }
 }

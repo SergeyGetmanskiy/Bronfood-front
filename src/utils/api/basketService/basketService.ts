@@ -33,12 +33,27 @@ export type Basket = {
      * List of meals in basket
      */
     meals: MealInBasket[];
+    /**
+     * Total price of meals in basket
+     */
+    basket_price: number;
+    /**
+     * Comission value
+     */
+    basket_comission: number;
+};
+
+export type FeatureInPayload = {
+    featureId: number;
+    featureName: string;
+    choiceId: number;
+    choiceName: string;
 };
 
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
-    addMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: MealInBasket }>;
-    deleteMeal: (restaurantId: number, mealId: number, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    addMeal: (restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]) => Promise<{ data: MealInBasket }>;
+    deleteMeal: (restaurantId: number, mealId: number, features: Feature[] | never[]) => Promise<{ data: Basket }>;
     emptyBasket: () => Promise<void>;
 }
 

@@ -17,6 +17,10 @@ export type Choice = {
      * Is choice selected by default
      */
     default: boolean;
+    /**
+     * Is choice chosen by user
+     */
+    chosen?: boolean;
 };
 
 export type Feature = {
@@ -117,7 +121,7 @@ export interface RestaurantsService {
     getRestaurants: () => Promise<{ data: Restaurant[] }>;
     getRestaurantById(id: number): Promise<{ data: Restaurant }>;
     getMeals(restaurantId: number): Promise<{ data: Meal[] }>;
-    getFeatures(restaurantId: number, mealId: number): Promise<{ features: Feature[] }>;
+    getFeatures(restaurantId: number, mealId: number): Promise<{ data: Feature[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();
