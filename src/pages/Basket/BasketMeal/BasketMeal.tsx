@@ -4,8 +4,8 @@ import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
-    const { meal, count, choices } = mealInBasket;
-    const { id, name, photo, price } = meal;
+    const { meal, count, choices, price } = mealInBasket;
+    const { id, name, photo } = meal;
     const sizeChoices = ['Маленький', 'Большой', 'Средний'];
     const toppings = choices.map((choice) => choice.name).filter((c) => (sizeChoices.some((sc) => sc === c) ? false : true));
     const size = choices.map((choice) => choice.name).find((c) => sizeChoices.some((sc) => sc === c));
