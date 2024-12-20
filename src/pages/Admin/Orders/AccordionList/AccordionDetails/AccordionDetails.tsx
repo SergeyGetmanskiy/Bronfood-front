@@ -24,8 +24,20 @@ function Meal({ meal, count, choices }: { meal: MealInterface; count: number; ch
     );
 }
 
-function AccordionDetails({ details }: { details: { meals: MealInBasket[] } }) {
+function OrdersNotAcceptedDetails({ price }: { price: number }) {
     const { t } = useTranslation();
+    return (
+        <>
+            <div className={styles.details__total}>
+                <p>{t('pages.admin.total')}</p>
+                <span className={styles.details__total_price}>{`${price} ₸`}</span>
+            </div>
+            <Button>{t('pages.admin.accept')}</Button>
+        </>
+    );
+}
+
+function AccordionDetails({ details, type }: { details: { meals: MealInBasket[] }; type: 'not accepted' | 'cooking' }) {
     const price = details.meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);
@@ -37,11 +49,7 @@ function AccordionDetails({ details }: { details: { meals: MealInBasket[] } }) {
                 })}
             </ul>
             <hr />
-            <div className={styles.details__total}>
-                <p>{t('pages.admin.total')}</p>
-                <span className={styles.details__total_price}>{`${price} ₸`}</span>
-            </div>
-            <Button>{t('pages.admin.accept')}</Button>
+            {type === 'not accepted' ? <OrdersNotAcceptedDetails price={price} /> : null}
         </div>
     );
 }

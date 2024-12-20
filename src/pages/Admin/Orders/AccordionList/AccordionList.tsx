@@ -1,8 +1,8 @@
 import styles from './AccordionList.module.scss';
 import Accordion from './Accordion/Accordion';
-import { OrderNotAccepted } from '../OrdersNotAccepted/OrdersNotAccepted';
+import { Order } from '../Orders';
 
-function AccordionList({ data }: { data: OrderNotAccepted[] }) {
+function AccordionList({ data }: { data: Order[] }) {
     return (
         <ul className={`${styles.accordion_list} bronfood-scrollbar`}>
             {data.map((order, index) => {

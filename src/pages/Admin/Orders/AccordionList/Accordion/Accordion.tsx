@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import styles from './Accordion.module.scss';
 import AccordionDetails from '../AccordionDetails/AccordionDetails';
-import { OrderNotAccepted } from '../../OrdersNotAccepted/OrdersNotAccepted';
+import { Order } from '../../Orders';
 
-function Accordion({ content }: { content: OrderNotAccepted }) {
+function Accordion({ content }: { content: Order }) {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
@@ -25,7 +25,7 @@ function Accordion({ content }: { content: OrderNotAccepted }) {
                 <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
-                <AccordionDetails details={content.details} />
+                <AccordionDetails details={content.details} type={content.type} />
             </div>
         </li>
     );
