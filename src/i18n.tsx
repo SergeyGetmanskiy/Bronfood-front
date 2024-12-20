@@ -269,6 +269,10 @@ i18n
                             workStatus: 'Рабочий статус',
                             total: 'Итого:',
                             accept: 'Принять',
+                            timeOrderAccepted: 'Время принятия заказа',
+                            waitingTime: 'Время ожидания',
+                            orderReady: 'Заказ готов',
+                            cancel: 'Отменить ',
                         },
                     },
                     errors: {
