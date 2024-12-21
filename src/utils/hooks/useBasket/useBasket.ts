@@ -57,7 +57,8 @@ export const useBasketMutations = () => {
     const reset = () => {
         setErrorMessage('');
         addMeal.reset();
-        deleteMeal.reset();
+        increment.reset();
+        decrement.reset();
         emptyBasket.reset();
     };
     const placeOrder = useMutation({
