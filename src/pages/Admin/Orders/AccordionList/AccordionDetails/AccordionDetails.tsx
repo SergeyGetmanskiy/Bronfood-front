@@ -73,7 +73,7 @@ function OrderCompleteDetails() {
     );
 }
 
-function AccordionDetails({ details, type }: { details: { meals: MealInBasket[] }; type: 'not accepted' | 'cooking' }) {
+function AccordionDetails({ details, type }: { details: { meals: MealInBasket[]; acceptedAt: string }; type: 'not accepted' | 'cooking' | 'complete' }) {
     const price = details.meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);

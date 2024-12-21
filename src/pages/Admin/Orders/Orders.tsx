@@ -17,6 +17,7 @@ export interface Order {
     };
     details: {
         meals: MealInBasket[];
+        acceptedAt: string;
     };
     type: 'not accepted' | 'cooking' | 'complete';
 }

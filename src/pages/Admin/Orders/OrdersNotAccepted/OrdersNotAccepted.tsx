@@ -13,6 +13,7 @@ function OrdersNotAccepted() {
             summary: order.summary,
             details: {
                 meals,
+                acceptedAt: '',
             },
             type: 'not accepted',
         };

@@ -1,3 +1,4 @@
+import { MealInBasket } from '../../../../utils/api/basketService/basketService';
 import { useGetBasket } from '../../../../utils/hooks/useBasket/useBasket';
 import AccordionList from '../AccordionList/AccordionList';
 import { Order } from '../Orders';
