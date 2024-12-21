@@ -273,6 +273,7 @@ i18n
                             waitingTime: 'Время ожидания',
                             orderReady: 'Заказ готов',
                             cancel: 'Отменить ',
+                            complete: 'Заказ выдан',
                         },
                     },
                     errors: {

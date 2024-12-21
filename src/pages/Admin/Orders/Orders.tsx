@@ -18,7 +18,7 @@ export interface Order {
     details: {
         meals: MealInBasket[];
     };
-    type: 'not accepted' | 'cooking';
+    type: 'not accepted' | 'cooking' | 'complete';
 }
 
 function Orders() {

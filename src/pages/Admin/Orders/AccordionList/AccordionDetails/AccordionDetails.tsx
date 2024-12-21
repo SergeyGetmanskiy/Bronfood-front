@@ -25,7 +25,7 @@ function Meal({ meal, count, choices }: { meal: MealInterface; count: number; ch
     );
 }
 
-function OrdersNotAcceptedDetails({ price }: { price: number }) {
+function OrderNotAcceptedDetails({ price }: { price: number }) {
     const { t } = useTranslation();
     return (
         <>
@@ -38,7 +38,7 @@ function OrdersNotAcceptedDetails({ price }: { price: number }) {
     );
 }
 
-function OrdersCookingDetails({ acceptedAt }: { acceptedAt: string }) {
+function OrderCookingDetails({ acceptedAt }: { acceptedAt: string }) {
     const { t } = useTranslation();
     return (
         <div className={styles.details__cooking}>
@@ -64,6 +64,15 @@ function OrdersCookingDetails({ acceptedAt }: { acceptedAt: string }) {
     );
 }
 
+function OrderCompleteDetails() {
+    const { t } = useTranslation();
+    return (
+        <div className={styles.details__complete}>
+            <Button>{t('pages.admin.complete')}</Button>
+        </div>
+    );
+}
+
 function AccordionDetails({ details, type }: { details: { meals: MealInBasket[] }; type: 'not accepted' | 'cooking' }) {
     const price = details.meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
@@ -76,7 +85,7 @@ function AccordionDetails({ details, type }: { details: { meals: MealInBasket[] 
                 })}
             </ul>
             <hr />
-            {type === 'not accepted' ? <OrdersNotAcceptedDetails price={price} /> : type === 'cooking' ? <OrdersCookingDetails acceptedAt={details.acceptedAt} /> : null}
+            {type === 'not accepted' ? <OrderNotAcceptedDetails price={price} /> : type === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : type === 'complete' ? <OrderCompleteDetails /> : null}
         </div>
     );
 }
