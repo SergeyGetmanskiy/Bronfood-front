@@ -1,23 +1,8 @@
-import { MealInBasket } from '../../../../utils/api/basketService/basketService';
-import { useGetBasket } from '../../../../utils/hooks/useBasket/useBasket';
+import { mockAdminOrders } from '../../../../utils/api/adminService/MockAdminOrders';
 import AccordionList from '../AccordionList/AccordionList';
-import { Order } from '../Orders';
-import { mockOrders } from './MockOrdersNotAccepted';
 
 function OrdersNotAccepted() {
-    /* next 2 lines temporary. meals need to be replaced by order.meals */
-    const { data: basket, isSuccess } = useGetBasket();
-    const meals: MealInBasket[] = isSuccess ? basket.data.meals : [];
-    const ordersNotAccepted: Order[] = mockOrders.map((order) => {
-        return {
-            summary: order.summary,
-            details: {
-                meals,
-                acceptedAt: '',
-            },
-            type: 'not accepted',
-        };
-    });
+    const ordersNotAccepted = mockAdminOrders;
 
     return <AccordionList data={ordersNotAccepted} />;
 }
