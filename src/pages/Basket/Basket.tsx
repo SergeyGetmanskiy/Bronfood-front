@@ -19,14 +19,14 @@ function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { addMeal, deleteMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
+    const { addMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
     const { data, isSuccess } = useGetBasket();
     const restaurant: Restaurant | Record<string, never> = isSuccess ? data.data.restaurant : {};
     const meals: MealInBasket[] = isSuccess ? data.data.meals : [];
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
     const price = isSuccess ? data.data.basket_price : 0;
-    const isLoading = addMeal.isPending || deleteMeal.isPending || emptyBasket.isPending;
+    const isLoading = addMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
     const restaurantId = restaurant.id;

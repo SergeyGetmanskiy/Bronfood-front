@@ -1,5 +1,4 @@
 import { BasketService, Basket, MealInBasket, FeatureInPayload } from './basketService';
-import { Feature } from '../restaurantsService/restaurantsService';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
 import { OrderState } from '../orderService/orderService';
 
@@ -8,10 +7,13 @@ export class BasketServiceReal implements BasketService {
         return handleFetch('api/basket/');
     }
     async addMeal(restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]): Promise<{ data: MealInBasket }> {
-        return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurantId, mealId, features } });
+        return handleFetch('api/basket/meals/', { method: 'POST', data: { restaurantId, mealId, features } });
     }
-    async deleteMeal(restaurant_id: number, meal_id: number, features: Feature[] | never[]): Promise<{ data: Basket }> {
-        return handleFetch('api/basket/delete_meal', { method: 'POST', data: { restaurant_id, meal_id, features } });
+    async increment(mealId: number): Promise<void> {
+        return handleFetch('api/basket/meals/increment/', { method: 'POST', data: { mealId } });
+    }
+    async decrement(mealId: number): Promise<void> {
+        return handleFetch('api/basket/meals/decrement/', { method: 'POST', data: { mealId } });
     }
     async emptyBasket(): Promise<void> {
         return handleFetch('api/basket/', { method: 'DELETE' });
