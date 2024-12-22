@@ -18,6 +18,10 @@ export type Choice = {
      */
     default: boolean;
     /**
+     * feature choice belongs to
+     */
+    feature_name: string;
+    /**
      * Is choice chosen by user
      */
     chosen?: boolean;
@@ -36,6 +40,10 @@ export type Feature = {
      * Feature's choices
      */
     choices: Choice[];
+    /**
+     * if true feature cannot be left without a choice
+     */
+    is_required: boolean;
 };
 
 export type MealType = 'food' | 'drink' | 'dessert';
