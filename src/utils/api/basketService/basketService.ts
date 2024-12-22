@@ -40,7 +40,7 @@ export type Basket = {
     /**
      * Comission value
      */
-    basket_comission: number;
+    basket_commission: number;
 };
 
 export type FeatureInPayload = {
