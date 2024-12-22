@@ -231,6 +231,7 @@ i18n
                             waitingTime: 'Время ожидания',
                             min: 'мин',
                             total: 'Итого:',
+                            commission: 'Комиссия:',
                             pay: 'Оплатить',
                             basketEmpty: 'Корзина пуста',
                             emptyBasket: 'Очистить корзину?',

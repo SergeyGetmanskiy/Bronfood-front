@@ -26,6 +26,7 @@ function Basket() {
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
     const price = isSuccess ? data.data.basket_price : 0;
+    const commission = isSuccess ? data.data.basket_commission : 0;
     const isLoading = addMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
@@ -55,7 +56,7 @@ function Basket() {
                         <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         {errorMessage && <ErrorMessage message={t(`pages.basket.${errorMessage}`)} />}
                         <BasketMealsList meals={meals} />
-                        <BasketTotal price={price} onPayOrderClick={handlePayOrder} />
+                        <BasketTotal price={price} commission={commission} onPayOrderClick={handlePayOrder} />
                     </>
                 )}
                 {isLoading && <Preloader />}
