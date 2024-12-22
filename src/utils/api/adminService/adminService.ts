@@ -1,7 +1,14 @@
 /* import { BasketServiceReal } from './basketServiceReal';*/
 
 import { MealInBasket } from '../basketService/basketService';
+import { Choice, Meal } from '../restaurantsService/restaurantsService';
 
+export type ChoiceInAdminOrder = Omit<Choice, 'price' | 'default' | 'feature_name' | 'chosen'>;
+export type MealInAdminOrder = Omit<Meal, 'description' | 'photo' | 'type' | 'hasFeatures'>;
+export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
+    meal: MealInAdminOrder;
+    choices: ChoiceInAdminOrder[];
+};
 export type AdminOrder = {
     summary: {
         /**
@@ -17,7 +24,7 @@ export type AdminOrder = {
         /**
          * meals in order
          */
-        meals: MealInBasket[];
+        meals: MealInOrder[];
         /**
          * time order was accepted
          */
@@ -30,7 +37,7 @@ export type AdminOrder = {
 };
 
 export interface AdminService {
-    getAdminOrders: () => Promise<{ data: AdminOrder[] }>;
+    getAdminOrders: () => Promise<{ status: 'success'; data: AdminOrder[] } | { status: 'error'; error_message: string }>;
 }
 
 /* export const adminService = new BasketServiceReal();

@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
-import { MealInBasket } from '../../../../../utils/api/basketService/basketService';
-import { Choice, Meal as MealInterface } from '../../../../../utils/api/restaurantsService/restaurantsService';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
+import { ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
 
-function Meal({ meal, count, choices }: { meal: MealInterface; count: number; choices: Choice[] }) {
+function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
     return (
         <li className={styles.details__meal}>
             <p className={styles.details__meal_name}>
@@ -73,7 +72,7 @@ function OrderCompleteDetails() {
     );
 }
 
-function AccordionDetails({ details, type }: { details: { meals: MealInBasket[]; acceptedAt: string }; type: 'not accepted' | 'cooking' | 'complete' }) {
+function AccordionDetails({ details, type }: { details: { meals: MealInOrder[]; acceptedAt: string }; type: 'not accepted' | 'cooking' | 'complete' }) {
     const price = details.meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);

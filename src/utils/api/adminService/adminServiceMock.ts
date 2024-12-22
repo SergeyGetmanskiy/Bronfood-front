@@ -1,5 +1,6 @@
 /* import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList'; */
 import { AdminOrder, AdminService } from './adminService';
+import { mockAdminOrders } from './MockAdminOrders';
 
 export class AdminServiceMock implements AdminService {
     async _wait(ms: number) {
@@ -9,10 +10,11 @@ export class AdminServiceMock implements AdminService {
     async getAdminOrders(): Promise<{ status: 'success'; data: AdminOrder[] } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
         const success = true;
-        if (!success) {
-            throw new Error('Произошла ошибка');
+        if (success) {
+            return { status: 'success', data: mockAdminOrders };
+        } else {
+            return { status: 'error', error_message: 'Произошла ошибка' };
         }
-        return { status: 'success', data: mockUser.favorites };
     }
 
     /*     async setFavorites(restId: number): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {

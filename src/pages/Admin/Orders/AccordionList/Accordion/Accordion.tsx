@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import styles from './Accordion.module.scss';
 import AccordionDetails from '../AccordionDetails/AccordionDetails';
-import { Order } from '../../Orders';
+import { AdminOrder } from '../../../../../utils/api/adminService/adminService';
 
-function Accordion({ content }: { content: Order }) {
+function Accordion({ content }: { content: AdminOrder }) {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
