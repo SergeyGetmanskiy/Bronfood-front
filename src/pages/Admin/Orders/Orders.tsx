@@ -6,21 +6,8 @@ import OrdersNotAccepted from './OrdersNotAccepted/OrdersNotAccepted';
 import OrdersCooking from './OrdersCooking/OrdersCooking';
 import OrdersArchive from './OrdersArchive/OrdersArchive';
 import Preloader from '../../../components/Preloader/Preloader';
-import { MealInBasket } from '../../../utils/api/basketService/basketService';
 
 const tabNames = ['notAccepted', 'cooking', 'archive'];
-
-export interface Order {
-    summary: {
-        userName: string;
-        orderCode: string;
-    };
-    details: {
-        meals: MealInBasket[];
-        acceptedAt: string;
-    };
-    type: 'not accepted' | 'cooking' | 'complete';
-}
 
 function Orders() {
     const [isPending, startTransition] = useTransition();
