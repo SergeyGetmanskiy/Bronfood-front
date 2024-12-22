@@ -1,5 +1,5 @@
 import { BasketServiceReal } from './basketServiceReal';
-import { Feature, Meal, Restaurant, Choice } from '../restaurantsService/restaurantsService';
+import { Meal, Restaurant, Choice } from '../restaurantsService/restaurantsService';
 
 export type MealInBasket = {
     /**
@@ -40,7 +40,7 @@ export type Basket = {
     /**
      * Comission value
      */
-    basket_comission: number;
+    basket_commission: number;
 };
 
 export type FeatureInPayload = {
@@ -53,7 +53,8 @@ export type FeatureInPayload = {
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
     addMeal: (restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]) => Promise<{ data: MealInBasket }>;
-    deleteMeal: (restaurantId: number, mealId: number, features: Feature[] | never[]) => Promise<{ data: Basket }>;
+    increment: (mealId: number) => Promise<void>;
+    decrement: (mealId: number) => Promise<void>;
     emptyBasket: () => Promise<void>;
 }
 

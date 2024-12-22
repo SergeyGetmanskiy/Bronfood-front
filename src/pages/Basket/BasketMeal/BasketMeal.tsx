@@ -4,12 +4,12 @@ import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
-    const { meal, count, choices, price } = mealInBasket;
-    const { id, name, photo } = meal;
+    const { meal, count, choices, price, id } = mealInBasket;
+    const { name, photo } = meal;
     const sizeChoices = ['Маленький', 'Большой', 'Средний'];
     const toppings = choices.map((choice) => choice.name).filter((c) => (sizeChoices.some((sc) => sc === c) ? false : true));
     const size = choices.map((choice) => choice.name).find((c) => sizeChoices.some((sc) => sc === c));
-    const { addMeal, deleteMeal } = useBasketMutations();
+    const { increment, decrement } = useBasketMutations();
     return (
         <div className={`${styles.basket_meal}`}>
             <div className={styles.basket_meal__container}>
@@ -32,7 +32,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     </div>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal.mutateAsync({ mealId: id })} decrement={() => deleteMeal.mutateAsync({ mealId: id })} />
+                    <Counter count={count} increment={() => increment.mutateAsync({ mealId: id })} decrement={() => decrement.mutateAsync({ mealId: id })} />
                 </div>
             </div>
         </div>

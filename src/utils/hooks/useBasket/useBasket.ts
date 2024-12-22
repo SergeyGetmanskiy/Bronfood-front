@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { basketService, FeatureInPayload } from '../../api/basketService/basketService';
-import { Feature } from '../../api/restaurantsService/restaurantsService';
 import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 export const useGetBasket = () => {
@@ -24,9 +23,26 @@ export const useBasketMutations = () => {
             setErrorMessage(error.message);
         },
     });
-    const deleteMeal = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: Feature[] }) => basketService.deleteMeal(restaurantId, mealId, features),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
+    const increment = useMutation({
+        mutationFn: ({ mealId }: { mealId: number }) => basketService.increment(mealId),
+        onSuccess: () =>
+            queryClient.refetchQueries({
+                queryKey: ['basket'],
+                type: 'active',
+                exact: true,
+            }),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const decrement = useMutation({
+        mutationFn: ({ mealId }: { mealId: number }) => basketService.decrement(mealId),
+        onSuccess: () =>
+            queryClient.refetchQueries({
+                queryKey: ['basket'],
+                type: 'active',
+                exact: true,
+            }),
         onError: (error) => {
             setErrorMessage(error.message);
         },
@@ -41,7 +57,8 @@ export const useBasketMutations = () => {
     const reset = () => {
         setErrorMessage('');
         addMeal.reset();
-        deleteMeal.reset();
+        increment.reset();
+        decrement.reset();
         emptyBasket.reset();
     };
     const placeOrder = useMutation({
@@ -55,7 +72,8 @@ export const useBasketMutations = () => {
     });
     return {
         addMeal,
-        deleteMeal,
+        increment,
+        decrement,
         emptyBasket,
         errorMessage,
         reset,

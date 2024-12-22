@@ -7,7 +7,7 @@ const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
         <ul className={`${styles.basket_meals_list} bronfood-scrollbar`}>
             {meals.map((meal) => {
                 return (
-                    <li key={meal.meal.id}>
+                    <li key={meal.id}>
                         <BasketMeal mealInBasket={meal} />
                     </li>
                 );
