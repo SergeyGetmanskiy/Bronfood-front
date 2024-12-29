@@ -41,9 +41,13 @@ export type Feature = {
      */
     choices: Choice[];
     /**
-     * if true feature cannot be left without a choice
+     * true if feature is container
      */
-    is_required: boolean;
+    is_container: boolean;
+    /**
+     * true if feature is size
+     */
+    is_size: boolean;
 };
 
 export type MealType = 'food' | 'drink' | 'dessert';
