@@ -36,7 +36,7 @@ export type AdminOrder = {
 };
 
 export interface AdminService {
-    getAdminOrders: () => Promise<{ status: 'success'; data: AdminOrder[] } | { status: 'error'; error_message: string }>;
+    getAdminOrders: () => Promise<{ data: AdminOrder[] }>;
 }
 
 export const adminService = new AdminServiceMock();

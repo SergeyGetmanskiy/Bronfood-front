@@ -7,13 +7,13 @@ export class AdminServiceMock implements AdminService {
         return new Promise((res) => setTimeout(res, ms));
     }
 
-    async getAdminOrders(): Promise<{ status: 'success'; data: AdminOrder[] } | { status: 'error'; error_message: string }> {
+    async getAdminOrders(): Promise<{ data: AdminOrder[] }> {
         await this._wait(1000);
         const success = true;
         if (success) {
-            return { status: 'success', data: mockAdminOrders };
+            return Promise.resolve({ data: mockAdminOrders });
         } else {
-            return { status: 'error', error_message: 'Произошла ошибка' };
+            return Promise.reject(new Error('Произошла ошибка'));
         }
     }
 
