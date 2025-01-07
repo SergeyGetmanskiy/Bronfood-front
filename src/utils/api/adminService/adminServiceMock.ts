@@ -11,9 +11,9 @@ export class AdminServiceMock implements AdminService {
         await this._wait(1000);
         const success = true;
         if (success) {
-            return Promise.resolve({ data: mockAdminOrders });
+            return await Promise.resolve({ data: mockAdminOrders });
         } else {
-            return Promise.reject(new Error('Произошла ошибка'));
+            return await Promise.reject(new Error('Произошла ошибка'));
         }
     }
 
