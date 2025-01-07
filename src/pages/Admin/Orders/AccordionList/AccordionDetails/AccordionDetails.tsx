@@ -4,6 +4,7 @@ import styles from './AccordionDetails.module.scss';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
 import { ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
 import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
+import Preloader from '../../../../../components/Preloader/Preloader';
 
 function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
     return (
@@ -38,7 +39,10 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
                 <p>{t('pages.admin.total')}</p>
                 <span className={styles.details__total_price}>{`${price} ₸`}</span>
             </div>
-            <Button onClick={handleClick}>{t('pages.admin.accept')}</Button>
+            {changeAdminOrderStatus.isPending && <Preloader />}
+            <Button onClick={handleClick} disabled={changeAdminOrderStatus.isPending}>
+                {t('pages.admin.accept')}
+            </Button>
         </>
     );
 }
