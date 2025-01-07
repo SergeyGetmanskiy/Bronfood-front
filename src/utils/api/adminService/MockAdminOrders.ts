@@ -9,6 +9,7 @@ const increment = (function (n) {
 
 export const mockAdminOrders: AdminOrder[] = [
     {
+        id: increment(),
         summary: {
             userName: 'Ермек',
             orderCode: 'LKJ65',
@@ -55,9 +56,10 @@ export const mockAdminOrders: AdminOrder[] = [
             ],
             acceptedAt: '',
         },
-        type: 'not accepted',
+        status: 'not accepted',
     },
     {
+        id: increment(),
         summary: {
             userName: 'Азамат',
             orderCode: 'LKJ66',
@@ -79,9 +81,10 @@ export const mockAdminOrders: AdminOrder[] = [
             ],
             acceptedAt: '',
         },
-        type: 'not accepted',
+        status: 'not accepted',
     },
     {
+        id: increment(),
         summary: {
             userName: 'Айгуль',
             orderCode: 'LKJ67',
@@ -128,9 +131,10 @@ export const mockAdminOrders: AdminOrder[] = [
             ],
             acceptedAt: '',
         },
-        type: 'cooking',
+        status: 'cooking',
     },
     {
+        id: increment(),
         summary: {
             userName: 'Айнур',
             orderCode: 'LKJ68',
@@ -152,6 +156,6 @@ export const mockAdminOrders: AdminOrder[] = [
             ],
             acceptedAt: '',
         },
-        type: 'complete',
+        status: 'complete',
     },
 ];

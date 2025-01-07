@@ -3,6 +3,7 @@ import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
 import { ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
+import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
 
 function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
     return (
@@ -24,15 +25,20 @@ function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number;
     );
 }
 
-function OrderNotAcceptedDetails({ price }: { price: number }) {
+function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     const { t } = useTranslation();
+    const { changeAdminOrderStatus } = useAdminOrdersMutations();
+    const handleClick = async () => {
+        const status = 'cooking';
+        await changeAdminOrderStatus.mutateAsync({ id, status });
+    };
     return (
         <>
             <div className={styles.details__total}>
                 <p>{t('pages.admin.total')}</p>
                 <span className={styles.details__total_price}>{`${price} ₸`}</span>
             </div>
-            <Button>{t('pages.admin.accept')}</Button>
+            <Button onClick={handleClick}>{t('pages.admin.accept')}</Button>
         </>
     );
 }
@@ -72,7 +78,7 @@ function OrderCompleteDetails() {
     );
 }
 
-function AccordionDetails({ details, type }: { details: { meals: MealInOrder[]; acceptedAt: string }; type: 'not accepted' | 'cooking' | 'complete' }) {
+function AccordionDetails({ id, details, status }: { id: number; details: { meals: MealInOrder[]; acceptedAt: string }; status: 'not accepted' | 'cooking' | 'complete' }) {
     const price = details.meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);
@@ -84,7 +90,7 @@ function AccordionDetails({ details, type }: { details: { meals: MealInOrder[]; 
                 })}
             </ul>
             <hr />
-            {type === 'not accepted' ? <OrderNotAcceptedDetails price={price} /> : type === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : type === 'complete' ? <OrderCompleteDetails /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} status={status} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
         </div>
     );
 }

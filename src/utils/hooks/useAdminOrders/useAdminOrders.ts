@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminService } from '../../api/adminService/adminService';
 
 export const useGetAdminOrders = () => {
@@ -6,4 +7,25 @@ export const useGetAdminOrders = () => {
         queryKey: ['adminOrders'],
         queryFn: () => adminService.getAdminOrders(),
     });
+};
+
+export const useAdminOrdersMutations = () => {
+    const [errorMessage, setErrorMessage] = useState('');
+    const queryClient = useQueryClient();
+    const changeAdminOrderStatus = useMutation({
+        mutationFn: ({ id, status }: { id: number; status: string }) => adminService.changeAdminOrderStatus(id, status),
+        onSuccess: () =>
+            queryClient.refetchQueries({
+                queryKey: ['adminOrders'],
+                type: 'active',
+                exact: true,
+            }),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    return {
+        changeAdminOrderStatus,
+        errorMessage,
+    };
 };

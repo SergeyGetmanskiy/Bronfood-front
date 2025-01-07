@@ -16,8 +16,8 @@ function Orders() {
     const navigate = useNavigate();
     const { data, isSuccess } = useGetAdminOrders();
     const adminOrders = isSuccess ? data.data : [];
-    const ordersNotAccepted = adminOrders.filter((order) => order.type === 'not accepted');
-    const ordersCooking = adminOrders.filter((order) => order.type === 'cooking');
+    const ordersNotAccepted = adminOrders.filter((order) => order.status === 'not accepted');
+    const ordersCooking = adminOrders.filter((order) => order.status === 'cooking');
     const close = () => {
         navigate('/admin');
     };

@@ -25,7 +25,7 @@ function Accordion({ content }: { content: AdminOrder }) {
                 <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
-                <AccordionDetails details={content.details} type={content.type} />
+                <AccordionDetails id={content.id} details={content.details} status={content.status} />
             </div>
         </li>
     );
