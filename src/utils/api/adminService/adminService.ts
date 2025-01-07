@@ -8,6 +8,7 @@ export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
     meal: MealInAdminOrder;
     choices: ChoiceInAdminOrder[];
 };
+export type AdminOrderStatus = 'not accepted' | 'cooking' | 'complete';
 export type AdminOrder = {
     /**
      * order's id
@@ -42,12 +43,12 @@ export type AdminOrder = {
     /**
      * order's status
      */
-    status: 'not accepted' | 'cooking' | 'complete';
+    status: AdminOrderStatus;
 };
 
 export interface AdminService {
     getAdminOrders: () => Promise<{ data: AdminOrder[] }>;
-    changeAdminOrderStatus: (id: number, status: string) => Promise<void>;
+    changeAdminOrderStatus: (id: number, status: AdminOrderStatus) => Promise<void>;
 }
 
 export const adminService = new AdminServiceMock();

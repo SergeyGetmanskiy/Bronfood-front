@@ -1,4 +1,4 @@
-import { AdminOrder, AdminService } from './adminService';
+import { AdminOrder, AdminOrderStatus, AdminService } from './adminService';
 import { mockAdminOrders } from './MockAdminOrders';
 
 export class AdminServiceMock implements AdminService {
@@ -18,7 +18,7 @@ export class AdminServiceMock implements AdminService {
         }
     }
 
-    async changeAdminOrderStatus(id: number, status: string): Promise<void> {
+    async changeAdminOrderStatus(id: number, status: AdminOrderStatus): Promise<void> {
         await this._wait(500);
         const success = true;
         if (success) {

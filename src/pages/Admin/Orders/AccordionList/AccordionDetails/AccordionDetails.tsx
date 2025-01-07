@@ -90,7 +90,7 @@ function AccordionDetails({ id, details, status }: { id: number; details: { meal
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} status={status} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
         </div>
     );
 }
