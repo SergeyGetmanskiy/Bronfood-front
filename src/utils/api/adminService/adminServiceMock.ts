@@ -2,8 +2,11 @@ import { AdminOrder, AdminOrderStatus, AdminService } from './adminService';
 import { mockAdminOrders } from './MockAdminOrders';
 
 export class AdminServiceMock implements AdminService {
-    private date = new Date();
     private adminOrders: AdminOrder[] = mockAdminOrders;
+
+    _getDate() {
+        return new Date();
+    }
 
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
@@ -23,7 +26,7 @@ export class AdminServiceMock implements AdminService {
         await this._wait(500);
         const success = true;
         if (success) {
-            this.adminOrders = this.adminOrders.map((order) => (order.id === id ? { ...order, status } : order));
+            this.adminOrders = this.adminOrders.map((order) => (order.id === id ? { ...order, status, acceptedAt: this._getDate() } : order));
             return await Promise.resolve();
         } else {
             return await Promise.reject(new Error('Произошла ошибка'));

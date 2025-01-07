@@ -29,7 +29,7 @@ export type AdminOrder = {
     /**
      * time order was accepted
      */
-    acceptedAt: string;
+    acceptedAt: Date | '';
     /**
      * order's status
      */

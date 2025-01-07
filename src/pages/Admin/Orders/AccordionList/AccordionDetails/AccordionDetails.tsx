@@ -47,13 +47,14 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     );
 }
 
-function OrderCookingDetails({ acceptedAt }: { acceptedAt: string }) {
+function OrderCookingDetails({ acceptedAt }: { acceptedAt: Date | '' }) {
     const { t } = useTranslation();
+    const time = acceptedAt !== '' ? `${acceptedAt.getHours()}:${acceptedAt.getMinutes()}` : '';
     return (
         <div className={styles.details__cooking}>
             <div className={styles.details__cooking_time_accepted_at}>
                 <p className={styles.details__cooking_time_accepted_at_text}>{t('pages.admin.timeOrderAccepted')}</p>
-                <span className={styles.details__cooking_time_accepted_at_time}>{acceptedAt}</span>
+                <span className={styles.details__cooking_time_accepted_at_time}>{time}</span>
             </div>
             <div className={styles.details__cooking_progress}>
                 <div className={styles.details__cooking_progress_timer}>
@@ -82,7 +83,7 @@ function OrderCompleteDetails() {
     );
 }
 
-function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date }) {
+function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date | '' }) {
     const price = meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);

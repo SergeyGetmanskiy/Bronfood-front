@@ -118,7 +118,7 @@ export const mockAdminOrders: AdminOrder[] = [
                 price: 1250,
             },
         ],
-        acceptedAt: '',
+        acceptedAt: new Date(),
         status: 'cooking',
     },
     {
@@ -139,7 +139,7 @@ export const mockAdminOrders: AdminOrder[] = [
                 price: 350,
             },
         ],
-        acceptedAt: '',
+        acceptedAt: new Date('Tue Jan 07 2025 18:32:40 GMT+0300'),
         status: 'complete',
     },
 ];
