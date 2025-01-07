@@ -1,5 +1,4 @@
-/* import { BasketServiceReal } from './basketServiceReal';*/
-
+import { AdminServiceMock } from './adminServiceMock';
 import { MealInBasket } from '../basketService/basketService';
 import { Choice, Meal } from '../restaurantsService/restaurantsService';
 
@@ -40,5 +39,4 @@ export interface AdminService {
     getAdminOrders: () => Promise<{ status: 'success'; data: AdminOrder[] } | { status: 'error'; error_message: string }>;
 }
 
-/* export const adminService = new BasketServiceReal();
- */
+export const adminService = new AdminServiceMock();

@@ -1,10 +1,7 @@
-import { mockAdminOrders } from '../../../../utils/api/adminService/MockAdminOrders';
 import AccordionList from '../AccordionList/AccordionList';
 
-function OrdersNotAccepted() {
-    const ordersNotAccepted = mockAdminOrders;
-
-    return <AccordionList data={ordersNotAccepted} />;
+function OrdersNotAccepted({ orders }) {
+    return <AccordionList data={orders} />;
 }
 
 export default OrdersNotAccepted;
