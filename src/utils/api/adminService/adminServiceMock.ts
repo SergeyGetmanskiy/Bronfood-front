@@ -2,6 +2,7 @@ import { AdminOrder, AdminOrderStatus, AdminService } from './adminService';
 import { mockAdminOrders } from './MockAdminOrders';
 
 export class AdminServiceMock implements AdminService {
+    private date = new Date();
     private adminOrders: AdminOrder[] = mockAdminOrders;
 
     async _wait(ms: number) {

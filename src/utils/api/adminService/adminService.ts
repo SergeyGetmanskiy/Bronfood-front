@@ -15,31 +15,21 @@ export type AdminOrder = {
      */
     id: number;
     /**
-     * order's summary
+     * user's name
      */
-    summary: {
-        /**
-         * user's name
-         */
-        userName: string;
-        /**
-         * order's code
-         */
-        orderCode: string;
-    };
+    userName: string;
     /**
-     * order's details
+     * order's code
      */
-    details: {
-        /**
-         * meals in order
-         */
-        meals: MealInOrder[];
-        /**
-         * time order was accepted
-         */
-        acceptedAt: string;
-    };
+    orderCode: string;
+    /**
+     * meals in order
+     */
+    meals: MealInOrder[];
+    /**
+     * time order was accepted
+     */
+    acceptedAt: string;
     /**
      * order's status
      */

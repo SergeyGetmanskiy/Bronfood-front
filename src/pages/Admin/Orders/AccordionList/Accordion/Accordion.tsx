@@ -20,12 +20,12 @@ function Accordion({ content }: { content: AdminOrder }) {
     return (
         <li className={`${styles.accordion} ${isOpen ? styles.accordion_active : ''}`}>
             <div className={`${styles.accordion__summary} ${isOpen ? styles.accordion__summary_active : ''}`} onClick={toggleAccordion}>
-                <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''}`}>{content.summary.userName}</h3>
-                <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''}`}>{content.summary.orderCode}</h3>
+                <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''}`}>{content.userName}</h3>
+                <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''}`}>{content.orderCode}</h3>
                 <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
-                <AccordionDetails id={content.id} details={content.details} status={content.status} />
+                <AccordionDetails id={content.id} meals={content.meals} status={content.status} acceptedAt={content.acceptedAt} />
             </div>
         </li>
     );

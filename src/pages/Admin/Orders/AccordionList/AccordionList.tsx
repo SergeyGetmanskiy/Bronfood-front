@@ -6,7 +6,7 @@ function AccordionList({ data }: { data: AdminOrder[] }) {
     return (
         <ul className={`${styles.accordion_list} bronfood-scrollbar`}>
             {data.map((order, index) => {
-                return <Accordion key={`${order.summary.orderCode}-${index}`} content={order} />;
+                return <Accordion key={`${order.orderCode}-${index}`} content={order} />;
             })}
         </ul>
     );

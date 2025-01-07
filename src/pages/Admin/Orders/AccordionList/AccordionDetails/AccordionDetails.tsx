@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
-import { ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
+import { AdminOrderStatus, ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
 import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../../../components/Preloader/Preloader';
 
@@ -82,19 +82,19 @@ function OrderCompleteDetails() {
     );
 }
 
-function AccordionDetails({ id, details, status }: { id: number; details: { meals: MealInOrder[]; acceptedAt: string }; status: 'not accepted' | 'cooking' | 'complete' }) {
-    const price = details.meals.reduce((acc, current) => {
+function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date }) {
+    const price = meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);
     return (
         <div className={styles.details}>
             <ul className={styles.details__meals}>
-                {details.meals.map((meal, index) => {
+                {meals.map((meal, index) => {
                     return <Meal key={`${meal.meal.name}-${index}`} meal={meal.meal} count={meal.count} choices={meal.choices} />;
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={details.acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
         </div>
     );
 }
