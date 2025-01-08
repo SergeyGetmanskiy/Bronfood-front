@@ -50,7 +50,7 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
 
 function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acceptedAt: Date | ''; waitingTime: number }) {
     const cookingTime = waitingTime * 60;
-    const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt)) / 1000);
+    const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt as string)) / 1000);
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleCancelClick = async () => {
@@ -59,8 +59,8 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
     const handleReadyClick = async () => {
         await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });
     };
-    const hours = acceptedAt.getHours();
-    const minutes = acceptedAt.getMinutes();
+    const hours = acceptedAt instanceof Date ? acceptedAt.getHours() : 0;
+    const minutes = acceptedAt instanceof Date ? acceptedAt.getMinutes() : 0;
     const time = acceptedAt !== '' ? `${hours}:${minutes}` : '';
     useEffect(() => {
         const interval = setInterval(() => {
