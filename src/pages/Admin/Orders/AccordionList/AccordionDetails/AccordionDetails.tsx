@@ -61,7 +61,7 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
     };
     const hours = acceptedAt instanceof Date ? acceptedAt.getHours() : 0;
     const minutes = acceptedAt instanceof Date ? acceptedAt.getMinutes() : 0;
-    const time = acceptedAt !== '' ? `${hours}:${minutes}` : '';
+    const time = acceptedAt !== '' ? `${hours}:${minutes < 10 ? `0${minutes}` : minutes}` : '';
     useEffect(() => {
         const interval = setInterval(() => {
             if (remainingTime < 0) {
@@ -72,7 +72,6 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
         }, 1000);
         return () => clearInterval(interval);
     }, [remainingTime]);
-
     return (
         <div className={styles.details__cooking}>
             <div className={styles.details__cooking_time_accepted_at}>
