@@ -30,8 +30,7 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleClick = async () => {
-        const status = 'cooking';
-        await changeAdminOrderStatus.mutateAsync({ id, status });
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'cooking' });
     };
     return (
         <>
@@ -47,8 +46,15 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     );
 }
 
-function OrderCookingDetails({ acceptedAt }: { acceptedAt: Date | '' }) {
+function OrderCookingDetails({ id, acceptedAt }: { id: number; acceptedAt: Date | '' }) {
     const { t } = useTranslation();
+    const { changeAdminOrderStatus } = useAdminOrdersMutations();
+    const handleCancelClick = async () => {
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'canceled' });
+    };
+    const handleReadyClick = async () => {
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });
+    };
     const time = acceptedAt !== '' ? `${acceptedAt.getHours()}:${acceptedAt.getMinutes()}` : '';
     return (
         <div className={styles.details__cooking}>
@@ -66,19 +72,23 @@ function OrderCookingDetails({ acceptedAt }: { acceptedAt: Date | '' }) {
             </div>
             <div className={styles.details__cooking_buttons}>
                 <div className={styles.details__cooking_buttons_grey}>
-                    <ButtonGrey>{t('pages.admin.cancel')}</ButtonGrey>
+                    <ButtonGrey onClick={handleCancelClick}>{t('pages.admin.cancel')}</ButtonGrey>
                 </div>
-                <Button>{t('pages.admin.orderReady')}</Button>
+                <Button onClick={handleReadyClick}>{t('pages.admin.orderReady')}</Button>
             </div>
         </div>
     );
 }
 
-function OrderReadyDetails() {
+function OrderReadyDetails({ id }: { id: number }) {
     const { t } = useTranslation();
+    const { changeAdminOrderStatus } = useAdminOrdersMutations();
+    const handleClick = async () => {
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'archive' });
+    };
     return (
         <div className={styles.details__complete}>
-            <Button>{t('pages.admin.complete')}</Button>
+            <Button onClick={handleClick}>{t('pages.admin.complete')}</Button>
         </div>
     );
 }
@@ -95,7 +105,7 @@ function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={acceptedAt} /> : status === 'ready' ? <OrderReadyDetails /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
         </div>
     );
 }

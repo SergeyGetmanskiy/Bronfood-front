@@ -16,7 +16,8 @@ function Orders() {
     const { data, isSuccess, isPending } = useGetAdminOrders();
     const adminOrders = isSuccess ? data.data : [];
     const ordersNotAccepted = adminOrders.filter((order) => order.status === 'not accepted');
-    const ordersCooking = adminOrders.filter((order) => order.status === 'cooking');
+    const ordersCooking = adminOrders.filter((order) => (order.status === 'cooking') | (order.status === 'ready'));
+    const ordersArchive = adminOrders.filter((order) => order.status === 'archive');
     const close = () => {
         navigate('/admin');
     };
@@ -29,7 +30,7 @@ function Orders() {
                 {isPending && <Preloader />}
                 {tab === 'notAccepted' && <OrdersNotAccepted orders={ordersNotAccepted} />}
                 {tab === 'cooking' && <OrdersCooking orders={ordersCooking} />}
-                {tab === 'archive' && <OrdersArchive />}
+                {tab === 'archive' && <OrdersArchive orders={ordersArchive} />}
             </AdminPopup>
         </>
     );
