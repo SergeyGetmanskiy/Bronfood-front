@@ -5,6 +5,8 @@ import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
 import { AdminOrderStatus, ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
 import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../../../components/Preloader/Preloader';
+import ProgressBar from '../../../../../components/ProgressBar/ProgressBar';
+import { useEffect, useState } from 'react';
 
 function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
     return (
@@ -46,7 +48,9 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     );
 }
 
-function OrderCookingDetails({ id, acceptedAt }: { id: number; acceptedAt: Date | '' }) {
+function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acceptedAt: Date | ''; waitingTime: number }) {
+    const cookingTime = waitingTime * 60;
+    const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt)) / 1000);
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleCancelClick = async () => {
@@ -55,7 +59,20 @@ function OrderCookingDetails({ id, acceptedAt }: { id: number; acceptedAt: Date 
     const handleReadyClick = async () => {
         await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });
     };
-    const time = acceptedAt !== '' ? `${acceptedAt.getHours()}:${acceptedAt.getMinutes()}` : '';
+    const hours = acceptedAt.getHours();
+    const minutes = acceptedAt.getMinutes();
+    const time = acceptedAt !== '' ? `${hours}:${minutes}` : '';
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (remainingTime < 0) {
+                setRemainingTime((prevTime) => prevTime);
+            } else {
+                setRemainingTime((prevTime) => prevTime - 1);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [remainingTime]);
+
     return (
         <div className={styles.details__cooking}>
             <div className={styles.details__cooking_time_accepted_at}>
@@ -65,9 +82,9 @@ function OrderCookingDetails({ id, acceptedAt }: { id: number; acceptedAt: Date 
             <div className={styles.details__cooking_progress}>
                 <div className={styles.details__cooking_progress_timer}>
                     <div className={styles.details__cooking_progress_timer_icon}></div>
-                    <p className={styles.details__cooking_progress_timer_text}>10 мин</p>
+                    <p className={styles.details__cooking_progress_timer_text}>{`${waitingTime} мин`}</p>
                 </div>
-                <div className={styles.details__cooking_progress_bar}></div>
+                <ProgressBar initialTime={cookingTime} currentTime={remainingTime} />
                 <h4 className={styles.details__cooking_progress_title}>{t('pages.admin.waitingTime')}</h4>
             </div>
             <div className={styles.details__cooking_buttons}>
@@ -93,7 +110,7 @@ function OrderReadyDetails({ id }: { id: number }) {
     );
 }
 
-function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date | '' }) {
+function AccordionDetails({ id, meals, status, acceptedAt, waitingTime }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date | ''; waitingTime: number }) {
     const price = meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);
@@ -105,7 +122,7 @@ function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
         </div>
     );
 }

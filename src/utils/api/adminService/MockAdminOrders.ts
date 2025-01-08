@@ -53,6 +53,7 @@ export const mockAdminOrders: AdminOrder[] = [
         ],
         acceptedAt: '',
         status: 'not accepted',
+        waitingTime: 1,
     },
     {
         id: increment(),
@@ -74,6 +75,7 @@ export const mockAdminOrders: AdminOrder[] = [
         ],
         acceptedAt: '',
         status: 'not accepted',
+        waitingTime: 1,
     },
     {
         id: increment(),
@@ -118,8 +120,9 @@ export const mockAdminOrders: AdminOrder[] = [
                 price: 1250,
             },
         ],
-        acceptedAt: new Date(),
-        status: 'cooking',
+        acceptedAt: '',
+        status: 'not accepted',
+        waitingTime: 1,
     },
     {
         id: increment(),
@@ -139,7 +142,8 @@ export const mockAdminOrders: AdminOrder[] = [
                 price: 350,
             },
         ],
-        acceptedAt: new Date('Tue Jan 07 2025 18:32:40 GMT+0300'),
-        status: 'archive',
+        acceptedAt: '',
+        status: 'not accepted',
+        waitingTime: 10,
     },
 ];

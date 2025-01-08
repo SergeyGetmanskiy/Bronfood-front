@@ -34,6 +34,10 @@ export type AdminOrder = {
      * order's status
      */
     status: AdminOrderStatus;
+    /**
+     * time required for order to be ready
+     */
+    waitingTime: number;
 };
 
 export interface AdminService {
