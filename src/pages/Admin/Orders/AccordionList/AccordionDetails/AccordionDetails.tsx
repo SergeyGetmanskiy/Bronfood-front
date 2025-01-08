@@ -74,7 +74,7 @@ function OrderCookingDetails({ acceptedAt }: { acceptedAt: Date | '' }) {
     );
 }
 
-function OrderCompleteDetails() {
+function OrderReadyDetails() {
     const { t } = useTranslation();
     return (
         <div className={styles.details__complete}>
@@ -95,7 +95,7 @@ function AccordionDetails({ id, meals, status, acceptedAt }: { id: number; meals
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={acceptedAt} /> : status === 'complete' ? <OrderCompleteDetails /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'cooking' ? <OrderCookingDetails acceptedAt={acceptedAt} /> : status === 'ready' ? <OrderReadyDetails /> : null}
         </div>
     );
 }
