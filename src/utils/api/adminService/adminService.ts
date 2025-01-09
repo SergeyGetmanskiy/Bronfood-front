@@ -31,7 +31,19 @@ export type AdminOrder = {
      */
     acceptedAt: Date | '';
     /**
-     * order's status
+     * time order was ready for pick-up
+     */
+    readyAt: Date | '';
+    /**
+     * time order was picked up by user
+     */
+    issuedAt: Date | '';
+    /**
+     * time order was canceled by admin
+     */
+    canceledAt: Date | '';
+    /**
+     * order's current status
      */
     status: AdminOrderStatus;
     /**
