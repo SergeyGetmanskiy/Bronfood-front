@@ -8,7 +8,7 @@ import OrdersArchive from './OrdersArchive/OrdersArchive';
 import { useGetAdminOrders } from '../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../components/Preloader/Preloader';
 
-const tabNames = ['notAccepted', 'cooking', 'archive'];
+const tabNames = ['notAccepted', 'beingPrepared', 'archive'];
 
 function Orders() {
     const [tab, setTab] = useState('notAccepted');
@@ -16,7 +16,7 @@ function Orders() {
     const { data, isSuccess, isPending } = useGetAdminOrders();
     const adminOrders = isSuccess ? data.data : [];
     const ordersNotAccepted = adminOrders.filter((order) => order.status === 'not accepted');
-    const ordersCooking = adminOrders.filter((order) => order.status === 'cooking' || order.status === 'ready');
+    const ordersCooking = adminOrders.filter((order) => order.status === 'being prepared' || order.status === 'ready');
     const ordersArchive = adminOrders.filter((order) => order.status === 'archive');
     const close = () => {
         navigate('/admin');
@@ -29,7 +29,7 @@ function Orders() {
                 <OrdersTabs tabNames={tabNames} tab={tab} selectTab={selectTab} />
                 {isPending && <Preloader />}
                 {tab === 'notAccepted' && <OrdersNotAccepted orders={ordersNotAccepted} />}
-                {tab === 'cooking' && <OrdersCooking orders={ordersCooking} />}
+                {tab === 'beingPrepared' && <OrdersCooking orders={ordersCooking} />}
                 {tab === 'archive' && <OrdersArchive orders={ordersArchive} />}
             </AdminPopup>
         </>

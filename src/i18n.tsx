@@ -265,7 +265,7 @@ i18n
                         admin: {
                             orders: 'Заказы',
                             notAccepted: 'Не принятые',
-                            cooking: 'Готовятся',
+                            beingPrepared: 'Готовятся',
                             archive: 'Архив',
                             workStatus: 'Рабочий статус',
                             total: 'Итого:',

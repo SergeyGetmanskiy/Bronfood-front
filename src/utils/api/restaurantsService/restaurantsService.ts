@@ -78,7 +78,7 @@ export type Meal = {
      */
     type: MealType;
     /**
-     * Meal's cooking time in minutes
+     * Time taken for meal to be prepared in minutes
      */
     waitingTime: number;
     /**
