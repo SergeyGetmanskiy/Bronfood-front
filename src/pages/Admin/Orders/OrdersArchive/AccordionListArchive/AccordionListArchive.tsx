@@ -7,11 +7,13 @@ function AccordionListArchive({ dates, content }: { dates: string[]; content: Ad
         <ul className={`${styles.accordion_list} bronfood-scrollbar`}>
             {dates.map((date, index) => {
                 const orders = content.filter((order) => {
-                    const orderDate = order.issuedAt;
-                    const day = orderDate.getDate() > 9 ? `${orderDate.getDate()}` : `0${orderDate.getDate()}`;
-                    const month = orderDate.getMonth() > 9 ? `${orderDate.getMonth() + 1}` : `0${orderDate.getMonth() + 1}`;
-                    const year = `${orderDate.getFullYear()}`;
-                    return date === `${day}.${month}.${year}`;
+                    if (order.issuedAt instanceof Date) {
+                        const orderDate = order.issuedAt;
+                        const day = orderDate.getDate() > 9 ? `${orderDate.getDate()}` : `0${orderDate.getDate()}`;
+                        const month = orderDate.getMonth() > 9 ? `${orderDate.getMonth() + 1}` : `0${orderDate.getMonth() + 1}`;
+                        const year = `${orderDate.getFullYear()}`;
+                        return date === `${day}.${month}.${year}`;
+                    } else return false;
                 });
                 return <AccordionArchive key={`${date}-${index}`} content={date} orders={orders} />;
             })}

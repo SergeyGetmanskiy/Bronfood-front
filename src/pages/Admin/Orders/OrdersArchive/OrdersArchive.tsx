@@ -7,10 +7,12 @@ function OrdersArchive({ orders }: { orders: AdminOrder[] }) {
         orders
             .map((order) => order.issuedAt)
             .map((date) => {
-                const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`;
-                const month = date.getMonth() > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`;
-                const year = `${date.getFullYear()}`;
-                return `${day}.${month}.${year}`;
+                if (date instanceof Date) {
+                    const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`;
+                    const month = date.getMonth() > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`;
+                    const year = `${date.getFullYear()}`;
+                    return `${day}.${month}.${year}`;
+                } else return date;
             })
     );
     return <AccordionListArchive dates={dates} content={orders} />;
