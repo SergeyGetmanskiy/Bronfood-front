@@ -13,7 +13,6 @@ function AccordionListArchive({ dates, content }: { dates: string[]; content: Ad
                     const year = `${orderDate.getFullYear()}`;
                     return date === `${day}.${month}.${year}`;
                 });
-                console.log(orders);
                 return <AccordionArchive key={`${date}-${index}`} content={date} orders={orders} />;
             })}
         </ul>

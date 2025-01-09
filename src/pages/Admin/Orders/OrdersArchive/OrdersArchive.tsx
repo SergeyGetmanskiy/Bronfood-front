@@ -13,7 +13,6 @@ function OrdersArchive({ orders }: { orders: AdminOrder[] }) {
                 return `${day}.${month}.${year}`;
             })
     );
-    console.log(dates);
     return <AccordionListArchive dates={dates} content={orders} />;
 }
 
