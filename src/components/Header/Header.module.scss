@@ -7,7 +7,7 @@
     width: 100%;
     padding: 34px 15px 22px;
     border-radius: 0px 0px 15px 15px;
-    box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
+    box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 1);
     background-color: $background;
     z-index: map-get($zIndexes, header);
 
@@ -94,7 +94,7 @@
         flex-direction: column;
         padding: 25px 30px 25px 15px;
         border-radius: 0px 0px 15px 15px;
-        box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
+        box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 1);
         transition: top 0.6s ease-out;
         &_active {
             top: 0;
