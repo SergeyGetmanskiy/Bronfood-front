@@ -121,13 +121,14 @@ function OrderArchiveDetails({ issuedAt }: { issuedAt: Date | '' }) {
     const { t } = useTranslation();
     const hours = issuedAt instanceof Date ? issuedAt.getHours() : 0;
     const minutes = issuedAt instanceof Date ? issuedAt.getMinutes() : 0;
-    const time = issuedAt !== '' ? `${hours}:${minutes < 10 ? `0${minutes}` : minutes}` : '';
+    const time = issuedAt !== '' ? ` ${hours}:${minutes < 10 ? `0${minutes}` : minutes}` : '';
     return (
         <div className={styles.details__archive}>
             <p className={styles.details__archive_text}>
                 {t('pages.admin.issuedTime')}
-                <span>{time}</span>
+                <span className={styles.details__archive_time}>{time}</span>
             </p>
+            <div className={styles.details__archive_icon}></div>
         </div>
     );
 }

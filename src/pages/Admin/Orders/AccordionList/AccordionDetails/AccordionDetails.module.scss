@@ -129,4 +129,29 @@
         margin: auto;
         max-width: 222px;
     }
+    &__archive {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 6px;
+        padding-right: 19px;
+
+        &_text {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        &_time {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+            color: $light-gray;
+        }
+
+        &_icon {
+            width: 24px;
+            height: 24px;
+            background-image: url('../../../../../vendor/images/icons/admin/phone.svg');
+        }
+    }
 }
