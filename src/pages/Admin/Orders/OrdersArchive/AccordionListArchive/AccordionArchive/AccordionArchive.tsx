@@ -23,7 +23,7 @@ function AccordionArchive({ content, orders }: { content: string; orders: AdminO
                 <div className={`${styles.accordion_archive__icon} ${isOpen ? styles.accordion_archive__icon_active : ''}`} />
             </div>
             <div ref={ref} className={styles.accordion_archive__details}>
-                <AccordionList data={orders} />
+                <AccordionList data={orders} isArchive={true} />
             </div>
         </li>
     );

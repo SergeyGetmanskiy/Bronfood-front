@@ -3,7 +3,7 @@ import styles from './Accordion.module.scss';
 import AccordionDetails from '../AccordionDetails/AccordionDetails';
 import { AdminOrder } from '../../../../../utils/api/adminService/adminService';
 
-function Accordion({ content }: { content: AdminOrder }) {
+function Accordion({ content, isArchive }: { content: AdminOrder; isArchive: boolean }) {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const toggleAccordion = () => {
@@ -18,11 +18,11 @@ function Accordion({ content }: { content: AdminOrder }) {
     };
 
     return (
-        <li className={`${styles.accordion} ${isOpen ? styles.accordion_active : ''}`}>
-            <div className={`${styles.accordion__summary} ${isOpen ? styles.accordion__summary_active : ''}`} onClick={toggleAccordion}>
-                <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''}`}>{content.userName}</h3>
-                <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''}`}>{content.orderCode}</h3>
-                <div className={`${styles.accordion__icon} ${isOpen ? styles.accordion__icon_active : ''}`} />
+        <li className={`${styles.accordion} ${isOpen && isArchive ? styles.accordion_archive_active : isOpen && !isArchive ? styles.accordion_active : ''}`}>
+            <div className={`${isArchive ? styles.accordion__summary_archive : styles.accordion__summary} ${isOpen && isArchive ? styles.accordion__summary_archive_active : isOpen && !isArchive ? styles.accordion__summary_active : ''} `} onClick={toggleAccordion}>
+                <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''} ${isArchive ? styles.accordion__username_archive : ''}`}>{content.userName}</h3>
+                <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''} ${isArchive ? styles.accordion__ordercode_archive : ''}`}>{content.orderCode}</h3>
+                <div className={`${isArchive ? styles.accordion__icon_archive : styles.accordion__icon} ${isOpen && isArchive ? styles.accordion__icon_archive_active : isOpen && !isArchive ? styles.accordion__icon_active : ''} `} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
                 <AccordionDetails id={content.id} meals={content.meals} status={content.status} acceptedAt={content.acceptedAt} waitingTime={content.waitingTime} />

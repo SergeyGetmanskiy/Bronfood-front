@@ -1,5 +1,19 @@
 @import '../../../../../styles/variables.scss';
 
+@mixin summary {
+    display: grid;
+    grid-template-columns: auto 124px 30px;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 27px 10px 15px;
+}
+
+@mixin icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
 .accordion {
     display: flex;
     flex-direction: column;
@@ -9,19 +23,30 @@
     margin-bottom: 10px;
     background-color: $background;
 
+    &_archive_active {
+        border: 1px solid $line;
+        border-radius: 25px;
+    }
+
     &_active {
         border: 1px solid $orange;
         border-radius: 25px;
     }
     &__summary {
-        display: grid;
-        grid-template-columns: auto 124px 30px;
-        width: 100%;
-        border-radius: 25px;
-        padding: 10px 27px 10px 15px;
+        @include summary;
         background-color: $orange;
 
         &_active {
+            background-color: $background;
+        }
+    }
+    &__summary_archive {
+        @include summary;
+        border: 1px solid $line;
+        background-color: $background;
+
+        &_active {
+            border: none;
             background-color: $background;
         }
     }
@@ -37,6 +62,10 @@
         &_active {
             color: $black;
         }
+
+        &_archive {
+            color: $light-gray;
+        }
     }
     &__ordercode {
         font-size: 15px;
@@ -47,12 +76,22 @@
         &_active {
             color: $black;
         }
+
+        &_archive {
+            color: $grey;
+        }
     }
     &__icon {
-        width: 24px;
-        height: 24px;
+        @include icon;
         background-image: url(../../../../../vendor/images/icons/admin/arrow-down.svg);
-        cursor: pointer;
+
+        &_active {
+            background-image: url(../../../../../vendor/images/icons/admin/arrow-up.svg);
+        }
+    }
+    &__icon_archive {
+        @include icon;
+        background-image: url(../../../../../vendor/images/icons/admin/arrow-down-black.svg);
 
         &_active {
             background-image: url(../../../../../vendor/images/icons/admin/arrow-up.svg);
