@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminPopup from '../AdminPopup/AdminPopup';
 import OrdersTabs from './OrdersTabs/OrdersTabs';
 import OrdersNotAccepted from './OrdersNotAccepted/OrdersNotAccepted';
-import OrdersCooking from './OrdersCooking/OrdersCooking';
+import OrdersBeingPrepared from './OrdersBeingPrepared/OrdersBeingPrepared';
 import OrdersArchive from './OrdersArchive/OrdersArchive';
 import { useGetAdminOrders } from '../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../components/Preloader/Preloader';
@@ -29,7 +29,7 @@ function Orders() {
                 <OrdersTabs tabNames={tabNames} tab={tab} selectTab={selectTab} />
                 {isPending && <Preloader />}
                 {tab === 'notAccepted' && <OrdersNotAccepted orders={ordersNotAccepted} />}
-                {tab === 'beingPrepared' && <OrdersCooking orders={ordersCooking} />}
+                {tab === 'beingPrepared' && <OrdersBeingPrepared orders={ordersCooking} />}
                 {tab === 'archive' && <OrdersArchive orders={ordersArchive} />}
             </AdminPopup>
         </>
