@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import Button from '../../../../../components/Button/Button';
+import Button from '../../../../../../components/Button/Button';
 import styles from './AccordionDetailsArchive.module.scss';
-import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
-import { AdminOrderStatus, ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
-import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
-import Preloader from '../../../../../components/Preloader/Preloader';
-import ProgressBar from '../../../../../components/ProgressBar/ProgressBar';
+import ButtonGrey from '../../../../../../components/ButtonGrey/ButtonGrey';
+import { AdminOrderStatus, ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../../utils/api/adminService/adminService';
+import { useAdminOrdersMutations } from '../../../../../../utils/hooks/useAdminOrders/useAdminOrders';
+import Preloader from '../../../../../../components/Preloader/Preloader';
+import ProgressBar from '../../../../../../components/ProgressBar/ProgressBar';
 import { useEffect, useState } from 'react';
 
 function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
