@@ -275,6 +275,7 @@ i18n
                             orderReady: 'Заказ готов',
                             cancel: 'Отменить ',
                             complete: 'Заказ выдан',
+                            issuedTime: 'Выдача заказа',
                         },
                     },
                     errors: {

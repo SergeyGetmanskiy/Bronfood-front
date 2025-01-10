@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
-import { AdminOrderStatus, ChoiceInAdminOrder, MealInAdminOrder, MealInOrder } from '../../../../../utils/api/adminService/adminService';
+import { AdminOrder, ChoiceInAdminOrder, MealInAdminOrder } from '../../../../../utils/api/adminService/adminService';
 import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../../../components/Preloader/Preloader';
 import ProgressBar from '../../../../../components/ProgressBar/ProgressBar';
@@ -117,7 +117,23 @@ function OrderReadyDetails({ id }: { id: number }) {
     );
 }
 
-function AccordionDetails({ id, meals, status, acceptedAt, waitingTime }: { id: number; meals: MealInOrder[]; status: AdminOrderStatus; acceptedAt: Date | ''; waitingTime: number }) {
+function OrderArchiveDetails({ issuedAt }: { issuedAt: Date | '' }) {
+    const { t } = useTranslation();
+    const hours = issuedAt instanceof Date ? issuedAt.getHours() : 0;
+    const minutes = issuedAt instanceof Date ? issuedAt.getMinutes() : 0;
+    const time = issuedAt !== '' ? `${hours}:${minutes < 10 ? `0${minutes}` : minutes}` : '';
+    return (
+        <div className={styles.details__archive}>
+            <p className={styles.details__archive_text}>
+                {t('pages.admin.issuedTime')}
+                <span>{time}</span>
+            </p>
+        </div>
+    );
+}
+
+function AccordionDetails({ order }: { order: AdminOrder }) {
+    const { id, meals, status, acceptedAt, issuedAt, waitingTime } = order;
     const price = meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
     }, 0);
@@ -129,7 +145,7 @@ function AccordionDetails({ id, meals, status, acceptedAt, waitingTime }: { id: 
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
         </div>
     );
 }

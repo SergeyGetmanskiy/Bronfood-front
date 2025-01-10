@@ -25,7 +25,7 @@ function Accordion({ content, isArchive }: { content: AdminOrder; isArchive: boo
                 <div className={`${isArchive ? styles.accordion__icon_archive : styles.accordion__icon} ${isOpen && isArchive ? styles.accordion__icon_archive_active : isOpen && !isArchive ? styles.accordion__icon_active : ''} `} />
             </div>
             <div ref={ref} className={styles.accordion__details}>
-                <AccordionDetails id={content.id} meals={content.meals} status={content.status} acceptedAt={content.acceptedAt} waitingTime={content.waitingTime} />
+                <AccordionDetails order={content} />
             </div>
         </li>
     );
