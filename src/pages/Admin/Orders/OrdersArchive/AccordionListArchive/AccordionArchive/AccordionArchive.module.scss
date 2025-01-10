@@ -49,9 +49,14 @@
     &__details {
         max-height: 0;
         width: 100%;
-        overflow: scroll;
+        overflow-y: hidden;
+        overflow-x: hidden;
         padding: 1px 6px 1px 6px;
         margin-bottom: 10px;
         transition: max-height 0.2s ease-out;
+
+        &_active {
+            overflow-y: scroll;
+        }
     }
 }

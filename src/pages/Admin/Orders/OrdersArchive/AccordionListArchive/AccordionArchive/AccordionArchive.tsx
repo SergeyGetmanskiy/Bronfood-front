@@ -22,7 +22,7 @@ function AccordionArchive({ content, orders }: { content: string; orders: AdminO
                 <h3 className={styles.accordion_archive__date}>{content}</h3>
                 <div className={`${styles.accordion_archive__icon} ${isOpen ? styles.accordion_archive__icon_active : ''}`} />
             </div>
-            <div ref={ref} className={styles.accordion_archive__details}>
+            <div ref={ref} className={`${styles.accordion_archive__details} ${isOpen ? `${styles.accordion_archive__details_active} bronfood-scrollbar` : ''}  `}>
                 <AccordionList data={orders} isArchive={true} />
             </div>
         </li>

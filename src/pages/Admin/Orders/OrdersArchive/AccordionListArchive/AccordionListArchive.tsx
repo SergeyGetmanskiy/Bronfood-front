@@ -4,7 +4,7 @@ import { AdminOrder } from '../../../../../utils/api/adminService/adminService';
 
 function AccordionListArchive({ dates, content }: { dates: string[]; content: AdminOrder[] }) {
     return (
-        <ul className={`${styles.accordion_list} bronfood-scrollbar`}>
+        <ul className={`${styles.accordion_list_archive} bronfood-scrollbar`}>
             {dates.map((date, index) => {
                 const orders = content.filter((order) => {
                     if (order.issuedAt instanceof Date) {
