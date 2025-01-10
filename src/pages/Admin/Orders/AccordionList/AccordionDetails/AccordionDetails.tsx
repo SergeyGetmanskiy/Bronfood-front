@@ -87,10 +87,15 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
                 <h4 className={styles.details__cooking_progress_title}>{t('pages.admin.waitingTime')}</h4>
             </div>
             <div className={styles.details__cooking_buttons}>
+                {changeAdminOrderStatus.isPending && <Preloader />}
                 <div className={styles.details__cooking_buttons_grey}>
-                    <ButtonGrey onClick={handleCancelClick}>{t('pages.admin.cancel')}</ButtonGrey>
+                    <ButtonGrey onClick={handleCancelClick} disabled={changeAdminOrderStatus.isPending}>
+                        {t('pages.admin.cancel')}
+                    </ButtonGrey>
                 </div>
-                <Button onClick={handleReadyClick}>{t('pages.admin.orderReady')}</Button>
+                <Button onClick={handleReadyClick} disabled={changeAdminOrderStatus.isPending}>
+                    {t('pages.admin.orderReady')}
+                </Button>
             </div>
         </div>
     );
@@ -104,7 +109,10 @@ function OrderReadyDetails({ id }: { id: number }) {
     };
     return (
         <div className={styles.details__complete}>
-            <Button onClick={handleClick}>{t('pages.admin.complete')}</Button>
+            {changeAdminOrderStatus.isPending && <Preloader />}
+            <Button onClick={handleClick} disabled={changeAdminOrderStatus.isPending}>
+                {t('pages.admin.complete')}
+            </Button>
         </div>
     );
 }
