@@ -69,7 +69,7 @@
         border: 1px solid $line;
         background-color: transparent;
         padding-left: 48px;
-        &:placeholder {
+        &::placeholder {
             color: $light-gray;
             font-size: 14px;
             font-weight: 400;
