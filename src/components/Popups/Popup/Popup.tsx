@@ -33,9 +33,7 @@ interface Popup {
 const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
 
-    const arrowBackClick = () => {
-        props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1);
-    };
+    const arrowBackClick = () => (props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1));
 
     const handleCloseButton = () => {
         props.onClose();
@@ -47,7 +45,9 @@ const Popup: FC<Popup> = (props) => {
     useEffect(() => {
         const overlayElement = document.getElementById('popup-overlay');
         const handleMouseDown = (e: Event) => {
-            e.target === e.currentTarget && onClose();
+            if (e.target === e.currentTarget) {
+                onClose();
+            }
         };
         overlayElement?.addEventListener('mousedown', handleMouseDown);
         return () => overlayElement?.removeEventListener('mousedown', handleMouseDown);
