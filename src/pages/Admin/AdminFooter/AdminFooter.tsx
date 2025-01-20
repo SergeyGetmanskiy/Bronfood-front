@@ -24,29 +24,29 @@ function AdminFooter() {
     }, [location.pathname]);
 
     return (
-        <footer className={styles.admin - footer}>
-            <div className={`${styles.admin - footer__container}`}>
-                <Link to={isOrdersActive ? '/admin' : '/admin/orders'} className={styles.admin - footer__element_container}>
+        <footer className={styles.admin-footer}>
+            <div className={`${styles.admin-footer__container}`}>
+                <Link to={isOrdersActive ? '/admin' : '/admin/orders'} className={styles.admin-footer__element_container}>
                     <button
                         title={t('pages.admin.orders')}
                         className={`
-                            ${styles.admin - footer__icon}
-                            ${styles.admin - footer__orders}
-                            ${isOrdersActive ? styles.admin - footer__orders_active : ''}
+                            ${styles.admin-footer__icon}
+                            ${styles.admin-footer__orders}
+                            ${isOrdersActive ? styles.admin-footer__orders_active : ''}
                         `}
                     />
-                    <h3 className={`${styles.admin - footer__element_title} ${isOrdersActive ? styles.admin - footer__element_title_active : ''}`}>{t('pages.admin.orders')}</h3>
+                    <h3 className={`${styles.admin-footer__element_title} ${isOrdersActive ? styles.admin-footer__element_title_active : ''}`}>{t('pages.admin.orders')}</h3>
                 </Link>
-                <Link to={isWorkStatusActive ? '/admin' : '/admin/work-status'} className={styles.admin - footer__element_container}>
+                <Link to={isWorkStatusActive ? '/admin' : '/admin/work-status'} className={styles.admin-footer__element_container}>
                     <button
                         title={t('pages.admin.workStatus')}
                         className={`
-                            ${styles.admin - footer__icon}
-                            ${styles.admin - footer__work_status}
-                            ${isWorkStatusActive ? styles.admin - footer__work_status_active : ''}
+                            ${styles.admin-footer__icon}
+                            ${styles.admin-footer__work_status}
+                            ${isWorkStatusActive ? styles.admin-footer__work_status_active : ''}
                         `}
                     />
-                    <h3 className={`${styles.admin - footer__element_title} ${isWorkStatusActive ? styles.admin - footer__element_title_active : ''}`}>{t('pages.admin.workStatus')}</h3>
+                    <h3 className={`${styles.admin-footer__element_title} ${isWorkStatusActive ? styles.admin-footer__element_title_active : ''}`}>{t('pages.admin.workStatus')}</h3>
                 </Link>
             </div>
         </footer>
