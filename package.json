@@ -18,12 +18,10 @@
     },
     "lint-staged": {
         "*.scss": [
-            "stylelint --fix",
-            "npm run prettier"
+            "stylelint --fix"
         ],
         "*.{js,jsx,ts,tsx}": [
-            "npm run lint:fix",
-            "npm run prettier"
+            "npm run lint:fix"
         ],
         "!(*.scss|*.js|*.jsx|*.ts|*.tsx)": [
             "npm run prettier"
