@@ -1,6 +1,6 @@
-@use './vendor/fonts/fonts.css';
-@use './vendor/normalize.css';
 @use './styles/variables';
+@import './vendor/fonts/fonts.css';
+@import './vendor/normalize.css';
 
 * {
     box-sizing: border-box;
