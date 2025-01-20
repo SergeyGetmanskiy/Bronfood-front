@@ -17,7 +17,7 @@ const ButtonIconSquare: FC<ButtonIconSquareProps> = ({ isActive = false, icon = 
         <button
             {...props}
             className={`
-                ${styles.button - icon - square}
+                ${styles['button-icon-square']}
                 ${styles[`button-icon-square_${isActive && icon === 'delete' ? `${icon}_active` : icon}`]}
             `}
         />

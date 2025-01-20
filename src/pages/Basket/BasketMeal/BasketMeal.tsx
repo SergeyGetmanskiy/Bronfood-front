@@ -20,7 +20,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                         {toppings &&
                             toppings.map((choice, index) => {
                                 return (
-                                    <li key={`${choice} - ${index}`}>
+                                    <li key={`${choice}-${index}`}>
                                         <p className={styles.basket - meal__feature}>{choice}</p>
                                     </li>
                                 );
