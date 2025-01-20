@@ -22,10 +22,10 @@
             "stylelint --fix"
         ],
         "*.{js,jsx,ts,tsx}": [
-            "npm run prettier"
+            
         ],
         "!(*.scss|*.js|*.jsx|*.ts|*.tsx)": [
-            "npm run prettier"
+
         ]
     },
     "dependencies": {
