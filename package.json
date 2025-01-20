@@ -11,7 +11,7 @@
         "build": "npm run lint && tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "lint:fix": "eslint . --ext ts,tsx --fix  ",
-        "preview": "vite preview",
+        "preview": "vite ",
         "prettier": "npx prettier . --write",
         "lint-staged": "lint-staged",
         "prepare": "husky install"
