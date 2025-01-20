@@ -44,14 +44,14 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
     };
 
     return (
-        <div className={styles.restaurant - popup_overlay} onClick={handleOverlayClick}>
-            <div className={styles.restaurant - popup}>
+        <div className={styles['restaurant-popup_overlay']} onClick={handleOverlayClick}>
+            <div className={styles['restaurant-popup']}>
                 {isLogin && (
-                    <div className={`${styles.restaurant - popup_button} ${styles.restaurant - popup_button_like}`}>
+                    <div className={`${styles['restaurant-popup_button']} ${styles['restaurant-popup_button_like']}`}>
                         <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
                     </div>
                 )}
-                <div className={`${styles.restaurant - popup_button} ${styles.restaurant - popup_button_close}`}>
+                <div className={`${styles['restaurant-popup_button']} ${styles['restaurant-popup_button_close']}`}>
                     <Button type="button" onClick={close} icon="close" />
                 </div>
                 {children}

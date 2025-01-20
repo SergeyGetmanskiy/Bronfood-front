@@ -63,11 +63,11 @@ const SMSVerify: FC<SMSVerify> = (props) => {
                 navigate('/');
             }}
         >
-            <div className={styles.sms - verify__layout}>
+            <div className={styles['sms-verify__layout']}>
                 {props.isLoading && <Preloader />}
                 {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
                 <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
-                    <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms - verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
+                    <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles['sms-verify__inputs']} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
                     <Button>{t('components.button.next')}</Button>
                 </Form>
             </div>

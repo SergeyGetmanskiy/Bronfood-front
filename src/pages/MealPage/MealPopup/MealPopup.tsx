@@ -17,12 +17,12 @@ const MealPopup = ({ goBack, close, children }: MealPopupProps) => {
     };
     useEsc(() => goBack(), [goBack]);
     return (
-        <div className={styles.meal - popup_overlay} onClick={handleOverlayClick}>
-            <div className={styles.meal - popup}>
-                <div className={`${styles.meal - popup_button} ${styles.meal - popup_button_back}`}>
+        <div className={styles['meal-popup_overlay']} onClick={handleOverlayClick}>
+            <div className={styles['meal-popup']}>
+                <div className={`${styles['meal-popup_button']} ${styles['meal-popup_button_back']}`}>
                     <Button type="button" onClick={goBack} icon="back" />
                 </div>
-                <div className={`${styles.meal - popup_button} ${styles.meal - popup_button_close}`}>
+                <div className={`${styles['meal-popup_button']} ${styles['meal-popup_button_close']}`}>
                     <Button type="button" onClick={close} icon="close" />
                 </div>
                 {children}

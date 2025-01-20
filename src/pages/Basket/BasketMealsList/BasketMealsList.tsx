@@ -4,7 +4,7 @@ import { MealInBasket } from '../../../utils/api/basketService/basketService';
 
 const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
     return (
-        <ul className={`${styles.basket - meals - list} bronfood-scrollbar`}>
+        <ul className={`${styles['basket-meals-list']} bronfood-scrollbar`}>
             {meals.map((meal) => {
                 return (
                     <li key={meal.id}>

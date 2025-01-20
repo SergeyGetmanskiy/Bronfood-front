@@ -44,12 +44,12 @@ const LeaveOrderFeedback: FC = () => {
 
     return (
         <Popup onClose={handleSkipOrClose}>
-            <div className={styles.leave - order - feedback__layout}>
-                <h3 className={styles.leave - order - feedback__subtitle}>{t('pages.leaveOrderFeedback.evaluate')}</h3>
+            <div className={styles['leave-order-feedback__layout']}>
+                <h3 className={styles['leave-order-feedback__subtitle']}>{t('pages.leaveOrderFeedback.evaluate')}</h3>
                 <ReviewForm rating={rating} review={review} onRatingChange={handleRatingChange} onReviewChange={handleReviewChange} filledStars={filledStars} triggerFilledStars={triggerFilledStars} resetFilledStars={resetFilledStars} onSubmit={handleSubmitReview} onSkipOrClose={handleSkipOrClose} isSubmitting={isSubmitting} />
             </div>
             {isSubmitting && (
-                <div className={styles.leave - order - feedback__preloader_wrapper}>
+                <div className={styles['leave-order-feedback__preloader_wrapper']}>
                     <Preloader />
                 </div>
             )}

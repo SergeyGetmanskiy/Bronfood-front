@@ -4,7 +4,7 @@ import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsSer
 
 const MealFeatureList = ({ features }: { features: Feature[] | [] }) => {
     return (
-        <ul className={`${styles.feature - list} bronfood-scrollbar`}>
+        <ul className={`${styles['feature-list']} bronfood-scrollbar`}>
             {features.map((feature) => (
                 <li key={feature.id}>
                     <MealFeature feature={feature} />
@@ -26,7 +26,7 @@ function MealFeature({ feature }: { feature: Feature }) {
 
 function ChoiceList({ featureName, choices }: { featureName: string; choices: ChoiceType[] }) {
     return (
-        <fieldset name={featureName} className={styles.choice - list}>
+        <fieldset name={featureName} className={styles['choice-list']}>
             {choices.map((choice) => (
                 <Choice key={choice.id} featureName={featureName} choice={choice} />
             ))}
@@ -39,7 +39,7 @@ function Choice({ featureName, choice }: { featureName: string; choice: ChoiceTy
     return (
         <div className={styles.choice}>
             <label className={styles.choice__container}>
-                <input type="radio" value={choice.name} defaultChecked={choice.default} className={styles.radio - button} {...register(featureName)} />
+                <input type="radio" value={choice.name} defaultChecked={choice.default} className={styles['radio-button']} {...register(featureName)} />
                 <span className={styles.choice__name}>{choice.name}</span>
                 <span className={styles.choice__price}>{`${choice.price.toFixed(0)} ₸`}</span>
             </label>

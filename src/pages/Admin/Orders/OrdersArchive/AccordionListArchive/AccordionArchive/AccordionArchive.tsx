@@ -17,12 +17,12 @@ function AccordionArchive({ content, orders }: { content: string; orders: AdminO
         }
     };
     return (
-        <li className={`${styles.accordion - archive} ${isOpen ? styles.accordion - archive_active : ''}`}>
-            <div className={`${styles.accordion - archive__summary} ${isOpen ? styles.accordion - archive__summary_active : ''}`} onClick={toggleAccordion}>
-                <h3 className={styles.accordion - archive__date}>{content}</h3>
-                <div className={`${styles.accordion - archive__icon} ${isOpen ? styles.accordion - archive__icon_active : ''}`} />
+        <li className={`${styles['accordion-archive']} ${isOpen ? styles['accordion-archive_active'] : ''}`}>
+            <div className={`${styles['accordion-archive__summary']} ${isOpen ? styles['accordion-archive__summary_active'] : ''}`} onClick={toggleAccordion}>
+                <h3 className={styles['accordion-archive__date']}>{content}</h3>
+                <div className={`${styles['accordion-archive__icon']} ${isOpen ? styles['accordion-archive__icon_active'] : ''}`} />
             </div>
-            <div ref={ref} className={`${styles.accordion - archive__details} ${isOpen ? `${styles.accordion - archive__details_active} bronfood-scrollbar` : ''}  `}>
+            <div ref={ref} className={`${styles['accordion-archive__details']} ${isOpen ? `${styles['accordion-archive__details_active']} bronfood-scrollbar` : ''}  `}>
                 <AccordionList data={orders} isArchive={true} />
             </div>
         </li>

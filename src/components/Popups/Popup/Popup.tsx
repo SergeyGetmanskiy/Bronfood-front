@@ -56,7 +56,7 @@ const Popup: FC<Popup> = (props) => {
     return (
         <div id={'popup-overlay'} className={styles.popup_overlay}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
-                {props.title && <h2 className={`${styles.popup - title} ${styles[`popup-title_${props.mode}`]}`}>{props.title}</h2>}
+                {props.title && <h2 className={`${styles['popup-title']} ${styles[`popup-title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
                 {props.arrowBack && <button className={`${styles['popup__arrow-back']} button`} type="button" onClick={arrowBackClick} />}
                 <button className={`${styles.popup__close} ${styles[`popup__close_${props.mode}`]} button`} type="button" onClick={handleCloseButton}></button>

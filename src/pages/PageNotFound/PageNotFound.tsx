@@ -15,12 +15,12 @@ const PageNotFound = () => {
     };
     return (
         <Popup onClose={navigateToRoot}>
-            <div className={styles.page - not - found}>
-                <div className={styles.page - not - found__error}>
+            <div className={styles['page-not-found']}>
+                <div className={styles['page-not-found__error']}>
                     4
-                    <div className={styles.page - not - found__icon} />4
+                    <div className={styles['page-not-found__icon']} />4
                 </div>
-                <p className={styles.page - not - found__message}>{t('pages.page-not-found.somethingWentWrong')}</p>
+                <p className={styles['page-not-found__message']}>{t('pages.page-not-found.somethingWentWrong')}</p>
                 <Button type="button" onClick={navigateToRoot}>
                     {t('pages.pageNotFound.goBack')}
                 </Button>

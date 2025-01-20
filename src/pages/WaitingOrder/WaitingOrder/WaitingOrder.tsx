@@ -89,30 +89,30 @@ const WaitingOrder: FC = () => {
         <>
             {!placedOrder ? (
                 <Modal>
-                    <h2 className={styles.waiting - order__title}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
-                    <p className={styles.waiting - order__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
-                    <span className={styles.waiting - order__img} />
-                    <div className={styles.waiting - order__separator} />
+                    <h2 className={styles['waiting-order__title']}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
+                    <p className={styles['waiting-order__subtitle']}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
+                    <span className={styles['waiting-order__img']} />
+                    <div className={styles['waiting-order__separator']} />
                     <ProgressBar initialTime={WAIT_ORDER_ID_INITIAL_TIME} currentTime={waitOrderIdTime} />
-                    <p className={styles.waiting - order__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
+                    <p className={styles['waiting-order__subtitleNote']}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
                 </Modal>
             ) : (
                 <Modal>
-                    <h2 className={styles.waiting - order__title}>{t('components.waitingOrder.orderCode')}</h2>
-                    <h1 className={styles.waiting - order__orderCode}>{placedOrder.id}</h1>
+                    <h2 className={styles['waiting-order__title']}>{t('components.waitingOrder.orderCode')}</h2>
+                    <h1 className={styles['waiting-order__orderCode']}>{placedOrder.id}</h1>
                     <OrderTimeCounter remainingTime={preparationTime ?? 0} initialTime={placedOrder.preparationTime} preparationStatus={placedOrder.preparationStatus} />
-                    <div className={styles.waiting - order__separator} />
+                    <div className={styles['waiting-order__separator']} />
                     <OrderListArticle order={placedOrder} />
                     {cancellationTime !== null && cancellationTime > 0 && (
-                        <div className={styles.waiting - order__cancelSection}>
-                            <p className={styles.waiting - order__subtitleNote}>
+                        <div className={styles['waiting-order__cancelSection']}>
+                            <p className={styles['waiting-order__subtitleNote']}>
                                 {t('components.waitingOrder.youCanCancelTheOrderWithin')}
-                                <span className={styles.waiting - order__subtitleNote_orange}>
-                                    <span className={styles.waiting - order__subtitleNoteTimer}>{formatTime(cancellationTime ?? 0)}</span>
+                                <span className={styles['waiting-order__subtitleNote_orange']}>
+                                    <span className={styles['waiting-order__subtitleNoteTimer']}>{formatTime(cancellationTime ?? 0)}</span>
                                     {t('components.orderTimeCounter.min')}
                                 </span>
                             </p>
-                            <button className={styles.waiting - order__button} type="button" onClick={handleCancelOrder}>
+                            <button className={styles['waiting-order__button']} type="button" onClick={handleCancelOrder}>
                                 {t('components.waitingOrder.cancelOrder')}
                             </button>
                         </div>
@@ -120,10 +120,10 @@ const WaitingOrder: FC = () => {
                 </Modal>
             )}
             {showConfirmationPopup && (
-                <div className={styles.confirmation - popup - wrapper} onClick={handleOverlayClick}>
+                <div className={styles['confirmation-popup-wrapper']} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancelOrder} />
                     {isLoading && (
-                        <div className={styles.preloader - wrapper}>
+                        <div className={styles['preloader-wrapper']}>
                             <Preloader />
                         </div>
                     )}

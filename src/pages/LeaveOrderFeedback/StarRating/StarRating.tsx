@@ -62,12 +62,12 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, filledSt
     };
 
     return (
-        <div className={styles.star - rating}>
+        <div className={styles['star-rating']}>
             {Array.from({ length: maxRating }, (_, index) => index + 1).map((star) => (
-                <div key={star} className={styles.star - rating__star} onClick={() => handleClick(star)} onMouseOver={() => handleMouseOver(star)} onMouseOut={handleMouseOut}>
-                    <img src={starGreyImg} alt={t('pages.leaveOrderFeedback.starGrey', { number: star })} className={styles.star - rating__img} />
-                    <img src={starOrangeImg} alt={t('pages.leaveOrderFeedback.starOrange', { number: star })} className={`${styles.star - rating__img} ${styles.star - rating__img_filled}`} style={{ opacity: star <= (hoverRating || rating) ? 1 : 0 }} />
-                    {redStars.includes(star) && <img src={starRedImg} alt={t('pages.leaveOrderFeedback.starRed', { number: star })} className={`${styles.star - rating__img} ${styles.star - rating__img_error}`} />}
+                <div key={star} className={styles['star-rating__star']} onClick={() => handleClick(star)} onMouseOver={() => handleMouseOver(star)} onMouseOut={handleMouseOut}>
+                    <img src={starGreyImg} alt={t('pages.leaveOrderFeedback.starGrey', { number: star })} className={styles['star-rating__img']} />
+                    <img src={starOrangeImg} alt={t('pages.leaveOrderFeedback.starOrange', { number: star })} className={`${styles['star-rating__img']} ${styles['star-rating__img_filled']}`} style={{ opacity: star <= (hoverRating || rating) ? 1 : 0 }} />
+                    {redStars.includes(star) && <img src={starRedImg} alt={t('pages.leaveOrderFeedback.starRed', { number: star })} className={`${styles['star-rating__img']} ${styles['star-rating__img_error']}`} />}
                 </div>
             ))}
         </div>

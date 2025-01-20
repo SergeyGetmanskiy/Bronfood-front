@@ -28,9 +28,9 @@ const Chip = (props: ChipProps) => {
         }
     };
     return (
-        <label className={`${styles.button - element} ${props.isActive ? styles.button - element_active : ''}`}>
-            <input className={styles.button - element_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
-            <span className={`${styles.button - element_text} ${props.isActive ? styles.button - element_text_active : ''}`}>{props.text}</span>
+        <label className={`${styles['button-element']} ${props.isActive ? styles['button-element_active'] : ''}`}>
+            <input className={styles['button-element_input']} type="checkbox" defaultChecked={false} onChange={handleChange} />
+            <span className={`${styles['button-element_text']} ${props.isActive ? styles['button-element_text_active'] : ''}`}>{props.text}</span>
         </label>
     );
 };

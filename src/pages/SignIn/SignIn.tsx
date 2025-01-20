@@ -54,11 +54,11 @@ const SignIn = () => {
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
                     </FormInputs>
                 </fieldset>
-                <Link to="/restore-password" className={`${styles.link - recovery} link`}>
+                <Link to="/restore-password" className={`${styles['link-recovery']} link`}>
                     {t('pages.signIn.forgotPassword')}
                 </Link>
                 <Button disabled={signIn.isPending}>{t('pages.signIn.loginButton')}</Button>
-                <Link to="/signup" className={`${styles.link - registration} link`}>
+                <Link to="/signup" className={`${styles['link-registration']} link`}>
                     {t('pages.signIn.registartion')}
                 </Link>
             </Form>

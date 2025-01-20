@@ -12,14 +12,14 @@ function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant 
         emptyBasket();
     };
     return (
-        <div className={styles.basket - restaurant}>
-            <div className={styles.basket - restaurant__container}>
-                <div className={styles.basket - restaurant__image} style={{ backgroundImage: `url(${photo})` }} />
-                <div className={styles.basket - restaurant__description}>
-                    <p className={styles.basket - restaurant__name}>{restaurant.name}</p>
-                    <div className={styles.basket - restaurant__feature}>
-                        <div className={`${styles.basket - restaurant__icon} ${styles.basket - restaurant__icon_placemark} ${styles.basket - restaurant__icon_small}`} />
-                        <p className={styles.basket - restaurant__feature_title}>{restaurant.address}</p>
+        <div className={styles['basket-restaurant']}>
+            <div className={styles['basket-restaurant__container']}>
+                <div className={styles['basket-restaurant__image']} style={{ backgroundImage: `url(${photo})` }} />
+                <div className={styles['basket-restaurant__description']}>
+                    <p className={styles['basket-restaurant__name']}>{restaurant.name}</p>
+                    <div className={styles['basket-restaurant__feature']}>
+                        <div className={`${styles['basket-restaurant__icon']} ${styles['basket-restaurant__icon_placemark']} ${styles['basket-restaurant__icon_small']}`} />
+                        <p className={styles['basket-restaurant__feature_title']}>{restaurant.address}</p>
                     </div>
                 </div>
             </div>

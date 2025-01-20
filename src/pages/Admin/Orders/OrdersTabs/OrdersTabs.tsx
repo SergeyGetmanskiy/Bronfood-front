@@ -9,7 +9,7 @@ type OrdersTabsProps = {
 
 function OrdersTabs({ tabNames, tab, selectTab }: OrdersTabsProps) {
     return (
-        <form className={`${styles.orders - tabs}`}>
+        <form className={`${styles['orders-tabs']}`}>
             {tabNames.map((name, index) => {
                 return <OrdersTab key={`${name}-${index}`} name={name} tab={tab} selectTab={selectTab} />;
             })}
