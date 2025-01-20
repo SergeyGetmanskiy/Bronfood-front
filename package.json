@@ -22,7 +22,6 @@
             "stylelint --fix"
         ],
         "*.{js,jsx,ts,tsx}": [
-            "npm run prettier",
             "npm run lint:fix"
         ],
         "!(*.scss|*.js|*.jsx|*.ts|*.tsx)": [
