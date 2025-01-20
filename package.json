@@ -25,9 +25,7 @@
             "npm run lint:fix",
             "npm run prettier"
         ],
-        "!(*.scss|*.js|*.jsx|*.ts|*.tsx)": [
-            "npm run prettier"
-        ]
+        "**/*": "npm run prettier"
     },
     "dependencies": {
         "@pbe/react-yandex-maps": "^1.2.5",
