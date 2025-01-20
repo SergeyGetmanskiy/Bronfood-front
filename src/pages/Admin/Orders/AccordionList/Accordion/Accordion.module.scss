@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables.scss';
+@use '../../../../../styles/variables';
 
 @mixin summary {
     display: grid;
@@ -21,87 +21,98 @@
     align-items: center;
     overflow: hidden;
     margin-bottom: 10px;
-    background-color: $background;
+    background-color: variables.$background;
 
     &_archive_active {
-        border: 1px solid $line;
+        border: 1px solid variables.$line;
         border-radius: 25px;
     }
 
     &_active {
-        border: 1px solid $orange;
+        border: 1px solid variables.$orange;
         border-radius: 25px;
     }
+
     &__summary {
+        background-color: variables.$orange;
+
         @include summary;
-        background-color: $orange;
 
         &_active {
-            background-color: $background;
+            background-color: variables.$background;
         }
     }
+
     &__summary_archive {
+        border: 1px solid variables.$line;
+        background-color: variables.$background;
+
         @include summary;
-        border: 1px solid $line;
-        background-color: $background;
 
         &_active {
             border: none;
-            background-color: $background;
+            background-color: variables.$background;
         }
     }
+
     &__username {
         font-size: 15px;
         font-weight: 500;
         line-height: 1.4;
-        color: $white;
+        color: variables.$white;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
 
         &_active {
-            color: $black;
+            color: variables.$black;
         }
 
         &_archive {
-            color: $light-gray;
+            color: variables.$light-gray;
         }
     }
+
     &__ordercode {
         font-size: 15px;
         font-weight: 600;
         line-height: 1.4;
-        color: $white;
+        color: variables.$white;
 
         &_active {
-            color: $black;
+            color: variables.$black;
         }
 
         &_archive {
-            color: $grey;
+            color: variables.$grey;
         }
     }
+
     &__icon {
+        background-image: url('../../../../../vendor/images/icons/admin/arrow-down.svg');
+
         @include icon;
-        background-image: url(../../../../../vendor/images/icons/admin/arrow-down.svg);
 
         &_active {
-            background-image: url(../../../../../vendor/images/icons/admin/arrow-up.svg);
+            background-image: url('../../../../../vendor/images/icons/admin/arrow-up.svg');
         }
     }
+
     &__icon_archive {
+        background-image: url('../../../../../vendor/images/icons/admin/arrow-down-black.svg');
+
         @include icon;
-        background-image: url(../../../../../vendor/images/icons/admin/arrow-down-black.svg);
 
         &_active {
-            background-image: url(../../../../../vendor/images/icons/admin/arrow-up.svg);
+            background-image: url('../../../../../vendor/images/icons/admin/arrow-up.svg');
         }
     }
+
     &__details {
         max-height: 0;
         width: 100%;
         overflow: hidden;
-        padding: 1px 6px 1px 6px;
+        padding: 1px 6px;
         margin-bottom: 10px;
         transition: max-height 0.2s ease-out;
     }

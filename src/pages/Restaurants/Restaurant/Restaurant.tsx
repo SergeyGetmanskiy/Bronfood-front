@@ -64,8 +64,8 @@ function Restaurant() {
     }, [restaurantId, setActiveRestaurant]);
     if (restaurantLoading || favoritesLoading) {
         return (
-            <div className={styles.restaurant_popup_overlay}>
-                <div className={styles.restaurant_popup}>
+            <div className={styles.restaurant - popup_overlay}>
+                <div className={styles.restaurant - popup}>
                     <Preloader />
                 </div>
             </div>

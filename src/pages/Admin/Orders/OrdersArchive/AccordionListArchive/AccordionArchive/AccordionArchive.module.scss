@@ -1,57 +1,59 @@
-@import '../../../../../../styles/variables.scss';
+@use '../../../../../../styles/variables';
 
-.accordion_archive {
+.accordion-archive {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
     margin-bottom: 10px;
-    background-color: $background;
+    background-color: variables.$background;
 
     &_active {
-        border: 1px solid $line;
+        border: 1px solid variables.$line;
         border-radius: 25px;
     }
+
     &__summary {
         display: grid;
         grid-template-columns: auto 30px;
         width: 100%;
-        border-radius: 25px;
         padding: 10px 27px 10px 15px;
-        background-color: $background;
-        border: 1px solid $orange;
+        background-color: variables.$background;
+        border: 1px solid variables.$orange;
         border-radius: 25px;
 
         &_active {
             border: none;
         }
     }
+
     &__date {
         font-size: 15px;
         font-weight: 500;
         line-height: 1.4;
-        color: $black;
+        color: variables.$black;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
     }
+
     &__icon {
         width: 24px;
         height: 24px;
-        background-image: url(../../../../../../vendor/images/icons/admin/arrow-down-black.svg);
+        background-image: url('../../../../../../vendor/images/icons/admin/arrow-down-black.svg');
         cursor: pointer;
 
         &_active {
-            background-image: url(../../../../../../vendor/images/icons/admin/arrow-up.svg);
+            background-image: url('../../../../../../vendor/images/icons/admin/arrow-up.svg');
         }
     }
+
     &__details {
         max-height: 0;
         width: 100%;
-        overflow-y: hidden;
-        overflow-x: hidden;
-        padding: 1px 6px 1px 6px;
+        overflow: hidden;
+        padding: 1px 6px;
         margin-bottom: 10px;
         transition: max-height 0.2s ease-out;
 

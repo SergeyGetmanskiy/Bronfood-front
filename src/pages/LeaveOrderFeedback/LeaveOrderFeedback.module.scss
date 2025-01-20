@@ -1,6 +1,6 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
-.leave_order_feedback {
+.leave-order-feedback {
     &__layout {
         padding: 0 21px;
         display: flex;
@@ -12,7 +12,7 @@
         font-size: 17px;
         font-weight: 500;
         line-height: 23.8px;
-        color: $grey;
+        color: variables.$grey;
         display: flex;
         width: 100%;
     }

@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
 .counter {
     display: flex;
@@ -12,29 +12,34 @@
         border-radius: 50%;
         border: none;
         padding: 0;
-        background-color: $button-grey;
+        background-color: variables.$button-grey;
         background-position: center;
         background-repeat: no-repeat;
         cursor: pointer;
+
         &_minus {
             background-image: url('../../vendor/images/icons/counter/minus.svg');
+
             &:active {
-                background-color: $orange;
+                background-color: variables.$orange;
                 background-image: url('../../vendor/images/icons/counter/minus_active.svg');
             }
         }
+
         &_plus {
             background-image: url('../../vendor/images/icons/counter/plus.svg');
+
             &:active {
-                background-color: $orange;
+                background-color: variables.$orange;
                 background-image: url('../../vendor/images/icons/counter/plus_active.svg');
             }
         }
     }
+
     &__count {
         font-size: 20px;
         font-weight: 500;
         line-height: 1.4;
-        color: $grey;
+        color: variables.$grey;
     }
 }

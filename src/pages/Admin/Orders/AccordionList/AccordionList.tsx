@@ -4,7 +4,7 @@ import { AdminOrder } from '../../../../utils/api/adminService/adminService';
 
 function AccordionList({ data, isArchive }: { data: AdminOrder[]; isArchive: boolean }) {
     return (
-        <ul className={`${styles.accordion_list} bronfood-scrollbar`}>
+        <ul className={`${styles.accordion - list} bronfood-scrollbar`}>
             {data.map((order, index) => {
                 return <Accordion key={`${order.orderCode}-${index}`} content={order} isArchive={isArchive} />;
             })}

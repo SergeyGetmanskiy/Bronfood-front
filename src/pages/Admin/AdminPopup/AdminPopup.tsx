@@ -16,9 +16,9 @@ const AdminPopup = ({ close, children }: AdminPopupProps) => {
     };
     useEsc(() => close(), [close]);
     return (
-        <div className={styles.admin_popup_overlay} onClick={handleOverlayClick}>
-            <div className={styles.admin_popup}>
-                <div className={`${styles.admin_popup_button} ${styles.admin_popup_button_close}`}>
+        <div className={styles.admin - popup_overlay} onClick={handleOverlayClick}>
+            <div className={styles.admin - popup}>
+                <div className={`${styles.admin - popup_button} ${styles.admin - popup_button_close}`}>
                     <Button type="button" onClick={close} icon="close" />
                 </div>
                 {children}

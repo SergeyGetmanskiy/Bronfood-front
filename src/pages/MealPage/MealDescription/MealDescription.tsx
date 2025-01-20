@@ -7,9 +7,9 @@ type MealDescriptionProps = {
 
 function MealDescription({ name, description }: MealDescriptionProps) {
     return (
-        <div className={styles.meal_description}>
-            <h1 className={styles.meal_description__name}>{name}</h1>
-            <p className={styles.meal_description__text}>{description}</p>
+        <div className={styles.meal - description}>
+            <h1 className={styles.meal - description__name}>{name}</h1>
+            <p className={styles.meal - description__text}>{description}</p>
         </div>
     );
 }

@@ -1,6 +1,6 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
-.pageNotFound {
+.page-not-found {
     display: flex;
     flex-direction: column;
     padding: 90px 21px 122px 22px;
@@ -12,7 +12,7 @@
         font-size: 69px;
         font-weight: 500;
         line-height: 1.28;
-        color: $orange;
+        color: variables.$orange;
     }
 
     &__icon {
@@ -30,6 +30,6 @@
         font-size: 15px;
         font-weight: 500;
         line-height: 1.4;
-        color: $black;
+        color: variables.$black;
     }
 }

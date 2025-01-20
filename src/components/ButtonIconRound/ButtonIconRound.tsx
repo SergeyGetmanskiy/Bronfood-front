@@ -19,10 +19,10 @@ const ButtonIconRound: FC<ButtonIconRoundProps> = ({ isActive = false, icon = 'c
         <button
             {...props}
             className={`
-                ${styles.button_icon_round}
-                ${styles[`button_icon_round__icon_${isActive && (icon === 'delete' || icon === 'favorite') ? `${icon}_active` : icon}`]}
-                ${isActive && icon === 'delete' ? styles.button_icon_round_outlined : ''}
-                ${!isActive ? styles.button_icon_round__background_white : icon === 'delete' ? styles.button_icon_round__background_red : styles.button_icon_round__background_grey}
+                ${styles.button - icon - round}
+                ${styles[`button-icon-round__icon_${isActive && (icon === 'delete' || icon === 'favorite') ? `${icon}_active` : icon}`]}
+                ${isActive && icon === 'delete' ? styles.button - icon - round_outlined : ''}
+                ${!isActive ? styles.button - icon - round__background_white : icon === 'delete' ? styles.button - icon - round__background_red : styles.button - icon - round__background_grey}
             `}
         />
     );

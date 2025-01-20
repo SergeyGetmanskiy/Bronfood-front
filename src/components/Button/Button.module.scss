@@ -1,19 +1,19 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
 .button {
     width: 100%;
     height: 49px;
     border-radius: 25px;
-    background: $orange;
+    background: variables.$orange;
     border: none;
-    color: $white;
+    color: variables.$white;
     font-weight: 500;
     margin-top: 25px;
     cursor: pointer;
 
     &_disabled {
-        background: $button-grey;
-        color: $grey;
+        background: variables.$button-grey;
+        color: variables.$grey;
         cursor: auto;
     }
 }

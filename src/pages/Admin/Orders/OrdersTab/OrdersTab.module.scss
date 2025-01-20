@@ -1,6 +1,6 @@
-@import '../../../../styles/variables.scss';
+@use '../../../../styles/variables';
 
-.orders_tab {
+.orders-tab {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,17 +17,19 @@
         width: 0;
         height: 0;
     }
+
     &_text {
         font-size: 17px;
         font-weight: 500;
         line-height: 1.4;
-        color: $grey;
+        color: variables.$grey;
 
         &_active {
-            color: $orange;
+            color: variables.$orange;
         }
     }
+
     &_active {
-        border-bottom: 2px solid $orange;
+        border-bottom: 2px solid variables.$orange;
     }
 }

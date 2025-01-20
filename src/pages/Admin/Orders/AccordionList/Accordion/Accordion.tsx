@@ -18,7 +18,7 @@ function Accordion({ content, isArchive }: { content: AdminOrder; isArchive: boo
     };
 
     return (
-        <li className={`${styles.accordion} ${isOpen && isArchive ? styles.accordion_archive_active : isOpen && !isArchive ? styles.accordion_active : ''}`}>
+        <li className={`${styles.accordion} ${isOpen && isArchive ? styles.accordion - archive_active : isOpen && !isArchive ? styles.accordion_active : ''}`}>
             <div className={`${isArchive ? styles.accordion__summary_archive : styles.accordion__summary} ${isOpen && isArchive ? styles.accordion__summary_archive_active : isOpen && !isArchive ? styles.accordion__summary_active : ''} `} onClick={toggleAccordion}>
                 <h3 className={`${styles.accordion__username} ${isOpen ? styles.accordion__username_active : ''} ${isArchive ? styles.accordion__username_archive : ''}`}>{content.userName}</h3>
                 <h3 className={`${styles.accordion__ordercode} ${isOpen ? styles.accordion__ordercode_active : ''} ${isArchive ? styles.accordion__ordercode_archive : ''}`}>{content.orderCode}</h3>

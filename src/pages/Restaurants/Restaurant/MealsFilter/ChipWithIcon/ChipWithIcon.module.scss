@@ -1,6 +1,6 @@
-@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/variables';
 
-.chip_with_icon {
+.chipwithicon {
     position: relative;
     display: flex;
     justify-content: center;
@@ -20,21 +20,26 @@
         width: 0;
         height: 0;
     }
+
     &_icon {
         width: 39px;
         height: 39px;
         background-position: center;
         background-repeat: no-repeat;
     }
+
     &_food {
-        background-image: url(./../../../../../vendor/images/restaurant/food-svg.svg);
+        background-image: url('./../../../../../vendor/images/restaurant/food-svg.svg');
     }
+
     &_drink {
-        background-image: url(./../../../../../vendor/images/restaurant/drink-svg.svg);
+        background-image: url('./../../../../../vendor/images/restaurant/drink-svg.svg');
     }
+
     &_dessert {
-        background-image: url(./../../../../../vendor/images/restaurant/desert-svg.svg);
+        background-image: url('./../../../../../vendor/images/restaurant/desert-svg.svg');
     }
+
     &_text {
         padding: 10px 10px 10px 2px;
         font-size: 14px;
@@ -42,9 +47,11 @@
         line-height: 1.4;
         color: $black;
     }
+
     &_text_active {
         color: $white;
     }
+
     &_active {
         background-color: $orange;
         border: 1px solid $orange;

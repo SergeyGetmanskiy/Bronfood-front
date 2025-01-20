@@ -1,6 +1,6 @@
-@import '../../../styles/variables.scss';
+@use '../../../styles/variables';
 
-.meal_image {
+.meal-image {
     height: 180px;
     background-repeat: no-repeat;
     background-size: cover;

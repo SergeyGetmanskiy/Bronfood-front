@@ -40,8 +40,8 @@ const ProgressBar: FC<ProgressBarProps> = ({ initialTime, currentTime }) => {
     };
 
     return (
-        <div className={styles.progressBar}>
-            <div className={styles.progressBar__line} style={barStyle} />
+        <div className={styles.progress - bar}>
+            <div className={styles.progress - bar__line} style={barStyle} />
         </div>
     );
 };

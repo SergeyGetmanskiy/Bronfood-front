@@ -19,7 +19,7 @@ const BasketConfirmation = ({ close }: { close: () => void }) => {
     };
     useEsc(() => close(), [close]);
     return (
-        <div className={styles.basket_confirmation} onClick={handleOverlayClick}>
+        <div className={styles.basket - confirmation} onClick={handleOverlayClick}>
             <ConfirmationPopup title={t(`pages.basket.emptyBasket`)} confirmButtonText={t(`pages.basket.yes`)} onCancel={() => close()} onSubmit={handleSubmit} />
         </div>
     );

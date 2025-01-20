@@ -5,16 +5,16 @@ import Button from '../../../components/Button/Button';
 function MealTotal({ price, percentage, buttonDisabled }: { price: number; percentage: number; buttonDisabled: boolean }) {
     const { t } = useTranslation();
     return (
-        <div className={styles.meal_total}>
-            <div className={styles.meal_total__title}>
-                <p className={styles.meal_total__text}>{t(`pages.meal.fee`)}</p>
-                <span className={styles.meal_total__price}>{`${percentage} ₸`}</span>
+        <div className={styles.meal - total}>
+            <div className={styles.meal - total__title}>
+                <p className={styles.meal - total__text}>{t(`pages.meal.fee`)}</p>
+                <span className={styles.meal - total__price}>{`${percentage} ₸`}</span>
             </div>
-            <div className={styles.meal_total__title}>
-                <p className={styles.meal_total__text}>{t(`pages.meal.total`)}</p>
-                <span className={styles.meal_total__price}>{`${price} ₸`}</span>
+            <div className={styles.meal - total__title}>
+                <p className={styles.meal - total__text}>{t(`pages.meal.total`)}</p>
+                <span className={styles.meal - total__price}>{`${price} ₸`}</span>
             </div>
-            <div className={styles.meal_total__button}>
+            <div className={styles.meal - total__button}>
                 <Button type="submit" disabled={buttonDisabled}>
                     {t(`pages.meal.add`)}
                 </Button>
