@@ -18,13 +18,9 @@
     },
     "lint-staged": {
         "*.scss": [
-            "stylelint --fix",
-            "npm run prettier"
+            "stylelint --fix"
         ],
-        "*.{js,jsx,ts,tsx}": [
-            "npm run lint:fix",
-            "npm run prettier"
-        ],
+        "*.{js,jsx,ts,tsx}": "npm run lint:fix",
         "**/*": "npm run prettier"
     },
     "dependencies": {
