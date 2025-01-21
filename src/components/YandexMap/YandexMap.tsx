@@ -1,4 +1,4 @@
-import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark } from '@r3flector/react-yandex-maps';
 import styles from './YandexMap.module.scss';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
