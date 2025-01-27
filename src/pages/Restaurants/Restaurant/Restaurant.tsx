@@ -31,8 +31,6 @@ function Restaurant() {
     const { addMeal } = useBasketMutations();
     const { refetch: refetchBasket } = useGetBasket();
     const { data: reviews } = useReviews(restaurantId);
-    console.log(reviews);
-
     const handleAddMealClick = async (meal: Meal) => {
         if (isLogin && restaurant) {
             if (meal.hasFeatures) {
@@ -87,7 +85,7 @@ function Restaurant() {
         <>
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
+                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.results.restaurant.rating} reviews={`( ${reviews?.count} )`} />
                 <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
                 {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} handleClick={handleAddMealClick} isActive={addMeal.isPending} />}
             </RestaurantPopup>
