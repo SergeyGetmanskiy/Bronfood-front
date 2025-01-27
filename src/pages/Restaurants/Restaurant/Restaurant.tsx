@@ -85,7 +85,7 @@ function Restaurant() {
         <>
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.results.restaurant.rating} reviews={`( ${reviews?.count} )`} />
+                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.data.results.restaurant.rating} reviews={`( ${reviews?.data.count} )`} />
                 <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
                 {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} handleClick={handleAddMealClick} isActive={addMeal.isPending} />}
             </RestaurantPopup>
