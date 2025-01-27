@@ -129,11 +129,33 @@ export type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
+export type Review = {
+    client: string;
+    comment: string;
+    rating: number;
+    created_at: Date;
+};
+
+export type ReviewResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: {
+        restaurant: {
+            name: string;
+            rating: string;
+            review_count: number;
+        };
+        reviews: Review[];
+    };
+};
+
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ data: Restaurant[] }>;
-    getRestaurantById(id: number): Promise<{ data: Restaurant }>;
-    getMeals(restaurantId: number): Promise<{ data: Meal[] }>;
-    getFeatures(restaurantId: number, mealId: number): Promise<{ data: Feature[] }>;
+    getRestaurantById: (id: number) => Promise<{ data: Restaurant }>;
+    getMeals: (restaurantId: number) => Promise<{ data: Meal[] }>;
+    getFeatures: (restaurantId: number, mealId: number) => Promise<{ data: Feature[] }>;
+    getReviews: (restaurantId: number) => Promise<{ data: ReviewResponse }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

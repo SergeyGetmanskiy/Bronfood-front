@@ -14,6 +14,7 @@ import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
 import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
 import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 import { useBasketMutations, useGetBasket } from '../../../utils/hooks/useBasket/useBasket';
+import { useReviews } from '../../../utils/hooks/useReviews/useReviews';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
@@ -29,6 +30,8 @@ function Restaurant() {
     const meals = isSuccess && data.data;
     const { addMeal } = useBasketMutations();
     const { refetch: refetchBasket } = useGetBasket();
+    const { data: reviews } = useReviews(restaurantId);
+    console.log(reviews);
 
     const handleAddMealClick = async (meal: Meal) => {
         if (isLogin && restaurant) {
