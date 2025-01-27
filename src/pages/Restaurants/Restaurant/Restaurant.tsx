@@ -60,7 +60,7 @@ function Restaurant() {
             setActiveRestaurant(restaurantId);
         }
     }, [restaurantId, setActiveRestaurant]);
-    if (restaurantLoading || favoritesLoading) {
+    if (restaurantLoading) {
         return (
             <div className={styles['restaurant-popup_overlay']}>
                 <div className={styles['restaurant-popup']}>
