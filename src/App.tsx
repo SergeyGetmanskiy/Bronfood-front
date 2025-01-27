@@ -33,7 +33,6 @@ function App() {
     useEffect(() => {
         navigate('/restaurants');
     }, [navigate]);
-
     return (
         <div>
             <Header city={city} />

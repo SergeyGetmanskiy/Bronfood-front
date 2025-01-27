@@ -24,7 +24,8 @@
     }
 
     &__buttons {
-        position: relative;
+        display: flex;
+        gap: 19px;
     }
 
     &__icon {
@@ -35,14 +36,17 @@
     }
 
     &__search {
+        width: 35px;
+        height: 35px;
         background-image: url('../../vendor/images/icons/search-icon.svg');
+        cursor: pointer;
     }
 
     &__favorite {
-        position: absolute;
-        top: 0;
-        left: -55px;
+        width: 35px;
+        height: 35px;
         background-image: url('../../vendor/images/icons/favorite-icon.svg');
+        cursor: pointer;
 
         &_active {
             background-image: url('../../vendor/images/icons/favorite-icon-active.svg');

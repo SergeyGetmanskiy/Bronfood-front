@@ -57,8 +57,11 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     modules={['geocode']}
                     onLoad={(ymaps) => {
                         ymaps.geocode([userLocation.latitude, userLocation.longitude], { kind: 'locality' }).then((res) => {
-                            const city = res.geoObjects.get(0).properties.get('name', { kind: 'locality', name: t('components.header.placeName') });
-                            setCity(city.toString());
+                            const city = res.geoObjects
+                                .get(0)
+                                .properties.get('name', { kind: 'locality', name: t('components.header.placeName') })
+                                .toString();
+                            setCity(city);
                         });
                     }}
                     instanceRef={(map) => {
