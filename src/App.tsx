@@ -20,11 +20,11 @@ import Feedback from './pages/Feedback/Feedback';
 import Favorites from './pages/Favorites/Favorites';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
-import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 import Admin from './pages/Admin/Admin';
 import Orders from './pages/Admin/Orders/Orders';
 import WorkStatus from './pages/Admin/WorkStatus/WorkStatus';
+import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 
 function App() {
     const [city, setCity] = useState('');
