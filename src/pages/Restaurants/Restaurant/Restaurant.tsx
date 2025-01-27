@@ -8,7 +8,6 @@ import MealsFilter from './MealsFilter/MealsFilter';
 import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { Meal, MealType } from '../../../utils/api/restaurantsService/restaurantsService';
-import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
@@ -28,7 +27,6 @@ function Restaurant() {
     const restaurant = isRestaurantSuccess && restaurantData.data;
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
-    const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
     const { addMeal } = useBasketMutations();
     const { refetch: refetchBasket } = useGetBasket();
 
@@ -76,7 +74,7 @@ function Restaurant() {
         return <PageNotFound />;
     }
 
-    if (!restaurant || !favoriteRestaurants) {
+    if (!restaurant) {
         return null;
     }
 

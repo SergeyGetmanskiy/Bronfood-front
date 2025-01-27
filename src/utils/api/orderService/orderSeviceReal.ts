@@ -23,11 +23,12 @@ export class OrderServiceReal {
     }
 
     async submitOrderFeedback(restaurantId: number, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
+        console.log(restaurantId, rating, comment);
         const options = {
             method: 'POST',
             data: { rating, comment },
         };
-        return handleFetch(`api/review/create_rating/${restaurantId}`, options);
+        return handleFetch(`api/review/${restaurantId}/`, options);
     }
 }
 

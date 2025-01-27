@@ -17,7 +17,6 @@ const LeaveOrderFeedback: FC = () => {
     const location = useLocation();
     const [restaurantId, setRestaurantId] = useState<number | null>(null);
     const [showThanksPopup, setShowThanksPopup] = useState(false);
-
     useEffect(() => {
         const state = location.state as LocationState;
         if (state && state.restaurantId) {
