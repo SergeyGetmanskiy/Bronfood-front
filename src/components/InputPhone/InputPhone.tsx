@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import styles from './InputPhone.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import InputMask from 'react-input-mask';
+import InputMask from 'comigo-tech-react-input-mask';
 import { regexPhoneNumberKazakhstan } from '../../utils/consts';
 import { useTranslation } from 'react-i18next';
 
