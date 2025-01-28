@@ -6,9 +6,10 @@ type RestaurantDescriptionProps = {
     workingTime: string;
     rating: number;
     reviews: string;
+    onReviews: () => void;
 };
 
-function RestaurantDescription({ name, address, workingTime, rating, reviews }: RestaurantDescriptionProps) {
+function RestaurantDescription({ name, address, workingTime, rating, reviews, onReviews }: RestaurantDescriptionProps) {
     return (
         <div className={styles['restaurant-description']}>
             <h1 className={styles['restaurant-description__name']}>{name}</h1>
@@ -22,7 +23,7 @@ function RestaurantDescription({ name, address, workingTime, rating, reviews }: 
                     <p className={styles['restaurant-description__feature_title']}>{workingTime}</p>
                 </div>
             </div>
-            <div className={styles['restaurant-description__rating_container']}>
+            <div className={styles['restaurant-description__rating_container']} onClick={onReviews}>
                 <span className={styles['restaurant-description__rating']}>{rating}</span>
                 <div className={`${styles['restaurant-description__icon']} ${styles['restaurant-description__icon_star']} ${styles['restaurant-description__icon_large']}`} />
                 <span className={styles['restaurant-description__reviews']}>{reviews}</span>

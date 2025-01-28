@@ -15,10 +15,12 @@ import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant'
 import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 import { useBasketMutations, useGetBasket } from '../../../utils/hooks/useBasket/useBasket';
 import { useReviews } from '../../../utils/hooks/useReviews/useReviews';
+import Reviews from './Reviews/Reviews';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
+    const [isReviewsVisible, setIsReviewsVisible] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
     const { isLogin } = useCurrentUser();
@@ -44,7 +46,7 @@ function Restaurant() {
             navigate(`/signin`);
         }
     };
-
+    const handleReviewsClick = () => setIsReviewsVisible((prev) => !prev);
     const close = () => {
         navigate('/restaurants');
     };
@@ -85,9 +87,15 @@ function Restaurant() {
         <>
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.data.results.restaurant.rating} reviews={`( ${reviews?.data.count} )`} />
-                <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} handleClick={handleAddMealClick} isActive={addMeal.isPending} />}
+                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.data.results.restaurant.rating} reviews={`( ${reviews?.data.count} )`} onReviews={handleReviewsClick} />
+                {isReviewsVisible ? (
+                    <Reviews reviews={reviews?.data.results.reviews} />
+                ) : (
+                    <>
+                        <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
+                        {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} handleClick={handleAddMealClick} isActive={addMeal.isPending} />}
+                    </>
+                )}
             </RestaurantPopup>
             <Outlet />
         </>
