@@ -222,7 +222,7 @@ i18n
                             dessert: 'Десерты',
                             reviews: 'Отзывы',
                             today: 'cегодня',
-                            dayAgo: 'день назад',
+                            yesterday: 'вчера',
                             daysyaAgo: 'дня назад',
                             daysAgo: 'дней назад',
                         },

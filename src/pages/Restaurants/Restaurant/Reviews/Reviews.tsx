@@ -10,7 +10,7 @@ function Review({ review }: { review: ReviewType }) {
         if (days === 0) {
             return `${t('pages.restaurant.today')}`;
         } else if (days === 1) {
-            return `${days} ${t('pages.restaurant.dayAgo')}`;
+            return `${t('pages.restaurant.yesterday')}`;
         } else if (days > 1 && days < 5) {
             return `${days} ${t('pages.restaurant.daysyaAgo')}`;
         } else {
