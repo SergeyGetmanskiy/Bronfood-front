@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import styles from './InputPhone.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import { InputMask } from '@react-input/mask';
 import { regexPhoneNumberKazakhstan } from '../../utils/consts';
 import { useTranslation } from 'react-i18next';
+import { InputMask } from '@react-input/mask';
 
 interface InputPhone {
     /**
@@ -29,7 +29,6 @@ const InputPhone: FC<InputPhone> = (props) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
-
     useEffect(() => {
         if (props.value) setInputValue(props.value);
     }, [props.value]);
@@ -55,7 +54,8 @@ const InputPhone: FC<InputPhone> = (props) => {
                     },
                 })}
                 value={inputValue}
-                mask="+7 (999) 999-99-99"
+                mask="+7 (___) ___-__-__"
+                replacement={{ _: /\d/ }}
             />
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
         </div>
