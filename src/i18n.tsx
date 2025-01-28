@@ -221,6 +221,10 @@ i18n
                             drink: 'Напитки',
                             dessert: 'Десерты',
                             reviews: 'Отзывы',
+                            today: 'cегодня',
+                            dayAgo: 'день назад',
+                            daysyaAgo: 'дня назад',
+                            daysAgo: 'дней назад',
                         },
                         meal: {
                             fee: 'Комиссия:',

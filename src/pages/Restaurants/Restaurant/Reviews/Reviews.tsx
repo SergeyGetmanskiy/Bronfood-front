@@ -3,12 +3,28 @@ import { Review as ReviewType } from '../../../../utils/api/restaurantsService/r
 import styles from './Reviews.module.scss';
 
 function Review({ review }: { review: ReviewType }) {
+    const { t } = useTranslation();
+    const getDays = (date) => {
+        const todaysDate = new Date();
+        const days = Math.floor((Date.parse(todaysDate) - Date.parse(date)) / 1000 / 60 / 60 / 24);
+        if (days === 0) {
+            return `${t('pages.restaurant.today')}`;
+        } else if (days === 1) {
+            return `${days} ${t('pages.restaurant.dayAgo')}`;
+        } else if (days > 1 && days < 5) {
+            return `${days} ${t('pages.restaurant.daysyaAgo')}`;
+        } else {
+            return `${days} ${t('pages.restaurant.daysAgo')}`;
+        }
+    };
+    const daysAgo = getDays(review.created_at);
+
     return (
         <div className={styles.review}>
             <div className={styles.review__heading}>
-                <h3 className={styles.review__heading_client}>Ирина</h3>
+                <h3 className={styles.review__heading_client}>{review.client}</h3>
                 <p className={styles.review__heading_ago}>
-                    4 дня назад
+                    {daysAgo}
                     <span className={styles.review__heading_rating}>{review.rating}</span>
                 </p>
                 <div className={styles.review__heading_icon} />

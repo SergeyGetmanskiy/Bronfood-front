@@ -49,7 +49,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
             <div className={styles['restaurant-popup']}>
                 {isLogin && (
                     <div className={`${styles['restaurant-popup_button']} ${styles['restaurant-popup_button_feedback']}`}>
-                        <button type="button" onClick={() => navigate('/leave-order-feedback', { state: { restaurantId: restaurant.id } })}>
+                        <button className={styles['restaurant-popup_button_feedback']} type="button" onClick={() => navigate('/leave-order-feedback', { state: { restaurantId: restaurant.id } })}>
                             Добавить отзыв
                         </button>
                     </div>
