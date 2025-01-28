@@ -4,7 +4,7 @@ type RestaurantDescriptionProps = {
     name: string;
     address: string;
     workingTime: string;
-    rating: number;
+    rating: string;
     reviews: string;
     onReviews: () => void;
 };

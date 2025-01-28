@@ -4,9 +4,9 @@ import styles from './Reviews.module.scss';
 
 function Review({ review }: { review: ReviewType }) {
     const { t } = useTranslation();
-    const getDays = (date) => {
+    const getDays = (date: Date) => {
         const todaysDate = new Date();
-        const days = Math.floor((Date.parse(todaysDate) - Date.parse(date)) / 1000 / 60 / 60 / 24);
+        const days = Math.floor((Date.parse(todaysDate.toString()) - Date.parse(date.toString())) / 1000 / 60 / 60 / 24);
         if (days === 0) {
             return `${t('pages.restaurant.today')}`;
         } else if (days === 1) {

@@ -32,7 +32,10 @@ function Restaurant() {
     const meals = isSuccess && data.data;
     const { addMeal } = useBasketMutations();
     const { refetch: refetchBasket } = useGetBasket();
-    const { data: reviews } = useReviews(restaurantId);
+    const { data: reviewsData, isSuccess: isReviewsSuccess } = useReviews(restaurantId);
+    const rating = isReviewsSuccess ? reviewsData.data.results.restaurant.rating : '';
+    const reviewsCount = isReviewsSuccess ? `( ${reviewsData.data.count} )` : '';
+    const reviews = isReviewsSuccess ? reviewsData.data.results.reviews : [];
     const handleAddMealClick = async (meal: Meal) => {
         if (isLogin && restaurant) {
             if (meal.hasFeatures) {
@@ -87,9 +90,9 @@ function Restaurant() {
         <>
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={reviews?.data.results.restaurant.rating} reviews={`( ${reviews?.data.count} )`} onReviews={handleReviewsClick} />
+                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={rating} reviews={reviewsCount} onReviews={handleReviewsClick} />
                 {isReviewsVisible ? (
-                    <Reviews reviews={reviews?.data.results.reviews} />
+                    <Reviews reviews={reviews} />
                 ) : (
                     <>
                         <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />

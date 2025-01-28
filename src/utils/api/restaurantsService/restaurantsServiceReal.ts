@@ -1,5 +1,5 @@
 import { handleFetch } from '../../serviceFuncs/handleFetch';
-import { Feature, Meal, Restaurant, RestaurantsService } from './restaurantsService';
+import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from './restaurantsService';
 
 export class RestaurantsServiceReal implements RestaurantsService {
     private _restaurantsCache: Restaurant[] | null = null;
