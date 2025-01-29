@@ -37,9 +37,9 @@ const SMSVerify: FC<SMSVerify> = (props) => {
     const { t } = useTranslation();
     const { control } = useForm();
     const [complete, setComplete] = useState<boolean>(false);
-    const [values, setValues] = useState<string[]>(['', '', '', '']);
+    const [values, setValues] = useState<string>('');
 
-    const handleComplete = (value) => {
+    const handleComplete = (value: string) => {
         const valTest = /^\d+$/;
         if (valTest.test(value)) {
             setComplete(true);
@@ -53,8 +53,6 @@ const SMSVerify: FC<SMSVerify> = (props) => {
         const code = values;
         if (code.length == 4) {
             props.onSubmit(code);
-        } else {
-            setShowError(true);
         }
     };
 
