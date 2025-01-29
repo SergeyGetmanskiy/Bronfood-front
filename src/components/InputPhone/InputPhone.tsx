@@ -4,7 +4,7 @@ import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { regexPhoneNumberKazakhstan } from '../../utils/consts';
 import { useTranslation } from 'react-i18next';
-import { InputMask } from '@react-input/mask';
+import { InputMask, format } from '@react-input/mask';
 
 interface InputPhone {
     /**
@@ -22,7 +22,7 @@ interface InputPhone {
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
-    const [inputValue, setInputValue] = useState(props.value === undefined ? '' : props.value);
+    const [inputValue, setInputValue] = useState('');
     const { t } = useTranslation();
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
     const id = useId();
@@ -30,7 +30,10 @@ const InputPhone: FC<InputPhone> = (props) => {
         setInputValue(e.target.value);
     };
     useEffect(() => {
-        if (props.value) setInputValue(props.value);
+        if (props.value) {
+            const value = format(props.value, { mask: '+_ (___) ___-__-__', replacement: { _: /\d/ } });
+            setInputValue(value);
+        }
     }, [props.value]);
 
     return (
