@@ -1,28 +1,63 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener, reactify } from '../../lib/ymaps';
-import type { YMapLocationRequest } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
-import { useEffect, useState } from 'react';
+import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 
-const LOCATION: YMapLocationRequest = {
-    center: [37.588144, 55.733842],
-    zoom: 9,
-};
-
-export default function YandexMap() {
+export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
     const [bounds, setBounds] = useState([]);
+    const [location, setLocation] = useState([76.921552, 43.246345]);
+    const [userLocation, setUserLocation] = useState([76.921552, 43.246345]);
+    const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
+    const center = activePlaceId ? location : userLocation;
+    const { restaurantsFiltered, inView } = useRestaurants();
 
     const handleActionEnd = (e) => {
         const boundsCoords = e.location.bounds;
+        console.log(e, bounds);
+        setLocation(e.location.center);
         setBounds(boundsCoords);
     };
 
     useEffect(() => {
-        console.log(bounds);
-    }, [bounds]);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setUserLocation([position.coords.longitude, position.coords.latitude]);
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        if (inView) {
+            setActivePlaceId(inView);
+            const place = restaurantsFiltered.find((place) => place.id === inView);
+            if (place) {
+                setLocation([place.coordinates.longitude, place.coordinates.latitude]);
+            }
+        }
+    }, [inView, restaurantsFiltered]);
+
+    useEffect(() => {
+        async function fetchLocality() {
+            setCity('');
+            const res = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=${import.meta.env.VITE_YNDX_API_KEY}&geocode=${userLocation}&format=json`);
+            if (res.ok) {
+                const result = await res.json();
+                if (!ignore) {
+                    const locality = result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter((c) => c.kind === 'locality')[0].name;
+                    setCity(locality);
+                }
+            }
+        }
+        let ignore = false;
+        fetchLocality();
+        return () => {
+            ignore = true;
+        };
+    }, [userLocation, setCity]);
 
     return (
         <div className={styles.yamap}>
-            <YMap location={reactify.useDefault(LOCATION)}>
+            <YMap location={{ center: center, zoom: 12 }}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
                 <YMapListener onActionEnd={handleActionEnd} />
@@ -36,14 +71,14 @@ export default function YandexMap() {
     );
 }
 
-/* import { YMaps, Map, Placemark } from '@r3flector/react-yandex-maps';
-import styles from './YandexMap.module.scss';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+/*
+
+
 import { useTranslation } from 'react-i18next';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+
 import { useNavigate } from 'react-router-dom';
 import { YNDX_API_KEY } from '../../utils/consts';
 
