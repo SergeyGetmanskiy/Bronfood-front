@@ -71,7 +71,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
 
     return (
         <div className={styles.yamap}>
-            <YMap location={{ center: center, zoom: zoom }}>
+            <YMap location={{ center: center, zoom: zoom }} margin={[0, 20, 360, 0]}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
                 <YMapListener onActionEnd={handleActionEnd} />
