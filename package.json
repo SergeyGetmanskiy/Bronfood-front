@@ -24,7 +24,6 @@
         "**/*": "npm run prettier"
     },
     "dependencies": {
-        "@r3flector/react-yandex-maps": "^1.2.7",
         "@react-input/mask": "^2.0.4",
         "@tanstack/react-query": "^5.64.2",
         "@tanstack/react-query-devtools": "^5.64.2",
@@ -49,6 +48,7 @@
         "@typescript-eslint/eslint-plugin": "^8.21.0",
         "@typescript-eslint/parser": "^8.21.0",
         "@vitejs/plugin-react": "^4.3.4",
+        "@yandex/ymaps3-types": "^1.0.15731128",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.0.1",
         "eslint-plugin-react-hooks": "^5.1.0",
