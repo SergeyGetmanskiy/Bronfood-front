@@ -9,20 +9,12 @@
     height: 100vh;
     z-index: map.get(variables.$z-indexes, 'map');
 
-    &__restaurant-marker {
-        height: 25px;
+    &__marker {
+        height: 30px;
         aspect-ratio: 1;
-        border-radius: 50%;
-        opacity: 0.5;
 
-        &_marked {
-            border: 3px solid variables.$orange;
-            opacity: 1;
+        &_active {
+            height: 41px;
         }
-    }
-
-    &__user-marker {
-        height: 32px;
-        aspect-ratio: 1;
     }
 }

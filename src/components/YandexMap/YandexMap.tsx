@@ -3,7 +3,9 @@ import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMa
 import styles from './YandexMap.module.scss';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useNavigate } from 'react-router-dom';
-import marker from '../../vendor/images/map-marker.png';
+import marker from '../../vendor/images/icons/navigation.svg';
+import markerActive from '../../vendor/images/icons/navigation_active.svg';
+import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
     /* const [bounds, setBounds] = useState([]); */
@@ -74,16 +76,16 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                 <YMapDefaultFeaturesLayer />
                 <YMapListener onActionEnd={handleActionEnd} />
                 {restaurantsFiltered.map((place) => {
-                    const marked = activePlaceId === place.id;
+                    const active = activePlaceId === place.id;
                     return (
                         <YMapMarker key={place.id} coordinates={[place.coordinates.longitude, place.coordinates.latitude]} draggable={false} onClick={() => handlePlacemarkClick(place.id, place.coordinates.longitude, place.coordinates.latitude)}>
-                            <img className={`${styles['yamap__restaurant-marker']} ${marked ? styles['yamap__restaurant-marker_marked'] : ''} `} src={place.photo}></img>
+                            <img className={`${styles.yamap.marker} ${active ? styles.yamap.marker_active : ''}`} src={active ? markerActive : marker}></img>
                         </YMapMarker>
                     );
                 })}
                 {userLocation && (
                     <YMapMarker key={userLocation[0]} coordinates={userLocation} draggable={false}>
-                        <img className={`${styles['yamap__user-marker']} `} src={marker} />
+                        <img className={styles.yamap.marker} src={userMarker} />
                     </YMapMarker>
                 )}
             </YMap>
