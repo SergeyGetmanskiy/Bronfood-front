@@ -8,14 +8,12 @@ import markerActive from '../../vendor/images/icons/navigation_active.svg';
 import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
-    /* const [bounds, setBounds] = useState([]); */
     const [center, setCenter] = useState([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
     const [userLocation, setUserLocation] = useState([]);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
-    const { restaurantsFiltered, inView } = useRestaurants();
-    console.log(center);
+    const { restaurantsFiltered, inView, setBounds } = useRestaurants();
 
     const handleActionEnd = (e) => {
         const boundsCoords = e.location.bounds;

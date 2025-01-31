@@ -20,7 +20,7 @@ const PageNotFound = () => {
                     4
                     <div className={styles['page-not-found__icon']} />4
                 </div>
-                <p className={styles['page-not-found__message']}>{t('pages.page-not-found.somethingWentWrong')}</p>
+                <p className={styles['page-not-found__message']}>{t('pages.pageNotFound.somethingWentWrong')}</p>
                 <Button type="button" onClick={navigateToRoot}>
                     {t('pages.pageNotFound.goBack')}
                 </Button>
