@@ -1,4 +1,42 @@
-import { YMaps, Map, Placemark } from '@r3flector/react-yandex-maps';
+import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener, reactify } from '../../lib/ymaps';
+import type { YMapLocationRequest } from '@yandex/ymaps3-types';
+import styles from './YandexMap.module.scss';
+import { useEffect, useState } from 'react';
+
+const LOCATION: YMapLocationRequest = {
+    center: [37.588144, 55.733842],
+    zoom: 9,
+};
+
+export default function YandexMap() {
+    const [bounds, setBounds] = useState([]);
+
+    const handleActionEnd = (e) => {
+        const boundsCoords = e.location.bounds;
+        setBounds(boundsCoords);
+    };
+
+    useEffect(() => {
+        console.log(bounds);
+    }, [bounds]);
+
+    return (
+        <div className={styles.yamap}>
+            <YMap location={reactify.useDefault(LOCATION)}>
+                <YMapDefaultSchemeLayer />
+                <YMapDefaultFeaturesLayer />
+                <YMapListener onActionEnd={handleActionEnd} />
+                <YMapMarker coordinates={reactify.useDefault([37.588144, 55.733842])} draggable={true}>
+                    <section>
+                        <h1>You can drag this header</h1>
+                    </section>
+                </YMapMarker>
+            </YMap>
+        </div>
+    );
+}
+
+/* import { YMaps, Map, Placemark } from '@r3flector/react-yandex-maps';
 import styles from './YandexMap.module.scss';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -119,3 +157,4 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
 };
 
 export default YandexMap;
+ */
