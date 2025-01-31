@@ -59,7 +59,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                 setCenter([place.coordinates.longitude, place.coordinates.latitude]);
             }
         }
-    }, [inView, restaurantsFiltered]);
+    }, [inView, restaurantsFiltered, activePlaceId]);
 
     useEffect(() => {
         async function fetchLocality() {
