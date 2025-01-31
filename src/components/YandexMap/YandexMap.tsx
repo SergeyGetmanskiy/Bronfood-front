@@ -1,27 +1,37 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener, reactify } from '../../lib/ymaps';
+import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
 import styles from './YandexMap.module.scss';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useNavigate } from 'react-router-dom';
+import marker from '../../vendor/images/map-marker.png';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
-    const [bounds, setBounds] = useState([]);
-    const [location, setLocation] = useState([76.921552, 43.246345]);
-    const [userLocation, setUserLocation] = useState([76.921552, 43.246345]);
+    /* const [bounds, setBounds] = useState([]); */
+    const [center, setCenter] = useState([76.921552, 43.246345]);
+    const [zoom, setZoom] = useState(12);
+    const [userLocation, setUserLocation] = useState([]);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
-    const center = activePlaceId ? location : userLocation;
+    const navigate = useNavigate();
     const { restaurantsFiltered, inView } = useRestaurants();
+    console.log(center);
 
     const handleActionEnd = (e) => {
         const boundsCoords = e.location.bounds;
-        console.log(e, bounds);
-        setLocation(e.location.center);
+        setCenter(e.location.center);
+        setZoom(e.location.zoom);
         setBounds(boundsCoords);
+    };
+
+    const handlePlacemarkClick = (placeId: number, longitude: number, latitude: number) => {
+        setCenter([longitude, latitude]);
+        navigate(`/restaurants/${placeId}`);
     };
 
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 setUserLocation([position.coords.longitude, position.coords.latitude]);
+                setCenter([position.coords.longitude, position.coords.latitude]);
             });
         }
     }, []);
@@ -31,7 +41,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             setActivePlaceId(inView);
             const place = restaurantsFiltered.find((place) => place.id === inView);
             if (place) {
-                setLocation([place.coordinates.longitude, place.coordinates.latitude]);
+                setCenter([place.coordinates.longitude, place.coordinates.latitude]);
             }
         }
     }, [inView, restaurantsFiltered]);
@@ -49,7 +59,9 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             }
         }
         let ignore = false;
-        fetchLocality();
+        if (userLocation.length > 0) {
+            fetchLocality();
+        }
         return () => {
             ignore = true;
         };
@@ -57,139 +69,24 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
 
     return (
         <div className={styles.yamap}>
-            <YMap location={{ center: center, zoom: 12 }}>
+            <YMap location={{ center: center, zoom: zoom }}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
                 <YMapListener onActionEnd={handleActionEnd} />
-                <YMapMarker coordinates={reactify.useDefault([37.588144, 55.733842])} draggable={true}>
-                    <section>
-                        <h1>You can drag this header</h1>
-                    </section>
-                </YMapMarker>
+                {restaurantsFiltered.map((place) => {
+                    const marked = activePlaceId === place.id;
+                    return (
+                        <YMapMarker key={place.id} coordinates={[place.coordinates.longitude, place.coordinates.latitude]} draggable={false} onClick={() => handlePlacemarkClick(place.id, place.coordinates.longitude, place.coordinates.latitude)}>
+                            <img className={`${styles['yamap__restaurant-marker']} ${marked ? styles['yamap__restaurant-marker_marked'] : ''} `} src={place.photo}></img>
+                        </YMapMarker>
+                    );
+                })}
+                {userLocation && (
+                    <YMapMarker key={userLocation[0]} coordinates={userLocation} draggable={false}>
+                        <img className={`${styles['yamap__user-marker']} `} src={marker} />
+                    </YMapMarker>
+                )}
             </YMap>
         </div>
     );
 }
-
-/*
-
-
-import { useTranslation } from 'react-i18next';
-import navigationIcon from '../../vendor/images/icons/navigation.svg';
-import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
-import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
-
-import { useNavigate } from 'react-router-dom';
-import { YNDX_API_KEY } from '../../utils/consts';
-
-const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
-    const [version, setVersion] = useState(0);
-    const { t } = useTranslation();
-    const navigate = useNavigate();
-    const { restaurantsFiltered, inView } = useRestaurants();
-    const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
-    const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
-    const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
-
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setUserLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-                setVersion((version) => version + 1);
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        if (inView) {
-            setActivePlaceId(inView);
-            const place = restaurantsFiltered.find((place) => place.id === inView);
-            if (place) {
-                setLocation({ latitude: place.coordinates.latitude, longitude: place.coordinates.longitude });
-            }
-        }
-    }, [inView, restaurantsFiltered]);
-
-    const handlePlacemarkClick = (placeId: number, latitude: number, longitude: number) => {
-        setLocation({ latitude, longitude });
-        navigate(`/restaurants/${placeId}`);
-    };
-
-    const center = activePlaceId ? [location.latitude, location.longitude] : [userLocation.latitude, userLocation.longitude];
-    return (
-        <YMaps key={version} query={{ apikey: YNDX_API_KEY }}>
-            <div className={styles.yamap}>
-                <Map
-                    state={{ center: center, zoom: 12 }}
-                    width="100%"
-                    height="100vh"
-                    options={{
-                        suppressMapOpenBlock: true,
-                        yandexMapDisablePoiInteractivity: true, // turn off other balloons
-                    }}
-                    modules={['geocode']}
-                    onLoad={(ymaps) => {
-                        ymaps.geocode([userLocation.latitude, userLocation.longitude], { kind: 'locality' }).then((res) => {
-                            const city = res.geoObjects
-                                .get(0)
-                                .properties.get('name', { kind: 'locality', name: t('components.header.placeName') })
-                                .toString();
-                            setCity(city);
-                        });
-                    }}
-                    instanceRef={(map) => {
-                        if (map) {
-                            const currentGlobalPixelCenter = map.getGlobalPixelCenter();
-                            const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 170];
-                            map.setGlobalPixelCenter(newGlobalPixelCenter);
-                        }
-                    }}
-                >
-                    {userLocation && (
-                        //* user
-                        <Placemark
-                            className={styles.grayscaleMap}
-                            geometry={[userLocation.latitude, userLocation.longitude]}
-                            options={{
-                                preset: 'islands#redDotIcon',
-                                iconLayout: 'default#image', // icon mark on map
-                                iconImageHref: navigationIcon,
-                                iconImageSize: [30, 40],
-                                iconImageOffset: [-15, -35],
-                            }}
-                            properties={{
-                                hintContent: 'Вы здесь',
-                            }}
-                            modules={['geoObject.addon.hint']}
-                        />
-                    )}
-                    //* restaurants
-                    {restaurantsFiltered.map((place) => {
-                        const marked = activePlaceId === place.id;
-                        return (
-                            <Placemark
-                                key={place.id}
-                                geometry={[place.coordinates.latitude, place.coordinates.longitude]}
-                                options={{
-                                    preset: 'islands#redDotIcon',
-                                    iconLayout: 'default#image',
-                                    iconImageHref: marked ? placeIconActive : placeIcon,
-                                    iconImageSize: [30, 40],
-                                    iconImageOffset: [-15, -35],
-                                }}
-                                properties={{
-                                    hintContent: place.name, //tooltip(hover)
-                                }}
-                                modules={['geoObject.addon.hint']}
-                                onClick={() => handlePlacemarkClick(place.id, place.coordinates.latitude, place.coordinates.longitude)}
-                            />
-                        );
-                    })}
-                </Map>
-            </div>
-        </YMaps>
-    );
-};
-
-export default YandexMap;
- */
