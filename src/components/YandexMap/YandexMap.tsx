@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState, useMemo, useCallback } from 'react';
 import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
-import type { BehaviorMapEventHandler } from '@yandex/ymaps3-types';
+import type { MapEventUpdateHandler, BehaviorMapEventHandler } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +9,22 @@ import markerActive from '../../vendor/images/icons/navigation_active.svg';
 import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
+    const [initialRender, setInitialRender] = useState(true);
     const [center, setCenter] = useState([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
     const [userLocation, setUserLocation] = useState([]);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
     const { restaurantsFiltered, inView, setBounds } = useRestaurants();
+
+    const handleMapUpdate: MapEventUpdateHandler = useCallback(
+        (object) => {
+            const boundsCoords = object.location.bounds;
+            setInitialRender(false);
+            setBounds(boundsCoords);
+        },
+        [setBounds]
+    );
 
     const createBehaviorEventHandler = useCallback((): BehaviorMapEventHandler => {
         return function (object) {
@@ -76,7 +86,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             <YMap location={{ center: center, zoom: zoom }} margin={[0, 20, 360, 0]}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
-                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} />
+                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} onUpdate={initialRender && handleMapUpdate} />
                 {restaurantsFiltered.map((place) => {
                     const active = activePlaceId === place.id;
                     return (
