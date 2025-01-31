@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState, useMemo, useCallback } from 'react';
 import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
+import type { BehaviorMapEventHandler } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useNavigate } from 'react-router-dom';
@@ -15,12 +16,15 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
     const navigate = useNavigate();
     const { restaurantsFiltered, inView, setBounds } = useRestaurants();
 
-    const handleActionEnd = (e) => {
-        const boundsCoords = e.location.bounds;
-        setCenter(e.location.center);
-        setZoom(e.location.zoom);
-        setBounds(boundsCoords);
-    };
+    const createBehaviorEventHandler = useCallback((): BehaviorMapEventHandler => {
+        return function (object) {
+            if (object.type === 'dblClick') return;
+            const boundsCoords = object.location.bounds;
+            setCenter(object.location.center);
+            setZoom(object.location.zoom);
+            setBounds(boundsCoords);
+        };
+    }, [setBounds]);
 
     const handlePlacemarkClick = (placeId: number, longitude: number, latitude: number) => {
         setCenter([longitude, latitude]);
@@ -72,7 +76,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             <YMap location={{ center: center, zoom: zoom }} margin={[0, 20, 360, 0]}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
-                <YMapListener onActionEnd={handleActionEnd} />
+                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} />
                 {restaurantsFiltered.map((place) => {
                     const active = activePlaceId === place.id;
                     return (
