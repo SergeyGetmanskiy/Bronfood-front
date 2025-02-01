@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
 .logout {
     width: 100vw;
@@ -9,6 +9,6 @@
     padding-top: 122px;
     position: relative;
     z-index: 2;
-    background: rgba(135, 133, 133, 0.75);
+    background: rgb(135 133 133 / 75%);
     backdrop-filter: blur(2.5px);
 }

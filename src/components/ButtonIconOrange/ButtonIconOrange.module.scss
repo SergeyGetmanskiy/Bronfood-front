@@ -1,6 +1,6 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
-.button_icon_orange {
+.button-icon-orange {
     position: absolute;
     height: 41px;
     width: 41px;
@@ -8,19 +8,22 @@
     border: none;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: $orange;
-    color: $white;
+    background-color: variables.$orange;
+    color: variables.$white;
     cursor: pointer;
 
     &__icon_close {
-        background-image: url(./../../vendor/images/icons/buttonIconOrange/close.svg);
+        background-image: url('./../../vendor/images/icons/buttonIconOrange/close.svg');
     }
+
     &__icon_add {
-        background-image: url(./../../vendor/images/icons/buttonIconOrange/add.svg);
+        background-image: url('./../../vendor/images/icons/buttonIconOrange/add.svg');
     }
+
     &_active {
-        background-color: $button-active;
+        background-color: variables.$button-active;
     }
+
     &_wide {
         width: 58px;
         border-radius: 20px;

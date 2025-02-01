@@ -1,10 +1,9 @@
-.meals_filter {
+.meals-filter {
     display: flex;
-    width: 100%;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    padding: 4px 15px 10px 15px;
+    padding: 4px 15px 10px;
     gap: 16px;
     overflow: hidden;
 }

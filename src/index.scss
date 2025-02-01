@@ -1,12 +1,14 @@
+@use './styles/variables';
 @import './vendor/fonts/fonts.css';
 @import './vendor/normalize.css';
-@import './styles/variables.scss';
+
 * {
     box-sizing: border-box;
 }
+
 body {
     font-family: Montserrat, sans-serif;
-    color: $black;
+    color: variables.$black;
     font-size: 15px;
     font-weight: 500;
     line-height: 21px;
@@ -20,13 +22,16 @@ p {
     margin: 0;
     padding: 0;
 }
+
 a {
     text-decoration: none;
     color: inherit;
 }
+
 ul {
     list-style: none;
 }
+
 .button {
     border: none;
     padding: 0;
@@ -46,6 +51,6 @@ ul {
 }
 
 .bronfood-scrollbar::-webkit-scrollbar-thumb {
-    background-color: $orange;
+    background-color: variables.$orange;
     border-radius: 4px;
 }

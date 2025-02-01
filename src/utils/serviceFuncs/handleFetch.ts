@@ -36,6 +36,9 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             localStorage.removeItem('token');
             throw new Error('Unauthorized');
         }
+        if (res.status === 204) {
+            return;
+        }
         const result = await res.json();
         if (res.ok) {
             return result;

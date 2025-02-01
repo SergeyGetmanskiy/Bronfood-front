@@ -1,6 +1,6 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
-@mixin orderTimeCounterBase {
+@mixin order-time-counter-base {
     position: relative;
     overflow: hidden;
     border-radius: 25px;
@@ -12,13 +12,10 @@
     &::before {
         content: '';
         position: absolute;
-        top: 1px;
-        right: 1px;
-        bottom: 1px;
-        left: 1px;
+        inset: 1px;
         z-index: -1;
         border-radius: 24px;
-        background-color: $white;
+        background-color: variables.$white;
         box-sizing: border-box;
     }
 
@@ -41,15 +38,14 @@
     }
 
     &__time {
-        color: $light-gray;
+        color: variables.$light-gray;
         font-size: 15px;
         font-style: normal;
-
         font-weight: 500;
         line-height: 21px;
 
         &_number {
-            color: $orange;
+            color: variables.$orange;
             font-size: 15px;
             line-height: 28px;
             display: flex;
@@ -64,35 +60,37 @@
     }
 
     &__separator {
-        margin: 13px 0 13px 0;
+        margin: 13px 0;
     }
 
     &__subtitle {
-        color: $grey;
+        color: variables.$grey;
         font-size: 14px;
         font-weight: 400;
         line-height: 19.6px;
     }
 }
 
-.orderTimeCounter {
-    @include orderTimeCounterBase;
+.order-time-counter {
     background-image: linear-gradient(to left, #faebd5 0%, #ffd696 50%, #ffae30 100%);
 
+    @include order-time-counter-base;
+
     &__image {
-        &.imageExpired {
+        &.image-expired {
             background-image: url('../../vendor/images/icons/clock-icon-red.svg');
         }
     }
 
     &__time {
-        .timeExpired {
-            color: $red;
+        .time-expired {
+            color: variables.$red;
         }
     }
 }
 
-.orderTimeCounterExpiredBorder {
-    @include orderTimeCounterBase;
+.order-time-counter-expired-border {
     background-image: linear-gradient(to left, #fad9d5 0%, #ffa996 50%, #ff3030 100%);
+
+    @include order-time-counter-base;
 }

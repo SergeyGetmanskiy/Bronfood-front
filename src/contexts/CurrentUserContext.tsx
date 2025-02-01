@@ -2,7 +2,7 @@ import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
-type CurrentUserContent = {
+type CurrentUserContext = {
     currentUser: User | null;
     isLogin: boolean;
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
@@ -14,7 +14,7 @@ type CurrentUserContent = {
     profile: UseQueryResult<User, Error> | Record<string, never>;
 };
 
-export const CurrentUserContext = createContext<CurrentUserContent>({
+export const CurrentUserContext = createContext<CurrentUserContext>({
     currentUser: null,
     isLogin: false,
     signIn: {},

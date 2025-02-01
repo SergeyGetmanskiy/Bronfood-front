@@ -14,10 +14,10 @@ const PopupOrderCancelled = () => {
     }, [navigate]);
     return (
         <Popup onClose={() => navigate('/')}>
-            <div className={styles.popupOrderCancelled}>
-                <h2 className={styles.popupOrderCancelled__title}>{t('pages.popupOrderCancelled.yourOrderHasBeeCancelled')}</h2>
-                <p className={styles.popupOrderCancelled__description}>{t('pages.popupOrderCancelled.youWillReceiveYourMoneyBackWithin15Minutes')}</p>
-                <span className={styles.popupOrderCancelled__image} />
+            <div className={styles['popup-order-cancelled']}>
+                <h2 className={styles['popup-order-cancelled__title']}>{t('pages.popupOrderCancelled.yourOrderHasBeeCancelled')}</h2>
+                <p className={styles['popup-order-cancelled__description']}>{t('pages.popupOrderCancelled.youWillReceiveYourMoneyBackWithin15Minutes')}</p>
+                <span className={styles['popup-order-cancelled__image']} />
             </div>
         </Popup>
     );

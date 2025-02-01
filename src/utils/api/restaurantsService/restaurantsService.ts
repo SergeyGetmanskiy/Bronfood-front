@@ -1,10 +1,11 @@
+import { LngLatBounds } from '@yandex/ymaps3-types';
 import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
 export type Choice = {
     /**
      * Choice's id
      */
-    id: string;
+    id: number;
     /**
      * Choice's name
      */
@@ -18,16 +19,20 @@ export type Choice = {
      */
     default: boolean;
     /**
-     * Is choice selected by user
+     * feature choice belongs to
      */
-    chosen: boolean;
+    feature_name: string;
+    /**
+     * Is choice chosen by user
+     */
+    chosen?: boolean;
 };
 
 export type Feature = {
     /**
      * Feature's id
      */
-    id: string;
+    id: number;
     /**
      * Feature's name
      */
@@ -36,6 +41,14 @@ export type Feature = {
      * Feature's choices
      */
     choices: Choice[];
+    /**
+     * true if feature is container
+     */
+    is_container: boolean;
+    /**
+     * true if feature is size
+     */
+    is_size: boolean;
 };
 
 export type MealType = 'food' | 'drink' | 'dessert';
@@ -44,7 +57,7 @@ export type Meal = {
     /**
      * Meal's id
      */
-    id: string;
+    id: number;
     /**
      * Meal's name
      */
@@ -66,20 +79,20 @@ export type Meal = {
      */
     type: MealType;
     /**
-     * Meal's cooking time in minutes
+     * Time taken for meal to be prepared in minutes
      */
     waitingTime: number;
     /**
-     * Meal's additions
+     * If meal has features
      */
-    features?: Feature[];
+    hasFeatures: boolean;
 };
 
 export type Restaurant = {
     /**
      * Venue's id
      */
-    id: string;
+    id: number;
     /**
      * Link to venue's image
      */
@@ -117,10 +130,33 @@ export type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
+export type Review = {
+    client: string;
+    comment: string;
+    rating: number;
+    created_at: Date;
+};
+
+export type ReviewResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: {
+        restaurant: {
+            name: string;
+            rating: string;
+            review_count: number;
+        };
+        reviews: Review[];
+    };
+};
+
 export interface RestaurantsService {
-    getRestaurants: () => Promise<{ data: Restaurant[] }>;
-    getRestaurantById(id: string): Promise<{ data: Restaurant }>;
-    getMeals(restaurantId: string): Promise<{ data: Meal[] }>;
+    getRestaurants: (bounds: LngLatBounds) => Promise<{ data: Restaurant[] }>;
+    getRestaurantById: (id: number) => Promise<{ data: Restaurant }>;
+    getMeals: (restaurantId: number) => Promise<{ data: Meal[] }>;
+    getFeatures: (restaurantId: number, mealId: number) => Promise<{ data: Feature[] }>;
+    getReviews: (restaurantId: number) => Promise<{ data: ReviewResponse }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

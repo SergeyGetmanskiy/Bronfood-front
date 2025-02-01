@@ -1,6 +1,6 @@
-@import '../../../styles/variables.scss';
+@use '../../../styles/variables';
 
-.basket_meals_list {
+.basket-meals-list {
     flex-grow: 1;
     display: flex;
     flex-direction: column;

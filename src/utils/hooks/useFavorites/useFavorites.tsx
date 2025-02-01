@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { favoritesService } from '../../api/favoritesService/favoritesService';
+import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 const useGetFavorites = () => {
+    const { currentUser } = useCurrentUser();
     return useQuery({
         queryKey: ['userFavorites'],
         queryFn: async () => {
@@ -10,6 +12,7 @@ const useGetFavorites = () => {
                 return res.data;
             }
         },
+        enabled: !!currentUser,
     });
 };
 
@@ -17,7 +20,7 @@ export const useFavoritesMutations = () => {
     const queryClient = useQueryClient();
 
     const addFavorite = useMutation({
-        mutationFn: async (restId: string) => {
+        mutationFn: async (restId: number) => {
             const response = await favoritesService.setFavorites(restId);
             return response;
         },
@@ -29,7 +32,7 @@ export const useFavoritesMutations = () => {
     });
 
     const deleteFavorite = useMutation({
-        mutationFn: async (restId: string) => {
+        mutationFn: async (restId: number) => {
             const response = await favoritesService.deleteFavorites(restId);
             return response;
         },

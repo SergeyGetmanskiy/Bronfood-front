@@ -1,6 +1,6 @@
-@import '../../../../styles/variables.scss';
+@use '../../../../styles/variables';
 
-.restaurant_image {
+.restaurant-image {
     height: 180px;
     background-repeat: no-repeat;
     background-size: cover;

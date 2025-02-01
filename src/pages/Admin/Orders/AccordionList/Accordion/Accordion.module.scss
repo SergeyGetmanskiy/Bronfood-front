@@ -1,0 +1,119 @@
+@use '../../../../../styles/variables';
+
+@mixin summary {
+    display: grid;
+    grid-template-columns: auto 124px 30px;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 27px 10px 15px;
+}
+
+@mixin icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background-color: variables.$background;
+
+    &_archive_active {
+        border: 1px solid variables.$line;
+        border-radius: 25px;
+    }
+
+    &_active {
+        border: 1px solid variables.$orange;
+        border-radius: 25px;
+    }
+
+    &__summary {
+        background-color: variables.$orange;
+
+        @include summary;
+
+        &_active {
+            background-color: variables.$background;
+        }
+    }
+
+    &__summary_archive {
+        border: 1px solid variables.$line;
+        background-color: variables.$background;
+
+        @include summary;
+
+        &_active {
+            border: none;
+            background-color: variables.$background;
+        }
+    }
+
+    &__username {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: variables.$white;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &_active {
+            color: variables.$black;
+        }
+
+        &_archive {
+            color: variables.$light-gray;
+        }
+    }
+
+    &__ordercode {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+        color: variables.$white;
+
+        &_active {
+            color: variables.$black;
+        }
+
+        &_archive {
+            color: variables.$grey;
+        }
+    }
+
+    &__icon {
+        background-image: url('../../../../../vendor/images/icons/admin/arrow-down.svg');
+
+        @include icon;
+
+        &_active {
+            background-image: url('../../../../../vendor/images/icons/admin/arrow-up.svg');
+        }
+    }
+
+    &__icon_archive {
+        background-image: url('../../../../../vendor/images/icons/admin/arrow-down-black.svg');
+
+        @include icon;
+
+        &_active {
+            background-image: url('../../../../../vendor/images/icons/admin/arrow-up.svg');
+        }
+    }
+
+    &__details {
+        max-height: 0;
+        width: 100%;
+        overflow: hidden;
+        padding: 1px 6px;
+        margin-bottom: 10px;
+        transition: max-height 0.2s ease-out;
+    }
+}

@@ -1,36 +1,34 @@
+import { LngLatBounds } from '@yandex/ymaps3-types';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
-import { Meal, Restaurant, RestaurantsService } from './restaurantsService';
+import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from './restaurantsService';
 
 export class RestaurantsServiceReal implements RestaurantsService {
-    private _restaurantsCache: Restaurant[] | null = null;
-
-    async getRestaurants(): Promise<{ data: Restaurant[] }> {
-        if (this._restaurantsCache !== null) {
-            return {
-                data: this._restaurantsCache,
-            };
-        }
-        const responseData = await handleFetch('api/restaurant/');
-        this._restaurantsCache = responseData.data;
+    async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
+        const coords = bounds.flat();
+        const swlat = `swlat=${coords[1]}`;
+        const swlon = `swlon=${coords[0]}`;
+        const nelat = `nelat=${coords[3]}`;
+        const nelon = `nelon=${coords[2]}`;
+        const endpoint = `api/restaurant/?${swlat}&${swlon}&${nelat}&${nelon}`;
+        const responseData = await handleFetch(endpoint);
         return responseData;
     }
 
-    async getRestaurantById(id: string): Promise<{ data: Restaurant }> {
-        if (this._restaurantsCache !== null) {
-            const restaurant = this._restaurantsCache.find((r) => r.id === id);
-            if (restaurant) {
-                return {
-                    data: restaurant,
-                };
-            }
-        }
-        const restaurant = await handleFetch(`api/restaurant/${id}/`);
-        return {
-            data: restaurant.data,
-        };
+    async getRestaurantById(id: number): Promise<{ data: Restaurant }> {
+        return handleFetch(`api/restaurant/${id}/`);
     }
 
-    async getMeals(restaurantId: string): Promise<{ data: Meal[] }> {
+    async getMeals(restaurantId: number): Promise<{ data: Meal[] }> {
         return handleFetch(`api/restaurant/${restaurantId}/meals/`);
+    }
+
+    async getFeatures(restaurantId: number, mealId: number): Promise<{ data: Feature[] }> {
+        return handleFetch(`api/restaurant/${restaurantId}/meal/${mealId}/features/`);
+    }
+
+    async getReviews(restaurantId: number): Promise<{ data: ReviewResponse }> {
+        const limit = 100;
+        const offset = 0;
+        return handleFetch(`api/review/${restaurantId}/?limit=${limit}&offset=${offset}`);
     }
 }

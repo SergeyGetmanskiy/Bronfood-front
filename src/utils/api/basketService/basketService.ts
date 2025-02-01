@@ -1,15 +1,27 @@
 import { BasketServiceReal } from './basketServiceReal';
-import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { Meal, Restaurant, Choice } from '../restaurantsService/restaurantsService';
 
 export type MealInBasket = {
     /**
-     * Meal in basket
+     * meal's id
+     */
+    id: number;
+    /**
+     * meal
      */
     meal: Meal;
     /**
-     * Quantity of meal in basket
+     * quantity of meals
      */
     count: number;
+    /**
+     * meal's choices
+     */
+    choices: Choice[] | never[];
+    /**
+     * meal's price
+     */
+    price: number;
 };
 
 export type Basket = {
@@ -21,13 +33,29 @@ export type Basket = {
      * List of meals in basket
      */
     meals: MealInBasket[];
+    /**
+     * Total price of meals in basket
+     */
+    basket_price: number;
+    /**
+     * Comission value
+     */
+    basket_commission: number;
+};
+
+export type FeatureInPayload = {
+    featureId: number;
+    featureName: string;
+    choiceId: number;
+    choiceName: string;
 };
 
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
-    addMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
-    deleteMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
-    emptyBasket: () => Promise<{ data: Basket }>;
+    addMeal: (restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]) => Promise<{ data: MealInBasket }>;
+    increment: (mealId: number) => Promise<void>;
+    decrement: (mealId: number) => Promise<void>;
+    emptyBasket: () => Promise<void>;
 }
 
 export const basketService = new BasketServiceReal();

@@ -1,12 +1,12 @@
-@import '../../../styles/variables.scss';
+@use '../../../styles/variables';
 
 .popup {
     position: relative;
     display: flex;
     flex-direction: column;
     width: calc(100% - 30px);
-    background-color: $background;
-    box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
+    background-color: variables.$background;
+    box-shadow: 0 27px 48px -23px rgb(28 39 49 / 100%);
     border-radius: 25px;
     margin: 115px auto 20px;
     padding: 30px 0;
@@ -23,36 +23,36 @@
         border: none;
         padding: 0;
 
-        &:before {
+        &::before {
             content: '';
             width: 22px;
             height: 2px;
             position: absolute;
             top: 12px;
             left: -4px;
-            background: $grey;
+            background: variables.$grey;
             transform: rotate(-45deg);
         }
 
-        &:after {
+        &::after {
             content: '';
             width: 22px;
             height: 2px;
             position: absolute;
             top: 12px;
             left: -4px;
-            background: $grey;
+            background: variables.$grey;
             transform: rotate(45deg);
         }
     }
 
     &__overlay {
-        position: absolute; //fixed --> without scroll
+        position: absolute; // fixed --> without scroll
         top: 0;
         left: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: rgba(135, 133, 133, 0.75);
+        background-color: rgb(135 133 133 / 75%);
         backdrop-filter: blur(2.5px);
 
         &_hide {

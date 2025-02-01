@@ -9,7 +9,7 @@ interface InfoImage {
 }
 
 const InfoImage: FC<InfoImage> = (props) => {
-    return <div className={`${styles.image_info} ${styles[`image_info_${props.mode}`]}`}></div>;
+    return <div className={`${styles['image-info']} ${styles[`image-info_${props.mode}`]}`}></div>;
 };
 
 export default InfoImage;

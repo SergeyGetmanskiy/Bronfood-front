@@ -1,6 +1,6 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables';
 
-.popupOrderCancelled {
+.popup-order-cancelled {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
         font-weight: 500;
         line-height: 28px;
         margin-top: 25px;
-        color: $black;
+        color: variables.$black;
     }
 
     &__description {
@@ -18,7 +18,7 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 19.6px;
-        color: $grey-subtitle;
+        color: variables.$grey-subtitle;
         max-width: 266px;
         text-align: center;
     }

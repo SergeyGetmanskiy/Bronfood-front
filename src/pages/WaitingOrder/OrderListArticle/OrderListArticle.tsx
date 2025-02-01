@@ -9,15 +9,15 @@ type OrderListArticleProps = {
 
 const OrderListArticle: FC<OrderListArticleProps> = ({ order }) => {
     return (
-        <article className={styles.orderListArticle}>
-            <ul className={styles.orderListArticle__list}>
+        <article className={styles['order-list-article']}>
+            <ul className={styles['order-list-article__list']}>
                 {order.orderedMeal.map((item) => (
                     <OrderListItem item={item} key={item.orderedMeal.id} />
                 ))}
             </ul>
-            <div className={styles.orderListArticle__amount}>
-                <h3 className={styles.orderListArticle__title}>Итого: </h3>
-                <h3 className={styles.orderListArticle__title}>{order.totalAmount} &#x20B8;</h3>
+            <div className={styles['order-list-article__amount']}>
+                <h3 className={styles['order-list-article__title']}>Итого: </h3>
+                <h3 className={styles['order-list-article__title']}>{order.totalAmount} &#x20B8;</h3>
             </div>
         </article>
     );

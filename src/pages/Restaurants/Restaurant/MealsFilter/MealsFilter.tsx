@@ -13,7 +13,7 @@ type MealsFilterProps = {
 function MealsFilter({ selectedTypes, addType, deleteType }: MealsFilterProps) {
     const { t } = useTranslation();
     return (
-        <ul className={`${styles.meals_filter}`}>
+        <ul className={`${styles['meals-filter']}`}>
             {types.map((type, index) => {
                 const isActive = selectedTypes.includes(type);
                 return (

@@ -20,8 +20,11 @@ import Feedback from './pages/Feedback/Feedback';
 import Favorites from './pages/Favorites/Favorites';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
-import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
+import Admin from './pages/Admin/Admin';
+import Orders from './pages/Admin/Orders/Orders';
+import WorkStatus from './pages/Admin/WorkStatus/WorkStatus';
+import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 
 function App() {
     const [city, setCity] = useState('');
@@ -30,7 +33,6 @@ function App() {
     useEffect(() => {
         navigate('/restaurants');
     }, [navigate]);
-
     return (
         <div>
             <Header city={city} />
@@ -53,6 +55,10 @@ function App() {
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="work-status" element={<WorkStatus />} />
+                </Route>
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

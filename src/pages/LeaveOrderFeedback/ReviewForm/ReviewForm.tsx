@@ -32,17 +32,17 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ rating, review, onRatingChange,
     };
 
     return (
-        <form className={styles.review_form} onSubmit={handleSubmit}>
+        <form className={styles['review-form']} onSubmit={handleSubmit}>
             <StarRating maxRating={5} onRatingChange={handleRatingChange} filledStars={filledStars} resetFilledStars={resetFilledStars} />
-            <div className={styles.review_form__input}>
-                <h3 className={styles.review_form__subtitle}>{t('pages.leaveOrderFeedback.leaveFeedback')}</h3>
-                <textarea className={`${styles.review_form__textarea} ${filledStars ? styles.error : ''}`} value={review} onChange={handleReviewChange} placeholder={t('pages.leaveOrderFeedback.writeYourReview')} minLength={1} maxLength={1000} />
+            <div className={styles['review-form__input']}>
+                <h3 className={styles['review-form__subtitle']}>{t('pages.leaveOrderFeedback.leaveFeedback')}</h3>
+                <textarea className={`${styles['review-form__textarea']} ${filledStars ? styles.error : ''}`} value={review} onChange={handleReviewChange} placeholder={t('pages.leaveOrderFeedback.writeYourReview')} minLength={1} maxLength={1000} />
             </div>
             <Button type="submit" disabled={isSubmitting || rating === 0}>
                 {t('pages.leaveOrderFeedback.send')}
             </Button>
-            <div className={styles.review_form__skip_button_wrapper}>
-                <button className={styles.review_form__skip_button} type="button" onClick={onSkipOrClose}>
+            <div className={styles['review-form__skip_button_wrapper']}>
+                <button className={styles['review-form__skip_button']} type="button" onClick={onSkipOrClose}>
                     {t('pages.leaveOrderFeedback.skip')}
                 </button>
             </div>
