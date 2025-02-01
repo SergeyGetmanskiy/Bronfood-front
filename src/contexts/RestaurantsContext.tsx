@@ -1,7 +1,8 @@
 import { skipToken, useQuery } from '@tanstack/react-query';
-import { FC, PropsWithChildren, createContext, useCallback, useState } from 'react';
+import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction } from 'react';
 import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
+import { LngLatBounds } from '@yandex/ymaps3-types';
 
 export type Option = {
     /**
@@ -111,7 +112,7 @@ export type RestaurantsContext = {
     /**
      * Sets Yandex map's bounds
      */
-    setBounds: (bounds: Array<Array>) => void;
+    setBounds: Dispatch<SetStateAction<LngLatBounds | never[]>>;
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
@@ -142,10 +143,10 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<number | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
-    const [bounds, setBounds] = useState([]);
+    const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants', bounds],
-        queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds) : skipToken,
+        queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
     });
     let restaurantsOnMap: Restaurant[] = [];
     if (isSuccess) {

@@ -12,7 +12,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
     const [initialRender, setInitialRender] = useState(true);
     const [center, setCenter] = useState<LngLat>([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
-    const [userLocation, setUserLocation] = useState<number[] | []>([]);
+    const [userLocation, setUserLocation] = useState<LngLat | undefined>(undefined);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
     const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds } = useRestaurants();
@@ -74,7 +74,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             }
         }
         let ignore = false;
-        if (userLocation.length > 0) {
+        if (userLocation) {
             fetchLocality();
         }
         return () => {
@@ -87,7 +87,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             <YMap location={{ center: center, zoom: zoom }} margin={[0, 20, 360, 0]}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
-                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} onUpdate={initialRender && handleMapUpdate} />
+                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} onUpdate={initialRender ? handleMapUpdate : null} />
                 {restaurantsFiltered.map((place) => {
                     const active = activePlaceId === place.id;
                     return (
