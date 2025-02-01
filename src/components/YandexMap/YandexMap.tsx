@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState, useMemo, useCallback } from 'react';
 import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
-import type { MapEventUpdateHandler, BehaviorMapEventHandler } from '@yandex/ymaps3-types';
+import { type MapEventUpdateHandler, type BehaviorMapEventHandler, LngLat } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,9 @@ import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
     const [initialRender, setInitialRender] = useState(true);
-    const [center, setCenter] = useState([76.921552, 43.246345]);
+    const [center, setCenter] = useState<LngLat>([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
-    const [userLocation, setUserLocation] = useState([]);
+    const [userLocation, setUserLocation] = useState<number[] | []>([]);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
     const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds } = useRestaurants();
@@ -68,7 +68,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             if (res.ok) {
                 const result = await res.json();
                 if (!ignore) {
-                    const locality = result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter((c) => c.kind === 'locality')[0].name;
+                    const locality = result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter((c: { kind: string; name: string }) => c.kind === 'locality')[0].name;
                     setCity(locality);
                 }
             }
@@ -92,13 +92,13 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                     const active = activePlaceId === place.id;
                     return (
                         <YMapMarker key={place.id} coordinates={[place.coordinates.longitude, place.coordinates.latitude]} draggable={false} onClick={() => handlePlacemarkClick(place.id, place.coordinates.longitude, place.coordinates.latitude)}>
-                            <img className={`${styles.yamap.marker} ${active ? styles.yamap.marker_active : ''}`} src={active ? markerActive : marker}></img>
+                            <img className={`${styles.yamap__marker} ${active ? styles.yamap__marker_active : ''}`} src={active ? markerActive : marker}></img>
                         </YMapMarker>
                     );
                 })}
                 {userLocation && (
                     <YMapMarker key={userLocation[0]} coordinates={userLocation} draggable={false}>
-                        <img className={styles.yamap.marker} src={userMarker} />
+                        <img className={styles.yamap__marker} src={userMarker} />
                     </YMapMarker>
                 )}
             </YMap>
