@@ -5,8 +5,12 @@ import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from '.
 export class RestaurantsServiceReal implements RestaurantsService {
     async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
         const coords = bounds.flat();
-        coords.name = 'name';
-        const responseData = await handleFetch('api/restaurant/');
+        const swlat = `swlat=${coords[1]}`;
+        const swlon = `swlon=${coords[0]}`;
+        const nelat = `nelat=${coords[3]}`;
+        const nelon = `nelon=${coords[2]}`;
+        const endpoint = `api/restaurant/?${swlat}&${swlon}&${nelat}&${nelon}`;
+        const responseData = await handleFetch(endpoint);
         return responseData;
     }
 
