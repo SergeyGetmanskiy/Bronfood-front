@@ -4,7 +4,7 @@ import OrderServiceReal from '../../api/orderService/orderSeviceReal';
 import { useNavigate } from 'react-router-dom';
 
 interface UseOrderFeedbackProps {
-    restaurantId: number;
+    restaurantId: string;
     onFeedbackSubmitted: () => void;
 }
 

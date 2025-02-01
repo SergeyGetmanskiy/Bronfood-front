@@ -20,7 +20,7 @@ export class FavoritesServiceMock implements FavoritesService {
         return { status: 'success', data: mockUser.favorites };
     }
 
-    async setFavorites(restId: number): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
+    async setFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         await this._wait(100);
         const token = true;
         if (token) {
@@ -35,7 +35,7 @@ export class FavoritesServiceMock implements FavoritesService {
         return { status: 'success', data: mockUser.favorites };
     }
 
-    async deleteFavorites(restId: number): Promise<{ status: 'success'; data: Restaurant[] | null } | { status: 'error'; error_message: string }> {
+    async deleteFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[] | null } | { status: 'error'; error_message: string }> {
         await this._wait(100);
         const token = true;
         if (token) {

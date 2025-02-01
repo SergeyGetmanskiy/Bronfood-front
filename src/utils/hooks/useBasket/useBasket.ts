@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { basketService, FeatureInPayload } from '../../api/basketService/basketService';
+import { basketService } from '../../api/basketService/basketService';
+import { Feature } from '../../api/restaurantsService/restaurantsService';
 import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 export const useGetBasket = () => {
@@ -9,7 +10,6 @@ export const useGetBasket = () => {
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
         enabled: isLogin,
-        retry: 0,
     });
 };
 
@@ -17,39 +17,22 @@ export const useBasketMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const queryClient = useQueryClient();
     const addMeal = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: number; mealId: number; features: FeatureInPayload[] | never[] }) => basketService.addMeal(restaurantId, mealId, features),
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.addMeal(restaurantId, mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const increment = useMutation({
-        mutationFn: ({ mealId }: { mealId: number }) => basketService.increment(mealId),
-        onSuccess: () =>
-            queryClient.refetchQueries({
-                queryKey: ['basket'],
-                type: 'active',
-                exact: true,
-            }),
-        onError: (error) => {
-            setErrorMessage(error.message);
-        },
-    });
-    const decrement = useMutation({
-        mutationFn: ({ mealId }: { mealId: number }) => basketService.decrement(mealId),
-        onSuccess: () =>
-            queryClient.refetchQueries({
-                queryKey: ['basket'],
-                type: 'active',
-                exact: true,
-            }),
+    const deleteMeal = useMutation({
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.deleteMeal(restaurantId, mealId, features),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const emptyBasket = useMutation({
         mutationFn: () => basketService.emptyBasket(),
-        onSuccess: () => queryClient.resetQueries({ queryKey: ['basket'], exact: true }),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
@@ -57,12 +40,11 @@ export const useBasketMutations = () => {
     const reset = () => {
         setErrorMessage('');
         addMeal.reset();
-        increment.reset();
-        decrement.reset();
+        deleteMeal.reset();
         emptyBasket.reset();
     };
     const placeOrder = useMutation({
-        mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: number }) => basketService.placeOrder(userId, restaurantId),
+        mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: string }) => basketService.placeOrder(userId, restaurantId),
         onSuccess: (result) => {
             queryClient.setQueryData(['basket'], result);
         },
@@ -72,8 +54,7 @@ export const useBasketMutations = () => {
     });
     return {
         addMeal,
-        increment,
-        decrement,
+        deleteMeal,
         emptyBasket,
         errorMessage,
         reset,

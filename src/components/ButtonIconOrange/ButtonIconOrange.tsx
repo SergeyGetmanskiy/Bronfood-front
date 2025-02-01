@@ -19,10 +19,10 @@ const ButtonIconOrange: FC<ButtonIconOrangeProps> = ({ isActive = false, icon = 
         <button
             {...props}
             className={`
-                ${styles['button-icon-orange']}
-                ${styles[`button-icon-orange__icon_${icon}`]}
-                ${isActive ? styles['button-icon-orange_active'] : ''}
-                ${icon === 'close' ? styles['button-icon-orange_wide'] : ''}
+                ${styles.button_icon_orange}
+                ${styles[`button_icon_orange__icon_${icon}`]}
+                ${isActive ? styles.button_icon_orange_active : ''}
+                ${icon === 'close' ? styles.button_icon_orange_wide : ''}
             `}
         />
     );

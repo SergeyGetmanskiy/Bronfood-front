@@ -1,4 +1,4 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
 .option {
     display: flex;
@@ -7,7 +7,7 @@
     width: fit-content;
     height: 26px;
     border-radius: 15px;
-    background: variables.$button-grey;
+    background: $button-grey;
     border: none;
     cursor: pointer;
 
@@ -17,7 +17,6 @@
         font-weight: 400;
         line-height: 1.4;
     }
-
     &__icon {
         display: none;
         width: 24px;
@@ -27,15 +26,13 @@
         background-image: url('./close-icon.svg');
         background-color: transparent;
         cursor: pointer;
-        color: variables.$grey;
+        color: $grey;
     }
-
     &__icon_visible {
         display: block;
     }
-
     &_selected {
-        background: variables.$orange-pale;
+        background: $orange-pale;
         cursor: default;
     }
 }

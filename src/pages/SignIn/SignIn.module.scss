@@ -1,12 +1,11 @@
-@use '../../styles/variables';
+@import '../../styles/variables.scss';
 
-.link-registration {
-    color: variables.$orange;
+.link_registration {
+    color: $orange;
     margin: 20px auto 0;
 }
-
-.link-recovery {
-    color: variables.$grey;
+.link_recovery {
+    color: $grey;
     text-decoration: underline;
     margin: 10px 0 0 auto;
 }

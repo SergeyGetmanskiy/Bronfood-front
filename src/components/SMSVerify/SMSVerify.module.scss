@@ -1,6 +1,6 @@
-@use '../../styles/variables';
+@import '../../styles/variables.scss';
 
-.sms-verify {
+.sms_verify {
     &__layout {
         padding: 0 21px;
         display: flex;
@@ -11,31 +11,30 @@
         display: flex !important;
         gap: 16px;
         justify-content: center;
-    }
+        input {
+            text-align: center;
+            width: 48px;
+            height: 52px;
+            border-radius: 15px;
+            border: 1px solid $line;
+            background-color: $background;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: $orange;
 
-    &__input {
-        text-align: center;
-        width: 48px;
-        height: 52px;
-        border-radius: 15px;
-        border: 1px solid variables.$line;
-        background-color: variables.$background;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 1.4;
-        color: variables.$orange;
+            &:focus {
+                box-shadow: none;
+                border-color: $orange;
+            }
 
-        &:focus {
-            box-shadow: none;
-            border-color: variables.$orange;
-        }
+            &:not(:placeholder-shown) {
+                border-color: $orange;
+            }
 
-        &:not(:placeholder-shown) {
-            border-color: variables.$orange;
-        }
-
-        &::-webkit-autofill {
-            appearance: none;
+            &::-webkit-autofill {
+                -webkit-appearance: none;
+            }
         }
     }
 }

@@ -46,7 +46,7 @@ const QueryPhone: FC<QueryPhone> = (props) => {
                 navigate('/');
             }}
         >
-            <div className={styles['query-phone__layout']}>
+            <div className={styles.query_phone__layout}>
                 <>
                     {props.isErrorVisible && <ErrorMessage message={t(`components.passwordRecovery.${props.error}`)} />}
                     <Form control={control} name="phoneNumber" onSubmit={onSubmit}>

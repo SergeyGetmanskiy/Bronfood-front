@@ -3,7 +3,7 @@ import Popup from '../Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import styles from './SMSVerify.module.scss';
 import Button from '../Button/Button';
-import PinField from 'react-pin-field';
+import { PinInput } from 'react-input-pin-code';
 import { FC, useState } from 'react';
 import { Form, useForm } from 'react-hook-form';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -36,26 +36,25 @@ const SMSVerify: FC<SMSVerify> = (props) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const { control } = useForm();
-    const [complete, setComplete] = useState<boolean>(false);
-    const [values, setValues] = useState<string>('');
 
-    const handleComplete = (value: string) => {
-        const valTest = /^\d+$/;
-        if (valTest.test(value)) {
-            setComplete(true);
-            setValues(value);
-        } else {
-            setComplete(false);
-        }
+    const [showError, setShowError] = useState<boolean>(false);
+    const [values, setValues] = useState<string[]>(['', '', '', '']);
+
+    const handleChange = (_value: string | string[], _index: number, values: string[]) => {
+        setShowError(false);
+        setValues(values);
     };
 
     const onSubmit = () => {
-        const code = values;
+        const code = values.join('');
         if (code.length == 4) {
             props.onSubmit(code);
+        } else {
+            setShowError(true);
         }
     };
 
+    const valTest = ['[0-9]'];
     return (
         <Popup
             title={t('pages.confirmation.enterSmsCode')}
@@ -64,14 +63,12 @@ const SMSVerify: FC<SMSVerify> = (props) => {
                 navigate('/');
             }}
         >
-            <div className={styles['sms-verify__layout']}>
+            <div className={styles.sms_verify__layout}>
                 {props.isLoading && <Preloader />}
                 {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
                 <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
-                    <div className={styles['sms-verify__inputs']}>
-                        <PinField length={4} className={`${styles['sms-verify__input']}`} onComplete={handleComplete} />
-                    </div>
-                    <Button disabled={!complete}>{t('components.button.next')}</Button>
+                    <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms_verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
+                    <Button>{t('components.button.next')}</Button>
                 </Form>
             </div>
         </Popup>

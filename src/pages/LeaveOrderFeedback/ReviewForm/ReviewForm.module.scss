@@ -1,6 +1,6 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
-.review-form {
+.review_form {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -9,8 +9,8 @@
         font-size: 17px;
         font-weight: 500;
         line-height: 23.8px;
-        color: variables.$grey;
-        padding: 15px 0;
+        color: $grey;
+        padding: 15px 0 15px 0;
     }
 
     &__input {
@@ -22,21 +22,21 @@
         width: 100%;
         padding: 15px 16px;
         border-radius: 20px;
-        border: 1px solid variables.$line;
+        border: 1px solid $line;
         font-size: 14px;
         line-height: 19.6px;
         color: black;
         resize: none;
         min-height: 147px;
-        background: variables.$background;
+        background: $background;
         transition: background-color 0.3s ease-in-out;
 
         &::placeholder {
-            color: variables.$light-gray;
+            color: $light-gray;
         }
 
         &.error {
-            background-color: rgb(255 204 204 / 20%);
+            background-color: rgba(255, 204, 204, 0.2);
         }
     }
 
@@ -51,11 +51,11 @@
         background-color: transparent;
         cursor: pointer;
         padding: 0;
-        color: variables.$light-gray;
+        color: $light-gray;
         display: flex;
         font-size: 15px;
         font-weight: 500;
         justify-content: center;
-        margin: 20px 0 0;
+        margin: 20px 0 0 0;
     }
 }

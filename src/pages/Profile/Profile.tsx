@@ -72,7 +72,7 @@ const Profile = () => {
                                 <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
                             </FormInputs>
                         )}
-                        <div className={styles['profile-button-space']}></div>
+                        <div className={styles.profile__button_space}></div>
                         <Button disabled={updateUser.isPending}>{t('pages.profile.save')}</Button>
                     </Form>
                 </Popup>

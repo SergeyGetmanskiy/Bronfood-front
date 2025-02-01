@@ -1,4 +1,4 @@
-@use '../../styles/variables';
+@import '../../styles/variables.scss';
 
 .favorites {
     &__error,
@@ -8,9 +8,8 @@
         margin: 100px auto;
         text-align: center;
         font-size: 14px;
-        color: variables.$orange;
+        color: $orange;
     }
-
     &__list {
         width: 100%;
         display: flex;
@@ -18,9 +17,5 @@
         justify-content: center;
         flex-direction: column;
         gap: 25px;
-    }
-
-    &__item {
-        width: 94%;
     }
 }
