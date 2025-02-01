@@ -1,6 +1,6 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
-.order-list-article {
+.orderListArticle {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -14,11 +14,11 @@
         justify-content: space-between;
         width: 100%;
         padding: 0;
-        margin: 14px 0 0;
+        margin: 14px 0 0 0;
     }
 
     &__title {
-        color: variables.$black;
+        color: $black;
         font-size: 17px;
         line-height: 23.8px;
         font-weight: 500;
@@ -32,11 +32,11 @@
         justify-content: flex-start;
         max-height: 100px;
         overflow-y: auto;
-        padding: 0;
-        border-bottom: 1px solid variables.$line;
+        padding: 0 0 0 0;
+        border-bottom: 1px solid $line;
     }
 
     &__price {
-        color: variables.$black;
+        color: $black;
     }
 }

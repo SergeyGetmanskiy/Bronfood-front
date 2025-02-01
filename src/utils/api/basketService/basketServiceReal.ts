@@ -1,4 +1,5 @@
-import { BasketService, Basket, MealInBasket, FeatureInPayload } from './basketService';
+import { BasketService, Basket } from './basketService';
+import { Feature } from '../restaurantsService/restaurantsService';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
 import { OrderState } from '../orderService/orderService';
 
@@ -6,19 +7,16 @@ export class BasketServiceReal implements BasketService {
     async getBasket(): Promise<{ data: Basket }> {
         return handleFetch('api/basket/');
     }
-    async addMeal(restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]): Promise<{ data: MealInBasket }> {
-        return handleFetch('api/basket/meals/', { method: 'POST', data: { restaurantId, mealId, features } });
+    async addMeal(restaurant_id: string, meal_id: string, feature_id: Feature[] | never[]): Promise<{ data: Basket }> {
+        return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurant_id, meal_id, feature_id } });
     }
-    async increment(mealId: number): Promise<void> {
-        return handleFetch('api/basket/meals/increment/', { method: 'POST', data: { mealId } });
+    async deleteMeal(restaurant_id: string, meal_id: string, feature_id: Feature[] | never[]): Promise<{ data: Basket }> {
+        return handleFetch('api/basket/delete_meal', { method: 'POST', data: { restaurant_id, meal_id, feature_id } });
     }
-    async decrement(mealId: number): Promise<void> {
-        return handleFetch('api/basket/meals/decrement/', { method: 'POST', data: { mealId } });
+    async emptyBasket(): Promise<{ data: Basket }> {
+        return handleFetch('api/basket/empty', { method: 'POST' });
     }
-    async emptyBasket(): Promise<void> {
-        return handleFetch('api/basket/', { method: 'DELETE' });
-    }
-    async placeOrder(userId: string, restaurantId: number): Promise<OrderState> {
+    async placeOrder(userId: string, restaurantId: string): Promise<OrderState> {
         return handleFetch('api/orders', { method: 'POST', data: { restaurantId, userId } });
     }
 }

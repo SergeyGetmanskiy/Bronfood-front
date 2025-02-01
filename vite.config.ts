@@ -5,8 +5,4 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
     plugins: [react(), svgr()],
     base: process.env.NODE_ENV === 'production' ? '/front/#/' : '',
-    build: {
-        target: 'esnext',
-        chunkSizeWarningLimit: 700,
-    },
 });

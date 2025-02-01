@@ -1,8 +1,8 @@
-import { skipToken, useQuery } from '@tanstack/react-query';
-import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { FC, PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
+import i18n from '../i18n';
 import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
-import { LngLatBounds } from '@yandex/ymaps3-types';
 
 export type Option = {
     /**
@@ -34,11 +34,11 @@ export type RestaurantsContext = {
     /**
      * Sets clicked restaurant page
      */
-    setActiveRestaurant: (id: number) => void;
+    setActiveRestaurant: (id: string) => void;
     /**
      * Restaurant which is clicked in a list
      */
-    inView?: number;
+    inView?: string;
     /**
      * List of restaurants currently on map
      */
@@ -56,17 +56,33 @@ export type RestaurantsContext = {
      */
     isError: boolean;
     /**
+     * Restaurant to add all meals to it
+     */
+    restaurant: Restaurant | null;
+    /**
+     * Indicates whether restaurant are loading
+     */
+    restaurantLoading: boolean;
+    /**
+     * Indicates whether query encountered an error
+     */
+    restaurantError: boolean;
+    /**
+     * Reload data restaurant
+     */
+    refetchRestaurant: () => void;
+    /**
      * Sets restaurant which is clicked in a list
      */
-    setInView: (id: number) => void;
+    setInView: (id: string) => void;
     /**
      * Restaurant which is last clicked in a list
      */
-    lastClickedRestaurantId: number | null;
+    lastClickedRestaurantId: string | null;
     /**
      * Sets restaurant which is last clicked in a list
      */
-    setLastClickedRestaurantId: (id: number | null) => void;
+    setLastClickedRestaurantId: (id: string | null) => void;
     /**
      * Options' states and controls. Options come from user's input
      */
@@ -109,10 +125,6 @@ export type RestaurantsContext = {
          */
         deleteVenueType: (type: VenueType) => void;
     };
-    /**
-     * Sets Yandex map's bounds
-     */
-    setBounds: Dispatch<SetStateAction<LngLatBounds | never[]>>;
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
@@ -121,7 +133,11 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
+    restaurant: null,
     refetch: () => {},
+    restaurantLoading: false,
+    restaurantError: false,
+    refetchRestaurant: () => {},
     setInView: () => {},
     lastClickedRestaurantId: null,
     setLastClickedRestaurantId: () => {},
@@ -137,16 +153,17 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
         addVenueType: () => {},
         deleteVenueType: () => {},
     },
-    setBounds: () => {},
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [inView, setInView] = useState<number | undefined>(undefined);
-    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
-    const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
+    const [inView, setInView] = useState<string | undefined>(undefined);
+    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+    const queryClient = useQueryClient();
+    const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
+    const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
-        queryKey: ['restaurants', bounds],
-        queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
+        queryKey: ['restaurants'],
+        queryFn: () => restaurantsService.getRestaurants(),
     });
     let restaurantsOnMap: Restaurant[] = [];
     if (isSuccess) {
@@ -163,9 +180,33 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
 
                   return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
               });
-    const setActiveRestaurant = useCallback((id: number) => {
-        setInView(id);
-    }, []);
+    const {
+        isLoading: restaurantLoading,
+        isError: restaurantError,
+        data: fetchedRestaurant,
+        refetch: refetchRestaurant,
+    } = useQuery({
+        queryKey: ['restaurant', restaurantId],
+        queryFn: async () => {
+            if (!restaurantId) throw new Error(i18n.t('pages.restaurantsContext.noRestaurantIdProvided'));
+            const response = await restaurantsService.getRestaurantById(restaurantId);
+            return response.data;
+        },
+        enabled: !!restaurantId,
+    });
+    useEffect(() => {
+        if (fetchedRestaurant) {
+            setRestaurant(fetchedRestaurant);
+        }
+    }, [fetchedRestaurant]);
+    const setActiveRestaurant = useCallback(
+        (id: string) => {
+            setRestaurantId(id);
+            setInView(id);
+            queryClient.invalidateQueries({ queryKey: ['restaurant', id] });
+        },
+        [queryClient]
+    );
     const addOption = (option: Option) => {
         if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
             setSelectedOptions([...selectedOptions, option]);
@@ -188,9 +229,13 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             value={{
                 isLoading,
                 isError,
+                restaurant,
+                restaurantLoading,
+                restaurantError,
                 setActiveRestaurant,
                 restaurantsFiltered,
                 refetch: refetch,
+                refetchRestaurant,
                 restaurantsOnMap,
                 inView,
                 setInView,
@@ -208,7 +253,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     addVenueType,
                     deleteVenueType,
                 },
-                setBounds,
             }}
         >
             {children}

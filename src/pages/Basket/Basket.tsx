@@ -14,20 +14,36 @@ import BasketTotal from './BasketTotal/BasketTotal';
 import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
+import { sumBy } from 'lodash';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { addMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
+    const { addMeal, deleteMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
     const { data, isSuccess } = useGetBasket();
     const restaurant: Restaurant | Record<string, never> = isSuccess ? data.data.restaurant : {};
     const meals: MealInBasket[] = isSuccess ? data.data.meals : [];
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
-    const price = isSuccess ? data.data.basket_price : 0;
-    const commission = isSuccess ? data.data.basket_commission : 0;
-    const isLoading = addMeal.isPending || emptyBasket.isPending;
+    const price = meals.reduce((acc, current) => {
+        if (current.meal.features && current.meal.features.length > 0) {
+            return (
+                acc +
+                current.count *
+                    sumBy(current.meal.features, (feature) => {
+                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        if (isChosen) {
+                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                        } else {
+                            return feature.choices.filter((choice) => choice.default)[0].price;
+                        }
+                    })
+            );
+        }
+        return acc + current.count * current.meal.price;
+    }, 0);
+    const isLoading = addMeal.isPending || deleteMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
     const restaurantId = restaurant.id;
@@ -55,8 +71,8 @@ function Basket() {
                     <>
                         <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         {errorMessage && <ErrorMessage message={t(`pages.basket.${errorMessage}`)} />}
-                        <BasketMealsList meals={meals} />
-                        <BasketTotal price={price} commission={commission} onPayOrderClick={handlePayOrder} />
+                        <BasketMealsList meals={meals} restaurantId={restaurantId} />
+                        <BasketTotal price={price} onPayOrderClick={handlePayOrder} />
                     </>
                 )}
                 {isLoading && <Preloader />}

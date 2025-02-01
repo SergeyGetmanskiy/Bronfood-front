@@ -1,13 +1,13 @@
-@use '../../../../../styles/variables';
+@import '../../../../../styles/variables.scss';
 
-.chip-with-icon {
+.chip_with_icon {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: fit-content;
     height: 41px;
-    border: 1px solid variables.$line;
+    border: 1px solid $line;
     border-radius: 35px;
     padding-inline: 0;
     padding-block: 0;
@@ -20,40 +20,33 @@
         width: 0;
         height: 0;
     }
-
     &_icon {
         width: 39px;
         height: 39px;
         background-position: center;
         background-repeat: no-repeat;
     }
-
     &_food {
-        background-image: url('./../../../../../vendor/images/restaurant/food-svg.svg');
+        background-image: url(./../../../../../vendor/images/restaurant/food-svg.svg);
     }
-
     &_drink {
-        background-image: url('./../../../../../vendor/images/restaurant/drink-svg.svg');
+        background-image: url(./../../../../../vendor/images/restaurant/drink-svg.svg);
     }
-
     &_dessert {
-        background-image: url('./../../../../../vendor/images/restaurant/desert-svg.svg');
+        background-image: url(./../../../../../vendor/images/restaurant/desert-svg.svg);
     }
-
     &_text {
         padding: 10px 10px 10px 2px;
         font-size: 14px;
         font-weight: 400;
         line-height: 1.4;
-        color: variables.$black;
+        color: $black;
     }
-
     &_text_active {
-        color: variables.$white;
+        color: $white;
     }
-
     &_active {
-        background-color: variables.$orange;
-        border: 1px solid variables.$orange;
+        background-color: $orange;
+        border: 1px solid $orange;
     }
 }

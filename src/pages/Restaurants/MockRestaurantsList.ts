@@ -10,7 +10,7 @@ import { Restaurant } from '../../utils/api/restaurantsService/restaurantsServic
 
 export const mockRestaurants: Restaurant[] = [
     {
-        id: 1,
+        id: '1',
         photo: restaurant3,
         name: 'Jahu',
         rating: 4.8,
@@ -19,12 +19,12 @@ export const mockRestaurants: Restaurant[] = [
             latitude: 43.243523441782585,
             longitude: 76.91477137561034,
         },
-        workingTime: '09:00-22.00',
+        workingTime: '09:00 - 22.00',
         isLiked: false,
         type: 'cafe',
     },
     {
-        id: 2,
+        id: '2',
         photo: restaurant2,
         name: 'Boom',
         rating: 4.9,
@@ -33,12 +33,12 @@ export const mockRestaurants: Restaurant[] = [
             latitude: 43.239536903817104,
             longitude: 76.9312294101257,
         },
-        workingTime: '10:00-23.00',
+        workingTime: '10:00 - 23.00',
         isLiked: false,
         type: 'cafe',
     },
     {
-        id: 3,
+        id: '3',
         photo: restaurant4,
         name: 'Moon',
         rating: 5.0,
@@ -47,12 +47,12 @@ export const mockRestaurants: Restaurant[] = [
             latitude: 43.23818774310171,
             longitude: 76.9074543094177,
         },
-        workingTime: '12:00-01.00',
+        workingTime: '12:00 - 01.00',
         isLiked: false,
         type: 'cafe',
     },
     {
-        id: 4,
+        id: '4',
         photo: restaurant1,
         name: 'Ready',
         rating: 4.8,
@@ -61,12 +61,12 @@ export const mockRestaurants: Restaurant[] = [
             latitude: 43.23531675447601,
             longitude: 76.91690641398621,
         },
-        workingTime: '09:00-22.00',
+        workingTime: '09:00 - 22.00',
         isLiked: false,
         type: 'fastFood',
     },
     {
-        id: 5,
+        id: '5',
         photo: restaurant3,
         name: 'Bar',
         rating: 5.0,
@@ -75,7 +75,7 @@ export const mockRestaurants: Restaurant[] = [
             latitude: 43.24301948193668,
             longitude: 76.909664449646,
         },
-        workingTime: '12:00-01.00',
+        workingTime: '12:00 - 01.00',
         isLiked: false,
         type: 'cafeBar',
     },
@@ -83,7 +83,7 @@ export const mockRestaurants: Restaurant[] = [
 
 export const mockMeals = [
     {
-        restaurantId: 1,
+        restaurantId: '1',
         restaurantName: 'Jahu',
         meals: [
             {
@@ -96,25 +96,25 @@ export const mockMeals = [
                 waitingTime: 10,
                 features: [
                     {
-                        id: 1,
+                        id: '1',
                         name: 'Размер',
                         choices: [
                             {
-                                id: 1,
+                                id: '1',
                                 name: 'Маленький',
                                 price: 1050,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 2,
+                                id: '2',
                                 name: 'Средний',
                                 price: 1350,
                                 default: true,
                                 chosen: false,
                             },
                             {
-                                id: 3,
+                                id: '3',
                                 name: 'Большой',
                                 price: 1650,
                                 default: false,
@@ -123,25 +123,25 @@ export const mockMeals = [
                         ],
                     },
                     {
-                        id: 2,
+                        id: '2',
                         name: 'Соусы',
                         choices: [
                             {
-                                id: 1,
+                                id: '1',
                                 name: 'Кетчуп',
                                 price: 100,
                                 default: true,
                                 chosen: false,
                             },
                             {
-                                id: 2,
+                                id: '2',
                                 name: 'Чесночный',
                                 price: 200,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 3,
+                                id: '3',
                                 name: 'Сырный',
                                 price: 300,
                                 default: false,
@@ -150,39 +150,39 @@ export const mockMeals = [
                         ],
                     },
                     {
-                        id: 3,
+                        id: '3',
                         name: 'Овощи',
                         choices: [
                             {
-                                id: 1,
+                                id: '1',
                                 name: 'Томаты',
                                 price: 100,
                                 default: true,
                                 chosen: false,
                             },
                             {
-                                id: 2,
+                                id: '2',
                                 name: 'Огурцы',
                                 price: 200,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 3,
+                                id: '3',
                                 name: 'Оливки',
                                 price: 300,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 4,
+                                id: '4',
                                 name: 'Маринованные огурцы',
                                 price: 400,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 5,
+                                id: '5',
                                 name: 'Зелень',
                                 price: 500,
                                 default: false,
@@ -235,7 +235,7 @@ export const mockMeals = [
         ],
     },
     {
-        restaurantId: 2,
+        restaurantId: '2',
         restaurantName: 'Boom',
         meals: [
             {
@@ -248,25 +248,25 @@ export const mockMeals = [
                 waitingTime: 10,
                 features: [
                     {
-                        id: 1,
+                        id: '1',
                         name: 'Размер',
                         choices: [
                             {
-                                id: 1,
+                                id: '1',
                                 name: 'Маленький',
                                 price: 1050,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 2,
+                                id: '2',
                                 name: 'Средний',
                                 price: 1350,
                                 default: true,
                                 chosen: false,
                             },
                             {
-                                id: 3,
+                                id: '3',
                                 name: 'Большой',
                                 price: 1650,
                                 default: false,
@@ -275,25 +275,25 @@ export const mockMeals = [
                         ],
                     },
                     {
-                        id: 2,
+                        id: '2',
                         name: 'Соусы',
                         choices: [
                             {
-                                id: 1,
+                                id: '1',
                                 name: 'Кетчуп',
                                 price: 100,
                                 default: true,
                                 chosen: false,
                             },
                             {
-                                id: 2,
+                                id: '2',
                                 name: 'Чесночный',
                                 price: 200,
                                 default: false,
                                 chosen: false,
                             },
                             {
-                                id: 3,
+                                id: '3',
                                 name: 'Сырный',
                                 price: 300,
                                 default: false,
@@ -306,7 +306,7 @@ export const mockMeals = [
         ],
     },
     {
-        restaurantId: 3,
+        restaurantId: '3',
         restaurantName: 'Moon',
         meals: [
             {
@@ -322,7 +322,7 @@ export const mockMeals = [
         ],
     },
     {
-        restaurantId: 4,
+        restaurantId: '4',
         restaurantName: 'Ready',
         meals: [
             {
@@ -338,7 +338,7 @@ export const mockMeals = [
         ],
     },
     {
-        restaurantId: 5,
+        restaurantId: '5',
         restaurantName: 'Bar',
         meals: [
             {

@@ -14,10 +14,7 @@ module.exports = {
     rules: {
         'react-refresh/only-export-components': [
             'warn',
-            {
-                allowConstantExport: true,
-                allowExportNames: ['CurrentUserContext', 'RestaurantsContext'],
-            },
+            { allowConstantExport: true },
         ],
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     },

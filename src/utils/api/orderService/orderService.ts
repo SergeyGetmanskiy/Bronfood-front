@@ -59,5 +59,5 @@ export interface OrderState {
     /**
      * Provides restaurantId for order feedback
      */
-    restaurantId: number;
+    restaurantId: string;
 }

@@ -1,15 +1,14 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
-.basket-meal {
-    padding-bottom: 6px;
-    border-bottom: 1px solid variables.$line;
+.basket_meal {
+    padding-bottom: 14px;
+    border-bottom: 1px solid $line;
 
     &__container {
         position: relative;
         display: flex;
         gap: 17px;
     }
-
     &__image {
         width: 74px;
         height: 75px;
@@ -18,7 +17,6 @@
         background-position: center;
         border-radius: 10px;
     }
-
     &__description {
         position: relative;
         box-sizing: content-box;
@@ -26,45 +24,39 @@
         flex-direction: column;
         justify-content: center;
     }
-
     &__name {
         font-size: 15px;
         font-weight: 400;
         line-height: 1.4;
-        color: variables.$black;
+        color: $black;
     }
-
     &__feature {
         font-size: 8px;
         font-weight: 400;
         line-height: 1.22;
-        color: variables.$grey;
+        color: $grey;
     }
-
     &__price_container {
         display: flex;
         align-items: baseline;
         gap: 10px;
     }
-
     &__size {
         font-size: 13px;
         font-weight: 400;
         line-height: 1.22;
-        color: variables.$light-gray;
+        color: $light-gray;
     }
-
     &__price {
         font-size: 17px;
         font-weight: 500;
         line-height: 1.4;
-        color: variables.$orange;
+        color: $orange;
     }
-
     &__counter {
         position: absolute;
-        right: 0;
-        bottom: 0;
+        right: 0px;
+        bottom: 0px;
         width: 110px;
         height: 40px;
     }

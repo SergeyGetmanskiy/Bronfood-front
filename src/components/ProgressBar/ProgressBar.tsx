@@ -23,7 +23,7 @@ interface ProgressBarProps {
  * The progress bar color changes when the remaining time falls below zero, indicating an overdue status.
  */
 const ProgressBar: FC<ProgressBarProps> = ({ initialTime, currentTime }) => {
-    const [progress, setProgress] = useState(((initialTime - currentTime) / initialTime) * 100);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         if (currentTime >= 0) {
@@ -40,8 +40,8 @@ const ProgressBar: FC<ProgressBarProps> = ({ initialTime, currentTime }) => {
     };
 
     return (
-        <div className={styles['progress-bar']}>
-            <div className={styles['progress-bar__line']} style={barStyle} />
+        <div className={styles.progressBar}>
+            <div className={styles.progressBar__line} style={barStyle} />
         </div>
     );
 };

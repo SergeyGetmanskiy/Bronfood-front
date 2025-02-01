@@ -33,7 +33,9 @@ interface Popup {
 const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
 
-    const arrowBackClick = () => (props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1));
+    const arrowBackClick = () => {
+        props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1);
+    };
 
     const handleCloseButton = () => {
         props.onClose();
@@ -45,9 +47,7 @@ const Popup: FC<Popup> = (props) => {
     useEffect(() => {
         const overlayElement = document.getElementById('popup-overlay');
         const handleMouseDown = (e: Event) => {
-            if (e.target === e.currentTarget) {
-                onClose();
-            }
+            e.target === e.currentTarget && onClose();
         };
         overlayElement?.addEventListener('mousedown', handleMouseDown);
         return () => overlayElement?.removeEventListener('mousedown', handleMouseDown);
@@ -56,7 +56,7 @@ const Popup: FC<Popup> = (props) => {
     return (
         <div id={'popup-overlay'} className={styles.popup_overlay}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
-                {props.title && <h2 className={`${styles['popup__title']} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
+                {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
                 {props.arrowBack && <button className={`${styles['popup__arrow-back']} button`} type="button" onClick={arrowBackClick} />}
                 <button className={`${styles.popup__close} ${styles[`popup__close_${props.mode}`]} button`} type="button" onClick={handleCloseButton}></button>

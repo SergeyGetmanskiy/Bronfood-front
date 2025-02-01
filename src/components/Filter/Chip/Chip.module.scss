@@ -1,6 +1,6 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
-.button-element {
+.button_element {
     position: relative;
     display: flex;
     justify-content: center;
@@ -8,7 +8,7 @@
     width: fit-content;
     height: 38px;
     border-radius: 35px;
-    background: variables.$button-grey;
+    background: $button-grey;
     padding-inline: 0;
     padding-block: 0;
     user-select: none;
@@ -21,20 +21,17 @@
         width: 0;
         height: 0;
     }
-
     &_text {
-        padding: 9px 16px;
+        padding: 9px 16px 9px 16px;
         font-size: 14px;
         font-weight: 400;
         line-height: 1.4;
-        color: variables.$black;
+        color: $black;
     }
-
     &_text_active {
-        color: variables.$white;
+        color: $white;
     }
-
     &_active {
-        background: variables.$orange;
+        background: $orange;
     }
 }

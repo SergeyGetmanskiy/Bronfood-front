@@ -1,6 +1,6 @@
-@use '../../../../styles/variables';
+@import '../../../../styles/variables.scss';
 
-.restaurant-description {
+.restaurant_description {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -12,55 +12,45 @@
         font-size: 30px;
         font-weight: 600;
         line-height: 1.4;
-        color: variables.$grey-dark;
+        color: $grey-dark;
     }
-
     &__features {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         gap: 17px;
     }
-
     &__feature {
         display: flex;
         gap: 6px;
     }
-
     &__feature_title {
         font-size: 13px;
         font-weight: 400;
         line-height: 1.21;
-        color: variables.$grey;
+        color: $grey;
     }
-
     &__icon {
         background-repeat: no-repeat;
         background-position: center;
     }
-
     &__icon_small {
         height: 15px;
         width: 15px;
     }
-
     &__icon_large {
         height: 19px;
         width: 19px;
     }
-
     &__icon_placemark {
-        background-image: url('./../../../../vendor/images/icons/restaurant/placemark.svg');
+        background-image: url(./../../../../vendor/images/icons/restaurant/placemark.svg);
     }
-
     &__icon_clock {
-        background-image: url('./../../../../vendor/images/icons/restaurant/clock.svg');
+        background-image: url(./../../../../vendor/images/icons/restaurant/clock.svg);
     }
-
     &__icon_star {
-        background-image: url('./../../../../vendor/images/icons/restaurant/star.svg');
+        background-image: url(./../../../../vendor/images/icons/restaurant/star.svg);
     }
-
     &__rating_container {
         position: absolute;
         top: -20px;
@@ -69,25 +59,22 @@
         justify-content: center;
         align-items: center;
         gap: 7px;
-        background-color: variables.$white;
-        border: 1px solid variables.$line;
+        background-color: $white;
+        border: 1px solid $line;
         border-radius: 17px;
-        padding: 8px 14px;
-        cursor: pointer;
+        padding: 8px 14px 8px 14px;
     }
-
     &__rating {
         font-size: 15px;
         font-weight: 400;
         line-height: 1.4;
-        color: variables.$black;
+        color: $black;
     }
-
     &__reviews {
         margin-left: 7px;
         font-size: 14px;
         font-weight: 400;
         line-height: 1.4;
-        color: variables.$light-gray;
+        color: $light-gray;
     }
 }

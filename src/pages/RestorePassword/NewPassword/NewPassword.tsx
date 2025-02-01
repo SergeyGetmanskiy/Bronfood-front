@@ -55,7 +55,7 @@ const NewPassword: FC<NewPassword> = (props) => {
             <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
                 <FormInputs>
                     {props.isErrorVisible && <ErrorMessage message={t(`components.newPassword.${props.error}`)} />}
-                    <div className={styles['new-password__layout']}>
+                    <div className={styles.new_password__layout}>
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('components.newPassword.nameLabel')} />
                         <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} />
                         <Button>{t('components.newPassword.button')}</Button>

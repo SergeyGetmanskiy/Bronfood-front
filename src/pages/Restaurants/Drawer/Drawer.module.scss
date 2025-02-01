@@ -1,14 +1,13 @@
-@use '../../../styles/variables';
-@use 'sass:map';
+@import '../../../styles/variables.scss';
 
 .drawer {
     position: fixed;
-    z-index: map.get(variables.$z-indexes, 'drawer');
+    z-index: map-get($zIndexes, drawer);
     width: 100%;
     height: fit-content;
-    background-color: variables.$background;
+    background-color: $background;
     transition: transform 0.5s ease-out;
-    border-radius: 35px 35px 0 0;
+    border-radius: 35px 35px 0px 0px;
 
     &__container {
         display: flex;
@@ -16,7 +15,6 @@
         padding-left: 15px;
         padding-right: 15px;
     }
-
     &__tab_container {
         display: flex;
         align-items: center;
@@ -27,22 +25,18 @@
         box-shadow: none;
         cursor: pointer;
     }
-
     &__tab {
         width: 100px;
         height: 35px;
         background-repeat: no-repeat;
         background-position: center;
-
         &_active {
             background-image: url('./arrow-down.svg');
         }
-
         &_disabled {
             background-image: url('./arrow-up.svg');
         }
     }
-
     &__title_container {
         display: flex;
         flex-direction: row;
@@ -50,23 +44,20 @@
         padding-top: 19px;
         padding-bottom: 28px;
     }
-
     &__title {
         font-size: 20px;
         font-weight: 500;
         line-height: 1.4;
-        color: variables.$black;
+        color: $black;
     }
-
     &__icon {
         width: 35px;
         height: 35px;
         border: none;
         background-image: url('./filter.svg');
-        background-color: variables.$background;
+        background-color: $background;
         cursor: pointer;
     }
-
     &__list {
         height: 360px;
         display: flex;
@@ -74,7 +65,6 @@
         row-gap: 15px;
         scroll-snap-type: y mandatory;
     }
-
     &__list_item {
         scroll-snap-align: start;
     }

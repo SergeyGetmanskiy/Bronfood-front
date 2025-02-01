@@ -14,11 +14,11 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonTex
     const { t } = useTranslation();
 
     return (
-        <div className={styles['confirm-popup']}>
-            <h2 className={styles['confirm-popup__title']}>{title}</h2>
+        <div className={styles.confirmPopup}>
+            <h2 className={styles.confirmPopup__title}>{title}</h2>
             {children}
-            <button className={styles['confirm-popup__close']} onClick={onCancel}></button>
-            <div className={styles['confirm-popup__buttonContainer']}>
+            <button className={styles.confirmPopup__close} onClick={onCancel}></button>
+            <div className={styles.confirmPopup__buttonContainer}>
                 <button className={styles.cancel} onClick={onCancel}>
                     {t('components.confirmationPopup.cancel')}
                 </button>

@@ -1,19 +1,19 @@
-@use '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
-.order-list-item {
+.orderListItem {
     &__item {
         display: flex;
         justify-content: space-between;
         align-items: top;
         width: 100%;
-        padding: 0 0 8px;
+        padding: 0 0 8px 0;
     }
 
     &__title {
         display: flex;
         padding: 0;
         margin: 0;
-        color: variables.$black;
+        color: $black;
         font-size: 15px;
         line-height: 21px;
         font-weight: 400;
@@ -22,7 +22,7 @@
 
     &__price {
         display: flex;
-        color: variables.$black;
+        color: $black;
         font-size: 15px;
         line-height: 21px;
         font-weight: 500;
@@ -32,7 +32,7 @@
 
     &__span {
         display: flex;
-        color: variables.$light-gray;
+        color: $light-gray;
         font-size: 15px;
         line-height: 21px;
         font-weight: 400;

@@ -1,4 +1,4 @@
-@use '../../styles/variables';
+@import '../../styles/variables.scss';
 
 .error {
     margin: 0 auto;
@@ -10,18 +10,16 @@
         align-items: center;
         column-gap: 12px;
         padding: 12px;
-        border: 1px solid variables.$red;
+        border: 1px solid $red;
         border-radius: 20px;
     }
-
     &__icon {
         width: 25px;
         height: 25px;
-        background: url('./error-icon.svg') no-repeat center;
+        background: url(./error-icon.svg) no-repeat center;
     }
-
     &__text {
-        color: variables.$neutral-gray-900;
+        color: $neutral-gray-900;
         font-size: 14px;
         font-weight: 400;
         line-height: 1.4;
