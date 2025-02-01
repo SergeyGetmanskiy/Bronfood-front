@@ -3,18 +3,10 @@ import { handleFetch } from '../../serviceFuncs/handleFetch';
 import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from './restaurantsService';
 
 export class RestaurantsServiceReal implements RestaurantsService {
-    private _restaurantsCache: Restaurant[] | null = null;
-
     async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
         const coords = bounds.flat();
         coords.name = 'name';
-        if (this._restaurantsCache !== null) {
-            return {
-                data: this._restaurantsCache,
-            };
-        }
         const responseData = await handleFetch('api/restaurant/');
-        this._restaurantsCache = responseData.data;
         return responseData;
     }
 
