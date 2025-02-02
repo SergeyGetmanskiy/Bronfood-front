@@ -148,7 +148,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['restaurants', bounds],
         queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
     });
-    const restaurantsOnMap = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data), [isSuccess, data]);
+    const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data as Restaurant[]), [isSuccess, data]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const restaurantsFiltered: Restaurant[] = useMemo(() => filterRestaurants(selectedOptions, selectedVenueTypes, restaurantsOnMap), [selectedOptions, selectedVenueTypes, restaurantsOnMap]);
@@ -216,20 +216,19 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     return <RestaurantsContext.Provider value={contextValue}>{children}</RestaurantsContext.Provider>;
 };
 
-function filterRestaurants(options, types, restaurants) {
+function filterRestaurants(options: Option[], types: VenueType[], restaurants: Restaurant[]) {
     if (options.length === 0 && types.length === 0) {
         return restaurants;
     } else {
         return restaurants.filter((restaurant) => {
             const optionNames = options.map((option) => option.name.toLowerCase());
             const typeNames = types.map((type) => type.name.toLowerCase());
-
             return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
         });
     }
 }
 
-function getRestaurantsOnMap(loaded, data) {
+function getRestaurantsOnMap(loaded: boolean, data: Restaurant[]) {
     if (loaded) {
         return data;
     } else return [];
