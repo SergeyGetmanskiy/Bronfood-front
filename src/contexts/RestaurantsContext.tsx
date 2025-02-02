@@ -145,7 +145,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
     const { isLoading, isError, isSuccess, data, refetch } = useRestaurants(bounds);
-    const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data as Restaurant[]), [isSuccess, data]);
+    const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data as Restaurant[]), [isSuccess, data]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const restaurantsFiltered: Restaurant[] = useMemo(() => filterRestaurants(selectedOptions, selectedVenueTypes, restaurantsOnMap), [selectedOptions, selectedVenueTypes, restaurantsOnMap]);
