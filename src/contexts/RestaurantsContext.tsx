@@ -1,5 +1,5 @@
 import { skipToken, useQuery } from '@tanstack/react-query';
-import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction } from 'react';
+import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction, useMemo } from 'react';
 import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { LngLatBounds } from '@yandex/ymaps3-types';
@@ -148,70 +148,90 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['restaurants', bounds],
         queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
     });
-    let restaurantsOnMap: Restaurant[] = [];
-    if (isSuccess) {
-        restaurantsOnMap = data.data;
-    }
+    const restaurantsOnMap = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data), [isSuccess, data]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
-    const restaurantsFiltered: Restaurant[] =
-        selectedOptions.length === 0 && selectedVenueTypes.length === 0
-            ? restaurantsOnMap
-            : restaurantsOnMap.filter((restaurant) => {
-                  const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
-                  const typeNames = selectedVenueTypes.map((type) => type.name.toLowerCase());
-
-                  return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
-              });
+    const restaurantsFiltered: Restaurant[] = useMemo(() => filterRestaurants(selectedOptions, selectedVenueTypes, restaurantsOnMap), [selectedOptions, selectedVenueTypes, restaurantsOnMap]);
     const setActiveRestaurant = useCallback((id: number) => {
         setInView(id);
     }, []);
-    const addOption = (option: Option) => {
-        if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
-            setSelectedOptions([...selectedOptions, option]);
-        }
-    };
-    const deleteOption = (option: Option) => {
-        setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
-    };
-    const addVenueType = (venueType: VenueType) => {
-        if (!selectedVenueTypes.find((type: VenueType) => type.id === venueType.id)) {
-            setSelectedVenueTypes([...selectedVenueTypes, venueType]);
-        }
-    };
-    const deleteVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
-    };
-
-    return (
-        <RestaurantsContext.Provider
-            value={{
-                isLoading,
-                isError,
-                setActiveRestaurant,
-                restaurantsFiltered,
-                refetch: refetch,
-                restaurantsOnMap,
-                inView,
-                setInView,
-                lastClickedRestaurantId,
-                setLastClickedRestaurantId,
-                options: {
-                    all: options,
-                    selectedOptions,
-                    addOption,
-                    deleteOption,
-                },
-                venueTypes: {
-                    all: types,
-                    selectedVenueTypes,
-                    addVenueType,
-                    deleteVenueType,
-                },
-                setBounds,
-            }}
-        >
-            {children}
-        </RestaurantsContext.Provider>
+    const addOption = useCallback(
+        (option: Option) => {
+            if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
+                setSelectedOptions([...selectedOptions, option]);
+            }
+        },
+        [selectedOptions]
     );
+    const deleteOption = useCallback(
+        (option: Option) => {
+            setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
+        },
+        [selectedOptions]
+    );
+    const addVenueType = useCallback(
+        (venueType: VenueType) => {
+            if (!selectedVenueTypes.find((type: VenueType) => type.id === venueType.id)) {
+                setSelectedVenueTypes([...selectedVenueTypes, venueType]);
+            }
+        },
+        [selectedVenueTypes]
+    );
+    const deleteVenueType = useCallback(
+        (venueType: VenueType) => {
+            setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
+        },
+        [selectedVenueTypes]
+    );
+
+    const contextValue = useMemo(
+        () => ({
+            isLoading,
+            isError,
+            setActiveRestaurant,
+            restaurantsFiltered,
+            refetch: refetch,
+            restaurantsOnMap,
+            inView,
+            setInView,
+            lastClickedRestaurantId,
+            setLastClickedRestaurantId,
+            options: {
+                all: options,
+                selectedOptions,
+                addOption,
+                deleteOption,
+            },
+            venueTypes: {
+                all: types,
+                selectedVenueTypes,
+                addVenueType,
+                deleteVenueType,
+            },
+            setBounds,
+        }),
+        [isLoading, isError, setActiveRestaurant, restaurantsFiltered, refetch, restaurantsOnMap, inView, setInView, lastClickedRestaurantId, setLastClickedRestaurantId, selectedOptions, addOption, deleteOption, selectedVenueTypes, addVenueType, deleteVenueType, setBounds]
+    );
+
+    return <RestaurantsContext.Provider value={contextValue}>{children}</RestaurantsContext.Provider>;
 };
+
+function filterRestaurants(options, types, restaurants) {
+    console.log('rendered');
+    if (options.length === 0 && types.length === 0) {
+        return restaurants;
+    } else {
+        return restaurants.filter((restaurant) => {
+            const optionNames = options.map((option) => option.name.toLowerCase());
+            const typeNames = types.map((type) => type.name.toLowerCase());
+
+            return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
+        });
+    }
+}
+
+function getRestaurantsOnMap(loaded, data) {
+    if (loaded) {
+        return data;
+    } else return [];
+}
