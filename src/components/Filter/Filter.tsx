@@ -2,7 +2,7 @@ import { MouseEvent, useState, useId, ChangeEvent, ReactNode } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
 import { Option } from '../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
 import { useEsc } from '../../utils/hooks/useEsc/useEsc';
@@ -36,7 +36,7 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
 };
 
 const Filter = ({ name, close, children }: { name?: string; close: () => void; children?: ReactNode }) => {
-    const { options, venueTypes } = useRestaurants();
+    const { options, venueTypes } = useRestaurantsContext();
     const [inputValue, setInputValue] = useState('');
     const { t } = useTranslation();
     const textId = useId();

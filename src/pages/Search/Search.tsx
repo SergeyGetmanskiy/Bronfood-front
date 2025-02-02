@@ -2,11 +2,11 @@ import styles from './Search.module.scss';
 import Filter from '../../components/Filter/Filter';
 import RestaurantCardLarge from '../../components/Cards/RestaurantCardLarge/RestaurantCardLarge';
 import { useNavigate } from 'react-router-dom';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
 
 const Search = () => {
     const navigate = useNavigate();
-    const { restaurantsFiltered } = useRestaurants();
+    const { restaurantsFiltered } = useRestaurantsContext();
 
     return (
         <div className={styles.search}>

@@ -147,6 +147,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants', bounds],
         queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
+        staleTimeL: 3000,
     });
     const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data as Restaurant[]), [isSuccess, data]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);

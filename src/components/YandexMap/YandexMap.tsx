@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState, useMemo, useCallback } f
 import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
 import { type MapEventUpdateHandler, type BehaviorMapEventHandler, LngLat } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
 import { useNavigate } from 'react-router-dom';
 import marker from '../../vendor/images/icons/navigation.svg';
 import markerActive from '../../vendor/images/icons/navigation_active.svg';
@@ -15,7 +15,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
     const [userLocation, setUserLocation] = useState<LngLat | undefined>(undefined);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
-    const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds } = useRestaurants();
+    const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds } = useRestaurantsContext();
 
     const handleMapUpdate: MapEventUpdateHandler = useCallback(
         (object) => {

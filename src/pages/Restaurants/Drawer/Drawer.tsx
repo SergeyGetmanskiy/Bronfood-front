@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 import Filter from '../../../components/Filter/Filter';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { useRestaurantsContext } from '../../../utils/hooks/useRestaurants/useRestaurantsContext';
 import Preloader from '../../../components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import PageNotFound from '../../PageNotFound/PageNotFound';
@@ -11,7 +11,7 @@ import PageNotFound from '../../PageNotFound/PageNotFound';
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered, isLoading, isError, lastClickedRestaurantId, setLastClickedRestaurantId, setActiveRestaurant } = useRestaurants();
+    const { restaurantsFiltered, isLoading, isError, lastClickedRestaurantId, setLastClickedRestaurantId, setActiveRestaurant } = useRestaurantsContext();
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();

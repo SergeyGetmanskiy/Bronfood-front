@@ -9,7 +9,7 @@ import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { Meal, MealType } from '../../../utils/api/restaurantsService/restaurantsService';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { useRestaurantsContext } from '../../../utils/hooks/useRestaurants/useRestaurantsContext';
 import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
 import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
 import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
@@ -25,7 +25,7 @@ function Restaurant() {
     const params = useParams();
     const { isLogin } = useCurrentUser();
     const restaurantId = parseInt(params.restaurantId ? params.restaurantId : '');
-    const { setActiveRestaurant } = useRestaurants();
+    const { setActiveRestaurant } = useRestaurantsContext();
     const { data: restaurantData, isLoading: restaurantLoading, error: restaurantError, isSuccess: isRestaurantSuccess } = useRestaurant(restaurantId);
     const restaurant = isRestaurantSuccess && restaurantData.data;
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
