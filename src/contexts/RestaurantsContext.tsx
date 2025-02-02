@@ -217,7 +217,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 function filterRestaurants(options, types, restaurants) {
-    console.log('rendered');
     if (options.length === 0 && types.length === 0) {
         return restaurants;
     } else {
