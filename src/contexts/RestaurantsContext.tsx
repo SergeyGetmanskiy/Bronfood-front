@@ -1,8 +1,8 @@
-import { skipToken, useQuery } from '@tanstack/react-query';
 import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction, useMemo } from 'react';
-import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { LngLatBounds } from '@yandex/ymaps3-types';
+import { useRestaurants } from '../utils/hooks/useRestaurants/useRestaurants';
 
 export type Option = {
     /**
@@ -144,11 +144,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<number | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
-    const { isLoading, isError, isSuccess, data, refetch } = useQuery({
-        queryKey: ['restaurants', bounds],
-        queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
-        staleTimeL: 3000,
-    });
+    const { isLoading, isError, isSuccess, data, refetch } = useRestaurants(bounds);
     const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data?.data as Restaurant[]), [isSuccess, data]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
