@@ -1,9 +1,10 @@
 import { useQuery, skipToken } from '@tanstack/react-query';
-import { restaurantsService } from '../../api/restaurantsService/restaurantsService';
+import { Restaurant, restaurantsService } from '../../api/restaurantsService/restaurantsService';
 import { useEffect, useState } from 'react';
+import { LngLatBounds } from '@yandex/ymaps3-types';
 
-export const useRestaurants = (bounds) => {
-    const [cachedData, setCachedData] = useState([]);
+export const useRestaurants = (bounds: LngLatBounds) => {
+    const [cachedData, setCachedData] = useState<Restaurant[] | never[]>([]);
     const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants', bounds],
         queryFn: bounds.length > 0 ? () => restaurantsService.getRestaurants(bounds as LngLatBounds) : skipToken,
