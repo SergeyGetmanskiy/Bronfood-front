@@ -24,8 +24,7 @@ export const useRestaurants = (bounds) => {
     return {
         isLoading,
         isError,
-        isSuccess,
-        data: cachedData,
+        restaurantsOnMap: cachedData,
         refetch,
     };
 };

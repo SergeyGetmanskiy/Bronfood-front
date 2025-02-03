@@ -144,8 +144,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<number | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
-    const { isLoading, isError, isSuccess, data, refetch } = useRestaurants(bounds);
-    const restaurantsOnMap: Restaurant[] = useMemo(() => getRestaurantsOnMap(isSuccess, data as Restaurant[]), [isSuccess, data]);
+    const { isLoading, isError, restaurantsOnMap, refetch } = useRestaurants(bounds);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const restaurantsFiltered: Restaurant[] = useMemo(() => filterRestaurants(selectedOptions, selectedVenueTypes, restaurantsOnMap), [selectedOptions, selectedVenueTypes, restaurantsOnMap]);
@@ -223,10 +222,4 @@ function filterRestaurants(options: Option[], types: VenueType[], restaurants: R
             return optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase());
         });
     }
-}
-
-function getRestaurantsOnMap(loaded: boolean, data: Restaurant[]) {
-    if (loaded) {
-        return data;
-    } else return [];
 }

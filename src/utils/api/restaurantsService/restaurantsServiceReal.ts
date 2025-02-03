@@ -4,7 +4,6 @@ import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from '.
 
 export class RestaurantsServiceReal implements RestaurantsService {
     async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
-        console.log('fetching');
         const coords = bounds.flat();
         const swlat = `swlat=${coords[1]}`;
         const swlon = `swlon=${coords[0]}`;
