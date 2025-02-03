@@ -59,6 +59,18 @@
         }
     }
 
+    &__buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+
+        &_grey {
+            width: 100%;
+            flex-shrink: 1.2;
+        }
+    }
+
     &__cooking {
         display: block;
         padding: 20px 0 0;
@@ -114,18 +126,6 @@
                 line-height: 1.4;
                 color: variables.$grey;
                 margin: 0;
-            }
-        }
-
-        &_buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-
-            &_grey {
-                width: 100%;
-                flex-shrink: 1.2;
             }
         }
     }

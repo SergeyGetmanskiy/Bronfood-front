@@ -31,8 +31,11 @@ function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number;
 function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
-    const handleClick = async () => {
+    const handleAcceptClick = async () => {
         await changeAdminOrderStatus.mutateAsync({ id, status: 'being prepared' });
+    };
+    const handleCancelClick = async () => {
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'canceled' });
     };
     return (
         <>
@@ -41,9 +44,17 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
                 <span className={styles.details__total_price}>{`${price} ₸`}</span>
             </div>
             {changeAdminOrderStatus.isPending && <Preloader />}
-            <Button onClick={handleClick} disabled={changeAdminOrderStatus.isPending}>
-                {t('pages.admin.accept')}
-            </Button>
+            <div className={styles.details__buttons}>
+                {changeAdminOrderStatus.isPending && <Preloader />}
+                <div className={styles.details__buttons_grey}>
+                    <ButtonGrey onClick={handleCancelClick} disabled={changeAdminOrderStatus.isPending}>
+                        {t('pages.admin.cancel')}
+                    </ButtonGrey>
+                </div>
+                <Button onClick={handleAcceptClick} disabled={changeAdminOrderStatus.isPending}>
+                    {t('pages.admin.accept')}
+                </Button>
+            </div>
         </>
     );
 }
@@ -86,9 +97,9 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
                 <ProgressBar initialTime={cookingTime} currentTime={remainingTime} />
                 <h4 className={styles.details__cooking_progress_title}>{t('pages.admin.waitingTime')}</h4>
             </div>
-            <div className={styles.details__cooking_buttons}>
+            <div className={styles.details__buttons}>
                 {changeAdminOrderStatus.isPending && <Preloader />}
-                <div className={styles.details__cooking_buttons_grey}>
+                <div className={styles.details__buttons_grey}>
                     <ButtonGrey onClick={handleCancelClick} disabled={changeAdminOrderStatus.isPending}>
                         {t('pages.admin.cancel')}
                     </ButtonGrey>
