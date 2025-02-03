@@ -57,6 +57,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
             const place = restaurantsFiltered.find((place) => place.id === inView);
             if (place) {
                 setCenter([place.coordinates.longitude, place.coordinates.latitude]);
+                setZoom(12);
             }
         }
     }, [inView, restaurantsFiltered, activePlaceId]);
