@@ -23,6 +23,7 @@ i18n
                         guestNavigation: {
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
+                            signInAsAdmin: 'Войти как админ заведения',
                             aboutService: 'О сервисе',
                         },
                         header: {
