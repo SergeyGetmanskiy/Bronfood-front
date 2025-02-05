@@ -3,7 +3,11 @@ import { handleFetch } from '../../serviceFuncs/handleFetch';
 import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from './restaurantsService';
 
 export class RestaurantsServiceReal implements RestaurantsService {
+    async _wait(ms: number) {
+        return new Promise((res) => setTimeout(res, ms));
+    }
     async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
+        await this._wait(1000);
         const coords = bounds.flat();
         const swlat = `swlat=${coords[1]}`;
         const swlon = `swlon=${coords[0]}`;
