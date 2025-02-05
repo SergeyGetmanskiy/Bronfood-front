@@ -12,9 +12,11 @@
     &__marker {
         height: 30px;
         aspect-ratio: 1;
+        cursor: pointer;
 
         &_active {
             height: 41px;
+            aspect-ratio: 0.78;
         }
     }
 }

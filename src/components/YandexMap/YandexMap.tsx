@@ -5,7 +5,7 @@ import styles from './YandexMap.module.scss';
 import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
 import { useNavigate } from 'react-router-dom';
 import marker from '../../vendor/images/icons/navigation.svg';
-import markerActive from '../../vendor/images/icons/navigation_active.svg';
+import markerActive from '../../vendor/images/icons/navigation_active.png';
 import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
@@ -94,7 +94,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                 {restaurantsFiltered.map((place) => {
                     const active = activePlaceId === place.id;
                     return (
-                        <YMapMarker key={place.id} coordinates={[place.coordinates.longitude, place.coordinates.latitude]} draggable={false} onClick={() => handlePlacemarkClick(place.id, place.coordinates.longitude, place.coordinates.latitude)}>
+                        <YMapMarker key={place.id} coordinates={[place.coordinates.longitude, place.coordinates.latitude]} draggable={false} onClick={() => handlePlacemarkClick(place.id, place.coordinates.longitude, place.coordinates.latitude)} zIndex={active ? 10 : 0}>
                             <img className={`${styles.yamap__marker} ${active ? styles.yamap__marker_active : ''}`} src={active ? markerActive : marker}></img>
                         </YMapMarker>
                     );
