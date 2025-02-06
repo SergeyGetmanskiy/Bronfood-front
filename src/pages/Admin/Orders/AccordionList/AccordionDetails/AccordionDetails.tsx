@@ -6,7 +6,8 @@ import { AdminOrder, ChoiceInAdminOrder, MealInAdminOrder } from '../../../../..
 import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
 import Preloader from '../../../../../components/Preloader/Preloader';
 import ProgressBar from '../../../../../components/ProgressBar/ProgressBar';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { OrderStatus } from '../../Orders';
 
 function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number; choices: ChoiceInAdminOrder[] }) {
     return (
@@ -28,14 +29,23 @@ function Meal({ meal, count, choices }: { meal: MealInAdminOrder; count: number;
     );
 }
 
-function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
+function OrderNotAcceptedDetails({ id, price, setOrderStatus }: { id: number; price: number; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
     const { t } = useTranslation();
-    const { changeAdminOrderStatus } = useAdminOrdersMutations();
-    const handleAcceptClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'being prepared' });
+    const handleAcceptClick = () => {
+        setOrderStatus({
+            id,
+            status: 'being prepared',
+            confirmQuestion: 'acceptOrder',
+            isConfirmationPopupOpen: true,
+        });
     };
-    const handleCancelClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'canceled' });
+    const handleCancelClick = () => {
+        setOrderStatus({
+            id,
+            status: 'canceled',
+            confirmQuestion: 'cancelOrder',
+            isConfirmationPopupOpen: true,
+        });
     };
     return (
         <>
@@ -43,32 +53,36 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
                 <p>{t('pages.admin.total')}</p>
                 <span className={styles.details__total_price}>{`${price} ₸`}</span>
             </div>
-            {changeAdminOrderStatus.isPending && <Preloader />}
             <div className={styles.details__buttons}>
-                {changeAdminOrderStatus.isPending && <Preloader />}
                 <div className={styles.details__buttons_grey}>
-                    <ButtonGrey onClick={handleCancelClick} disabled={changeAdminOrderStatus.isPending}>
-                        {t('pages.admin.cancel')}
-                    </ButtonGrey>
+                    <ButtonGrey onClick={handleCancelClick}>{t('pages.admin.cancel')}</ButtonGrey>
                 </div>
-                <Button onClick={handleAcceptClick} disabled={changeAdminOrderStatus.isPending}>
-                    {t('pages.admin.accept')}
-                </Button>
+                <Button onClick={handleAcceptClick}>{t('pages.admin.accept')}</Button>
             </div>
         </>
     );
 }
 
-function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acceptedAt: Date | ''; waitingTime: number }) {
+function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { id: number; acceptedAt: Date | ''; waitingTime: number; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
     const cookingTime = waitingTime * 60;
     const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt as string)) / 1000);
     const { t } = useTranslation();
-    const { changeAdminOrderStatus } = useAdminOrdersMutations();
-    const handleCancelClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'canceled' });
+    const handleCancelClick = () => {
+        console.log(typeof setOrderStatus);
+        setOrderStatus({
+            id,
+            status: 'canceled',
+            confirmQuestion: 'cancelOrder',
+            isConfirmationPopupOpen: true,
+        });
     };
-    const handleReadyClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });
+    const handleReadyClick = () => {
+        setOrderStatus({
+            id,
+            status: 'ready',
+            confirmQuestion: 'isOrderReady',
+            isConfirmationPopupOpen: true,
+        });
     };
     const hours = acceptedAt instanceof Date ? acceptedAt.getHours() : 0;
     const minutes = acceptedAt instanceof Date ? acceptedAt.getMinutes() : 0;
@@ -98,15 +112,10 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
                 <h4 className={styles.details__cooking_progress_title}>{t('pages.admin.waitingTime')}</h4>
             </div>
             <div className={styles.details__buttons}>
-                {changeAdminOrderStatus.isPending && <Preloader />}
                 <div className={styles.details__buttons_grey}>
-                    <ButtonGrey onClick={handleCancelClick} disabled={changeAdminOrderStatus.isPending}>
-                        {t('pages.admin.cancel')}
-                    </ButtonGrey>
+                    <ButtonGrey onClick={handleCancelClick}>{t('pages.admin.cancel')}</ButtonGrey>
                 </div>
-                <Button onClick={handleReadyClick} disabled={changeAdminOrderStatus.isPending}>
-                    {t('pages.admin.orderReady')}
-                </Button>
+                <Button onClick={handleReadyClick}>{t('pages.admin.orderReady')}</Button>
             </div>
         </div>
     );
@@ -144,7 +153,7 @@ function OrderArchiveDetails({ issuedAt }: { issuedAt: Date | '' }) {
     );
 }
 
-function AccordionDetails({ order }: { order: AdminOrder }) {
+function AccordionDetails({ order, setOrderStatus }: { order: AdminOrder; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
     const { id, meals, status, acceptedAt, issuedAt, waitingTime } = order;
     const price = meals.reduce((acc, current) => {
         return acc + current.count * current.meal.price;
@@ -157,7 +166,7 @@ function AccordionDetails({ order }: { order: AdminOrder }) {
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} setOrderStatus={setOrderStatus} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} setOrderStatus={setOrderStatus} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
         </div>
     );
 }

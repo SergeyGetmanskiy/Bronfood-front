@@ -5,16 +5,17 @@ import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 type AdminPopupProps = {
     close: () => void;
+    isConfirmationPopupOpen: boolean;
     children?: ReactNode;
 };
 
-const AdminPopup = ({ close, children }: AdminPopupProps) => {
+const AdminPopup = ({ close, isConfirmationPopupOpen, children }: AdminPopupProps) => {
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
         }
     };
-    useEsc(() => close(), [close]);
+    useEsc(() => !isConfirmationPopupOpen && close(), [isConfirmationPopupOpen, close]);
     return (
         <div className={styles['admin-popup_overlay']} onClick={handleOverlayClick}>
             <div className={styles['admin-popup']}>
