@@ -47,8 +47,8 @@ function Orders() {
                 <OrdersTabs tabNames={tabNames} tab={tab} selectTab={selectTab} />
                 {isPending && <Preloader />}
                 {tab === 'notAccepted' && <OrdersNotAccepted orders={ordersNotAccepted} setOrderStatus={setOrderStatus} />}
-                {tab === 'beingPrepared' && <OrdersBeingPrepared orders={ordersCooking} />}
-                {tab === 'archive' && <OrdersArchive orders={ordersArchive} />}
+                {tab === 'beingPrepared' && <OrdersBeingPrepared orders={ordersCooking} setOrderStatus={setOrderStatus} />}
+                {tab === 'archive' && <OrdersArchive orders={ordersArchive} setOrderStatus={setOrderStatus} />}
             </AdminPopup>
             {orderStatus.isConfirmationPopupOpen && <AdminConfirmation close={() => setOrderStatus({ ...orderStatus, isConfirmationPopupOpen: false })} question={orderStatus.confirmQuestion} onSubmit={onSubmit} isLoading={changeAdminOrderStatus.isPending} />}
         </>

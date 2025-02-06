@@ -3,8 +3,6 @@ import Button from '../../../../../components/Button/Button';
 import styles from './AccordionDetails.module.scss';
 import ButtonGrey from '../../../../../components/ButtonGrey/ButtonGrey';
 import { AdminOrder, ChoiceInAdminOrder, MealInAdminOrder } from '../../../../../utils/api/adminService/adminService';
-import { useAdminOrdersMutations } from '../../../../../utils/hooks/useAdminOrders/useAdminOrders';
-import Preloader from '../../../../../components/Preloader/Preloader';
 import ProgressBar from '../../../../../components/ProgressBar/ProgressBar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { OrderStatus } from '../../Orders';
@@ -68,7 +66,6 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { 
     const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt as string)) / 1000);
     const { t } = useTranslation();
     const handleCancelClick = () => {
-        console.log(typeof setOrderStatus);
         setOrderStatus({
             id,
             status: 'canceled',
@@ -121,18 +118,19 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { 
     );
 }
 
-function OrderReadyDetails({ id }: { id: number }) {
+function OrderReadyDetails({ id, setOrderStatus }: { id: number; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
     const { t } = useTranslation();
-    const { changeAdminOrderStatus } = useAdminOrdersMutations();
-    const handleClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'archive' });
+    const handleClick = () => {
+        setOrderStatus({
+            id,
+            status: 'archive',
+            confirmQuestion: 'issueOrder',
+            isConfirmationPopupOpen: true,
+        });
     };
     return (
         <div className={styles.details__complete}>
-            {changeAdminOrderStatus.isPending && <Preloader />}
-            <Button onClick={handleClick} disabled={changeAdminOrderStatus.isPending}>
-                {t('pages.admin.complete')}
-            </Button>
+            <Button onClick={handleClick}>{t('pages.admin.complete')}</Button>
         </div>
     );
 }
@@ -166,7 +164,7 @@ function AccordionDetails({ order, setOrderStatus }: { order: AdminOrder; setOrd
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} setOrderStatus={setOrderStatus} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} setOrderStatus={setOrderStatus} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
+            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} setOrderStatus={setOrderStatus} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} setOrderStatus={setOrderStatus} /> : status === 'ready' ? <OrderReadyDetails id={id} setOrderStatus={setOrderStatus} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
         </div>
     );
 }
