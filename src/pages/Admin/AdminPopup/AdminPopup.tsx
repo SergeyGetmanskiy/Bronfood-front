@@ -5,7 +5,7 @@ import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 type AdminPopupProps = {
     close: () => void;
-    isConfirmationPopupOpen: boolean;
+    isConfirmationPopupOpen?: boolean;
     children?: ReactNode;
 };
 

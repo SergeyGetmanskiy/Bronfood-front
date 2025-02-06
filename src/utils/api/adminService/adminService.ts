@@ -8,7 +8,7 @@ export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
     meal: MealInAdminOrder;
     choices: ChoiceInAdminOrder[];
 };
-export type AdminOrderStatus = 'not accepted' | 'being prepared' | 'ready' | 'canceled' | 'archive';
+export type AdminOrderStatus = 'not accepted' | 'being prepared' | 'ready' | 'canceled' | 'archive' | '';
 export type AdminOrder = {
     /**
      * order's id

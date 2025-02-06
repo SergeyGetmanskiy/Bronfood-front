@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import styles from './OrdersTab.module.scss';
+import { TabNames } from '../Orders';
 
 type OrdersTabProps = {
-    name: string;
-    tab: string;
-    selectTab: (tab: string) => void;
+    name: TabNames;
+    tab: TabNames;
+    selectTab: (tab: TabNames) => void;
 };
 
 function OrdersTab({ name, tab, selectTab }: OrdersTabProps) {

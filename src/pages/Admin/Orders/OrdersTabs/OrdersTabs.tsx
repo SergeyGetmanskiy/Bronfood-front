@@ -1,10 +1,11 @@
 import styles from './OrdersTabs.module.scss';
 import OrdersTab from '../OrdersTab/OrdersTab';
+import { TabNames } from '../Orders';
 
 type OrdersTabsProps = {
-    tabNames: string[];
-    tab: string;
-    selectTab: (tab: string) => void;
+    tabNames: TabNames[];
+    tab: TabNames;
+    selectTab: (tab: TabNames) => void;
 };
 
 function OrdersTabs({ tabNames, tab, selectTab }: OrdersTabsProps) {

@@ -4,7 +4,7 @@ import AccordionList from '../AccordionList/AccordionList';
 import { OrderStatus } from '../Orders';
 
 function OrdersNotAccepted({ orders, setOrderStatus }: { orders: AdminOrder[]; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
-    return <AccordionList data={orders} isArchive={false} setOrderStatus={setOrderStatus} />;
+    return <AccordionList data={orders} isArchive={false} setOrderStatus={setOrderStatus as Dispatch<SetStateAction<OrderStatus>>} />;
 }
 
 export default OrdersNotAccepted;
