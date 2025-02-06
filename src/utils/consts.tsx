@@ -9,3 +9,5 @@ export const regexPhoneNumberKazakhstan: RegExp = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d
 
 export const API_URL = 'http://localhost:8000';
 export const mealTypes: MealType[] = ['food', 'drink', 'dessert'];
+
+export const DEBOUNCE_VALUE = 1000;

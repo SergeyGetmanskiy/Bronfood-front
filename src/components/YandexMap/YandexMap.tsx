@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import marker from '../../vendor/images/icons/navigation.svg';
 import markerActive from '../../vendor/images/icons/navigation_active.png';
 import userMarker from '../../vendor/images/icons/navigation_grey.svg';
+import { debounce } from 'lodash';
+import { DEBOUNCE_VALUE } from '../../utils/consts';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
     const [initialRender, setInitialRender] = useState(true);
@@ -27,13 +29,13 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
     );
 
     const createBehaviorEventHandler = useCallback((): BehaviorMapEventHandler => {
-        return function (object) {
+        return debounce(function (object) {
             if (object.type === 'dblClick') return;
             const boundsCoords = object.location.bounds;
             setCenter(object.location.center);
             setZoom(object.location.zoom);
             setBounds(boundsCoords);
-        };
+        }, DEBOUNCE_VALUE);
     }, [setBounds]);
 
     const handlePlacemarkClick = (placeId: number, longitude: number, latitude: number) => {
