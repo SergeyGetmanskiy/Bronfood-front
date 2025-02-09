@@ -8,7 +8,7 @@ export class FavoritesServiceReal implements FavoritesService {
     }
 
     async setFavorites(restaurantId: number): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
-        return handleFetch(`api/favorites/${restaurantId}`, { method: 'PUT', data: { restaurantId } });
+        return handleFetch(`api/favorites/${restaurantId}/`, { method: 'POST', data: { restaurantId } });
     }
 
     async deleteFavorites(restId: number): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
