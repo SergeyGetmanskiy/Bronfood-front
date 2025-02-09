@@ -14,6 +14,7 @@ import BasketTotal from './BasketTotal/BasketTotal';
 import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
+import { openPaymentWidgetHandler } from '../../lib/onevision';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
@@ -42,6 +43,7 @@ function Basket() {
         }
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
+        openPaymentWidgetHandler();
         if (userId) {
             await placeOrder.mutate({ userId, restaurantId });
         }
