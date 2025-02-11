@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFavoritesMutations } from '../../../../utils/hooks/useFavorites/useFavorites';
 import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 import { Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { useRestaurant } from '../../../../utils/hooks/useRestaurant/useRestaurant';
 
 type RestaurantPopupProps = {
     close: () => void;
@@ -21,7 +22,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
     const params = useParams();
     const mealId = parseInt(params.mealId ? params.mealId : '');
     const { isLogin } = useCurrentUser();
-
+    const { refetch: refetchRestaurant } = useRestaurant();
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -34,13 +35,14 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
         }
     }, [mealId, setIsMealPageOpen]);
 
-    const handleFavoriteClick = () => {
+    const handleFavoriteClick = async () => {
         if (restaurant) {
-            if (restaurant.isLiked) {
-                deleteFavorite.mutate(restaurant.id);
+            if (restaurant.isFavorite) {
+                await deleteFavorite.mutate(restaurant.id);
             } else {
-                addFavorite.mutate(restaurant.id);
+                await addFavorite.mutate(restaurant.id);
             }
+            await refetchRestaurant();
         }
     };
 
@@ -56,7 +58,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
                 )}
                 {isLogin && (
                     <div className={`${styles['restaurant-popup_button']} ${styles['restaurant-popup_button_like']}`}>
-                        <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
+                        <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isFavorite ? true : false} />
                     </div>
                 )}
                 <div className={`${styles['restaurant-popup_button']} ${styles['restaurant-popup_button_close']}`}>

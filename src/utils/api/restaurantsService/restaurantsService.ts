@@ -121,9 +121,9 @@ export type Restaurant = {
      */
     workingTime: string;
     /**
-     * User's favorite state
+     * User's favorite restaurant
      */
-    isLiked: boolean;
+    isFavorite: boolean;
     /**
      * Venue's type
      */
