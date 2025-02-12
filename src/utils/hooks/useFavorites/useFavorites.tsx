@@ -20,8 +20,10 @@ export const useFavoritesMutations = () => {
             return response;
         },
         onSuccess: (res, restId) => {
-            queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
-            queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+            if (res) {
+                queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+                queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+            }
         },
     });
 
@@ -31,8 +33,10 @@ export const useFavoritesMutations = () => {
             return response;
         },
         onSuccess: (res, restId) => {
-            queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
-            queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+            if (res) {
+                queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+                queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+            }
         },
     });
 
