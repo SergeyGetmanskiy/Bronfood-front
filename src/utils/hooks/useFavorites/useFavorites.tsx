@@ -19,7 +19,10 @@ export const useFavoritesMutations = () => {
             const response = await favoritesService.setFavorites(restId);
             return response;
         },
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userFavorites'] }),
+        onSuccess: (res, restId) => {
+            queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+            queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+        },
     });
 
     const deleteFavorite = useMutation({
@@ -27,7 +30,10 @@ export const useFavoritesMutations = () => {
             const response = await favoritesService.deleteFavorites(restId);
             return response;
         },
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userFavorites'] }),
+        onSuccess: (res, restId) => {
+            queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+            queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
+        },
     });
 
     return {

@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFavoritesMutations } from '../../../../utils/hooks/useFavorites/useFavorites';
 import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 import { Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
-import { useRestaurant } from '../../../../utils/hooks/useRestaurant/useRestaurant';
 
 type RestaurantPopupProps = {
     close: () => void;
@@ -22,7 +21,6 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
     const params = useParams();
     const mealId = parseInt(params.mealId ? params.mealId : '');
     const { isLogin } = useCurrentUser();
-    const { refetch: refetchRestaurant } = useRestaurant();
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -34,7 +32,6 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
             setIsMealPageOpen(false);
         }
     }, [mealId, setIsMealPageOpen]);
-
     const handleFavoriteClick = async () => {
         if (restaurant) {
             if (restaurant.isFavorite) {
@@ -42,7 +39,6 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
             } else {
                 await addFavorite.mutate(restaurant.id);
             }
-            await refetchRestaurant();
         }
     };
 
