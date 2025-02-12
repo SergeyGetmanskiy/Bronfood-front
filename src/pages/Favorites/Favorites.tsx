@@ -21,11 +21,9 @@ const Favorites = () => {
     const [favoritesList, setFavoritesList] = useState<Restaurant[]>([]);
     const { data: favoritesData, error: favoritesError, isLoading: favoritesLoading, isFetching: favoritesFetching, isSuccess: isFavoritesSuccess } = useGetFavorites();
     const favorites = isFavoritesSuccess && favoritesData.data;
-    console.log(favorites);
     useEffect(() => {
         const restaurantsData = queryClient.getQueryData<ApiResponse<Restaurant[]>>(['restaurants']);
         if (restaurantsData && favorites) {
-            console.log(favorites);
             setFavoritesList(favorites);
         }
     }, [favorites, queryClient]);
