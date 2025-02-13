@@ -1,6 +1,7 @@
 import styles from './RestaurantCardLarge.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 import { useFavoritesMutations } from '../../../utils/hooks/useFavorites/useFavorites';
+import { MouseEvent } from 'react';
 
 type RestaurantCardLargeProps = {
     card: Restaurant;
@@ -10,9 +11,9 @@ type RestaurantCardLargeProps = {
 
 function RestaurantCardLarge({ card, isFavorite = false, onRestaurantClick }: RestaurantCardLargeProps) {
     const { deleteFavorite } = useFavoritesMutations();
-    const handleDeleteFavorite = async (event) => {
+    const handleDeleteFavorite = (event: MouseEvent) => {
         event.stopPropagation();
-        await deleteFavorite.mutate(card.id);
+        deleteFavorite.mutate(card.id);
     };
 
     return (
