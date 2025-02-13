@@ -10,12 +10,15 @@ type RestaurantCardLargeProps = {
 
 function RestaurantCardLarge({ card, isFavorite = false, onRestaurantClick }: RestaurantCardLargeProps) {
     const { deleteFavorite } = useFavoritesMutations();
-    const handleDeleteFavorite = (id: number) => deleteFavorite.mutate(id);
+    const handleDeleteFavorite = async (event) => {
+        event.stopPropagation();
+        await deleteFavorite.mutate(card.id);
+    };
 
     return (
         <div className={styles.card} onClick={onRestaurantClick}>
             <div className={styles.card__container}>
-                {isFavorite ? <div className={styles.card__delete} onClick={() => handleDeleteFavorite(card.id)}></div> : ''}
+                {isFavorite ? <div className={styles.card__delete} onClick={handleDeleteFavorite}></div> : ''}
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
