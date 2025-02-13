@@ -9,7 +9,7 @@ import RestaurantCardLarge from '../../components/Cards/RestaurantCardLarge/Rest
 const Favorites = () => {
     const navigate = useNavigate();
     const { data: favoritesData, error: favoritesError, isLoading: favoritesLoading, isFetching: favoritesFetching, isSuccess: isFavoritesSuccess } = useGetFavorites();
-    const favorites = isFavoritesSuccess && favoritesData.data;
+    const favorites = isFavoritesSuccess ? favoritesData.data : [];
 
     return (
         <Popup
