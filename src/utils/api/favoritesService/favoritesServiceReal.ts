@@ -11,7 +11,7 @@ export class FavoritesServiceReal implements FavoritesService {
         return handleFetch(`api/favorites/`, { method: 'POST', data: { restaurantId } });
     }
 
-    async deleteFavorites(restaurantId: number): Promise<{ data: string }> {
-        return handleFetch(`api/favorites/`, { method: 'DELETE', data: { restaurantId } });
+    async deleteFavorites(restaurantId: number): Promise<void> {
+        return handleFetch(`api/favorites/${restaurantId}/`, { method: 'DELETE' });
     }
 }
