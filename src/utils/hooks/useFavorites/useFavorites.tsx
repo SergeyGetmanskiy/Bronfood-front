@@ -33,7 +33,6 @@ export const useFavoritesMutations = () => {
             return response;
         },
         onSuccess: (res, restId) => {
-            console.log(res);
             if (res) {
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
                 queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
