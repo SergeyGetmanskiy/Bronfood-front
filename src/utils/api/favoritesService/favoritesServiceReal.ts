@@ -2,8 +2,13 @@ import { Restaurant } from '../restaurantsService/restaurantsService';
 import { FavoritesService } from './favoritesService';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
 
+export type FavoriteRestaurant = {
+    id: number;
+    restaurant: Restaurant;
+};
+
 export class FavoritesServiceReal implements FavoritesService {
-    async getFavorites(): Promise<{ data: Restaurant[] }> {
+    async getFavorites(): Promise<{ data: FavoriteRestaurant[] }> {
         return handleFetch('api/favorites/');
     }
 

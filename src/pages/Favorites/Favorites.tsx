@@ -2,31 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './Favorites.module.scss';
 import { t } from 'i18next';
-import { useQueryClient } from '@tanstack/react-query';
-import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
-import { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 import useGetFavorites from '../../utils/hooks/useFavorites/useFavorites';
 import RestaurantCardLarge from '../../components/Cards/RestaurantCardLarge/RestaurantCardLarge';
 
-interface ApiResponse<T> {
-    status: 'success' | 'error';
-    data: T;
-    error_message?: string;
-}
-
 const Favorites = () => {
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
-    const [favoritesList, setFavoritesList] = useState<Restaurant[]>([]);
     const { data: favoritesData, error: favoritesError, isLoading: favoritesLoading, isFetching: favoritesFetching, isSuccess: isFavoritesSuccess } = useGetFavorites();
     const favorites = isFavoritesSuccess && favoritesData.data;
-    useEffect(() => {
-        const restaurantsData = queryClient.getQueryData<ApiResponse<Restaurant[]>>(['restaurants']);
-        if (restaurantsData && favorites) {
-            setFavoritesList(favorites);
-        }
-    }, [favorites, queryClient]);
 
     return (
         <Popup
@@ -44,13 +27,15 @@ const Favorites = () => {
                         <span className={styles.favorites__error}>{t('pages.favorites.error_load')}</span>
                     ) : (
                         <div className={styles.favorites}>
-                            {favoritesList.length > 0 ? (
+                            {favorites.length > 0 ? (
                                 <ul className={`${styles.favorites__list} bronfood-scrollbar`}>
-                                    {favoritesList.map((restaurant) => (
-                                        <li key={restaurant.id} className={styles.favorites__item}>
-                                            <RestaurantCardLarge card={restaurant} isFavorite={true} onRestaurantClick={() => navigate(`/restaurants/${restaurant.id}`)}></RestaurantCardLarge>
-                                        </li>
-                                    ))}
+                                    {favorites.map((favorite) => {
+                                        return (
+                                            <li key={favorite.id} className={styles.favorites__item}>
+                                                <RestaurantCardLarge card={favorite.restaurant} isFavorite={true} onRestaurantClick={() => navigate(`/restaurants/${favorite.restaurant.id}`)}></RestaurantCardLarge>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             ) : (
                                 <span className={styles.favorites__empty}>{t('pages.favorites.list_empty')}</span>
