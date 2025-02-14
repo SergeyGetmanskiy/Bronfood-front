@@ -37,7 +37,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             throw new Error('Unauthorized');
         }
         if (res.status === 204) {
-            return;
+            return res;
         }
         const result = await res.json();
         if (res.ok) {

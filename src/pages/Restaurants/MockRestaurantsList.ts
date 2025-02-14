@@ -20,7 +20,7 @@ export const mockRestaurants: Restaurant[] = [
             longitude: 76.91477137561034,
         },
         workingTime: '09:00-22.00',
-        isLiked: false,
+        isFavorite: false,
         type: 'cafe',
     },
     {
@@ -34,7 +34,7 @@ export const mockRestaurants: Restaurant[] = [
             longitude: 76.9312294101257,
         },
         workingTime: '10:00-23.00',
-        isLiked: false,
+        isFavorite: false,
         type: 'cafe',
     },
     {
@@ -48,7 +48,7 @@ export const mockRestaurants: Restaurant[] = [
             longitude: 76.9074543094177,
         },
         workingTime: '12:00-01.00',
-        isLiked: false,
+        isFavorite: false,
         type: 'cafe',
     },
     {
@@ -62,7 +62,7 @@ export const mockRestaurants: Restaurant[] = [
             longitude: 76.91690641398621,
         },
         workingTime: '09:00-22.00',
-        isLiked: false,
+        isFavorite: false,
         type: 'fastFood',
     },
     {
@@ -76,7 +76,7 @@ export const mockRestaurants: Restaurant[] = [
             longitude: 76.909664449646,
         },
         workingTime: '12:00-01.00',
-        isLiked: false,
+        isFavorite: false,
         type: 'cafeBar',
     },
 ];

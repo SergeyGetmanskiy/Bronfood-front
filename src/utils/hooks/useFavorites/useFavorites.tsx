@@ -6,12 +6,7 @@ const useGetFavorites = () => {
     const { currentUser } = useCurrentUser();
     return useQuery({
         queryKey: ['userFavorites'],
-        queryFn: async () => {
-            const res = await favoritesService.getFavorites();
-            if (res.status === 'success') {
-                return res.data;
-            }
-        },
+        queryFn: () => favoritesService.getFavorites(),
         enabled: !!currentUser,
     });
 };
@@ -24,9 +19,10 @@ export const useFavoritesMutations = () => {
             const response = await favoritesService.setFavorites(restId);
             return response;
         },
-        onSuccess: (res) => {
-            if (res.status === 'success') {
+        onSuccess: (res, restId) => {
+            if (res) {
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+                queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
             }
         },
     });
@@ -36,9 +32,10 @@ export const useFavoritesMutations = () => {
             const response = await favoritesService.deleteFavorites(restId);
             return response;
         },
-        onSuccess: (res) => {
-            if (res.status === 'success') {
+        onSuccess: (res, restId) => {
+            if (res.ok) {
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
+                queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
             }
         },
     });

@@ -1,10 +1,9 @@
-import { Restaurant } from '../restaurantsService/restaurantsService';
-// import { FavoritesServiceMock } from './favoritesServiceMock';
-import { FavoritesServiceReal } from './favoritesServiceReal';
+import { FavoriteRestaurant, FavoritesServiceReal } from './favoritesServiceReal';
+
 export interface FavoritesService {
-    getFavorites: (userId: string) => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
-    setFavorites: (restId: number) => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
-    deleteFavorites: (restId: number) => Promise<{ status: 'success'; data: Restaurant[] | null } | { status: 'error'; error_message: string }>;
+    getFavorites: (userId: string) => Promise<{ data: FavoriteRestaurant[] }>;
+    setFavorites: (restaurantId: number) => Promise<{ data: string }>;
+    deleteFavorites: (restaurantId: number) => Promise<Response>;
 }
 
 export const favoritesService = new FavoritesServiceReal();
