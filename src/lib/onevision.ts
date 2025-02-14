@@ -1,4 +1,5 @@
 export function openPaymentWidgetHandler() {
+    // @ts-expect-error: This function is from OneVision script
     openPaymentWidget({
         api_key: import.meta.env.VITE_ONEVISION_API_KEY,
         amount: 10,
