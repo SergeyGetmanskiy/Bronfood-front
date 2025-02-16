@@ -1,4 +1,6 @@
-export const MockPayment = {
+import { Payment } from './paymentService';
+
+export const MockPayment: Payment = {
     amount: 10,
     currency: 'KZT',
     order_id: '',

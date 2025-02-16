@@ -45,8 +45,8 @@ function Basket() {
         }
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
-        const options = await getPaymentOptions.mutateAsync();
-        openPaymentWidgetHandler({ ...options, api_key: import.meta.env.VITE_ONEVISION_API_KEY });
+        const { data } = await getPaymentOptions.mutateAsync();
+        openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY });
         if (userId) {
             await placeOrder.mutate({ userId, restaurantId });
         }

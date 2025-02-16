@@ -4,6 +4,6 @@ import { Payment, PaymentService } from './paymentService';
 export class PaymentServiceReal implements PaymentService {
     async getPayment(): Promise<{ data: Payment }> {
         const payment = MockPayment;
-        return payment;
+        return { data: payment };
     }
 }
