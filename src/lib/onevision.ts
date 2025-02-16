@@ -1,36 +1,4 @@
-export function openPaymentWidgetHandler() {
+export function openPaymentWidgetHandler(options) {
     // @ts-expect-error: This function is from OneVision script
-    openPaymentWidget({
-        api_key: import.meta.env.VITE_ONEVISION_API_KEY,
-        amount: 10,
-        currency: 'KZT',
-        order_id: '',
-        description: '',
-        payment_type: 'pay',
-        payment_method: 'ecom',
-        items: [
-            {
-                merchant_id: import.meta.env.VITE_ONEVISION_MID,
-                service_id: import.meta.env.VITE_ONEVISION_SID,
-                merchant_name: 'Example',
-                name: 'Example',
-                quantity: 1,
-                amount_one_pcs: 10,
-                amount_sum: 10,
-            },
-        ],
-        user_id: 'string',
-        email: 'example@gmail.com',
-        phone: 'example',
-        success_url: 'https://bronfood.vercel.app',
-        failure_url: 'https://bronfood.vercel.app',
-        callback_url: 'https://bronfood.vercel.app',
-        payment_lifetime: 0,
-        create_recurrent_profile: false,
-        recurrent_profile_lifetime: 0,
-        lang: 'ru',
-        extra_params: {},
-        payment_gateway_host: 'https://api.paysage.kz/',
-        payment_widget_host: 'https://widget.paysage.kz',
-    });
+    openPaymentWidget(options);
 }

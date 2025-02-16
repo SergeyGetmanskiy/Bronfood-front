@@ -15,11 +15,13 @@ import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/us
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
 import { openPaymentWidgetHandler } from '../../lib/onevision';
+import { usePaymentMutations } from '../../utils/hooks/usePayment/usePayment';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { getPaymentOptions } = usePaymentMutations();
     const { addMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
     const { data, isSuccess } = useGetBasket();
     const restaurant: Restaurant | Record<string, never> = isSuccess ? data.data.restaurant : {};
@@ -43,7 +45,8 @@ function Basket() {
         }
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
-        openPaymentWidgetHandler();
+        const options = await getPaymentOptions.mutateAsync();
+        openPaymentWidgetHandler({ ...options, api_key: import.meta.env.VITE_ONEVISION_API_KEY });
         if (userId) {
             await placeOrder.mutate({ userId, restaurantId });
         }
