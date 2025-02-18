@@ -13,6 +13,7 @@ const Header = ({ city }: { city: string }) => {
     const { t } = useTranslation();
     const { data, isSuccess } = useGetBasket();
     const meals = isSuccess && data.data.meals;
+    const mealsCount = meals && data.data.meals.reduce((acc, curr) => acc + curr.count, 0);
     const [isContentVisible, setIsContentVisible] = useState(true);
     const handleMenuActive = () => {
         setIsContentVisible(false);
@@ -71,7 +72,7 @@ const Header = ({ city }: { city: string }) => {
                             <Link to="/basket">
                                 <div className={styles.header__basket}>
                                     <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                                    {meals && meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
+                                    {mealsCount && <span className={styles.header__chip}>{mealsCount}</span>}
                                 </div>
                             </Link>
                         </>
