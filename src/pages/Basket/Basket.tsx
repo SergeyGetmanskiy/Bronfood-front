@@ -49,7 +49,7 @@ function Basket() {
         openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY });
         const element = document.getElementById('onevision-widget');
         if (element) {
-            element.style.zIndex = 15;
+            element.style.zIndex = '15';
         }
         if (userId) {
             await placeOrder.mutate({ userId, restaurantId });
