@@ -10,23 +10,28 @@ type PaymentItem = {
     amount_sum: number;
 };
 
-export interface Payment {
+export type PaymentBackend = {
     amount: number; // Положительное число с '.' в качестве разделителя, не более двух разрядов после точки
     currency: 'KZT';
     order_id: string;
     description: string;
-    payment_type: 'pay';
-    payment_method: 'ecom';
     items: PaymentItem[];
     email: string;
     success_url: 'https://bronfood.vercel.app';
     failure_url: 'https://bronfood.vercel.app';
     payment_lifetime: number; // Время жизни платежа в секундах
-    lang: 'ru' | 'kz' | 'en';
     extra_params: Record<string, never>;
+};
+
+export type PaymentFrontend = {
+    payment_type: 'pay';
+    payment_method: 'ecom';
+    lang: 'ru' | 'kz' | 'en';
     payment_gateway_host: 'https://api.paysage.kz/';
     payment_widget_host: 'https://widget.paysage.kz';
-}
+};
+
+export type Payment = PaymentBackend & PaymentFrontend;
 
 export interface PaymentService {
     getPayment: () => Promise<{ data: Payment }>;
