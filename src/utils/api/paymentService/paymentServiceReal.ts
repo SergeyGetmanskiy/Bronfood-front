@@ -4,7 +4,7 @@ import { handleFetch } from '../../serviceFuncs/handleFetch';
 export class PaymentServiceReal implements PaymentService {
     async getPayment(): Promise<{ data: Payment }> {
         const { data } = await handleFetch(`api/orders/`, { method: 'POST' });
-        const payment = {
+        const payment: Payment = {
             ...data,
             payment_type: 'pay',
             payment_method: 'ecom',
