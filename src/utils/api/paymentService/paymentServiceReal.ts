@@ -11,6 +11,8 @@ export class PaymentServiceReal implements PaymentService {
             lang: 'ru',
             payment_gateway_host: 'https://api.paysage.kz/',
             payment_widget_host: 'https://widget.paysage.kz',
+            success_url: 'http://localhost:5173/',
+            failure_url: 'http://localhost:5173/',
         };
         return { data: payment };
     }
