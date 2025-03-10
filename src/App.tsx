@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -29,11 +29,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 function App() {
     const [city, setCity] = useState('');
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        navigate('/restaurants');
-    }, [navigate]);
     return (
         <div>
             <Header city={city} />
