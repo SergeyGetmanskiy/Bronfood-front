@@ -46,7 +46,11 @@ function Basket() {
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
         const { data } = await getPaymentOptions.mutateAsync();
-        openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY });
+        const onPaymentSuccess = () => {
+            navigate('/waiting-order');
+            setTimeout(() => document.querySelector('iframe')?.remove(), 3000);
+        };
+        openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY }, onPaymentSuccess);
         const element = document.getElementById('onevision-widget');
         if (element) {
             element.style.zIndex = '15';
