@@ -1,4 +1,4 @@
-import { AdminOrder } from './adminService';
+import { AdminOrderFromApi } from './adminService';
 
 const increment = (function (n) {
     return function () {
@@ -7,7 +7,7 @@ const increment = (function (n) {
     };
 })(0);
 
-export const mockAdminOrders: AdminOrder[] = [
+export const mockAdminOrders: AdminOrderFromApi[] = [
     {
         id: increment(),
         userName: 'Ермек',
