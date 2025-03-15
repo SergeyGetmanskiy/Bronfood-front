@@ -12,11 +12,12 @@ export class AdminServiceMock implements AdminService {
         return new Promise((res) => setTimeout(res, ms));
     }
 
-    async getAdminOrders(): Promise<{ data: AdminOrder[] }> {
+    async getAdminOrders(status: AdminOrderStatus): Promise<{ data: AdminOrder[] }> {
         await this._wait(1000);
+        const orders = this.adminOrders.filter((order) => order.status === status);
         const success = true;
         if (success) {
-            const result = await Promise.resolve({ data: this.adminOrders });
+            const result = await Promise.resolve({ data: orders });
             const returnResult: AdminOrder[] = result.data.map((item) => {
                 const meals = item.meals.map((oldMeal) => {
                     const { meal, ...rest } = oldMeal;
