@@ -4,7 +4,7 @@ interface PaymentOptions extends Payment {
     api_key: string;
 }
 
-export function openPaymentWidgetHandler(options: PaymentOptions, onSuccess: () => void) {
+export function openPaymentWidgetHandler(options: PaymentOptions, onSuccess: () => void, onFailure: () => void) {
     // @ts-expect-error: This function is from OneVision script
-    openPaymentWidget(options, onSuccess);
+    openPaymentWidget(options, onSuccess, onFailure);
 }

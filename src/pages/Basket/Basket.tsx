@@ -48,9 +48,13 @@ function Basket() {
         const { data } = await getPaymentOptions.mutateAsync();
         const onPaymentSuccess = () => {
             navigate('/waiting-order');
-            setTimeout(() => document.querySelector('iframe')?.remove(), 3000);
+            setTimeout(() => document.querySelector('iframe')?.remove(), 5000);
         };
-        openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY }, onPaymentSuccess);
+        const onPaymentFailure = () => {
+            navigate('/basket');
+            setTimeout(() => document.querySelector('iframe')?.remove(), 5000);
+        };
+        openPaymentWidgetHandler({ ...data, api_key: import.meta.env.VITE_ONEVISION_API_KEY }, onPaymentSuccess, onPaymentFailure);
         const element = document.getElementById('onevision-widget');
         if (element) {
             element.style.zIndex = '15';
