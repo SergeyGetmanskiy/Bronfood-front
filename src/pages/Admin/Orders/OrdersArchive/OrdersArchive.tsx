@@ -1,10 +1,14 @@
 import { uniq } from 'lodash';
 import { AdminOrder } from '../../../../utils/api/adminService/adminService';
 import AccordionListArchive from './AccordionListArchive/AccordionListArchive';
+import { useGetAdminOrders } from '../../../../utils/hooks/useAdminOrders/useAdminOrders';
+import Preloader from '../../../../components/Preloader/Preloader';
 
-function OrdersArchive({ orders }: { orders: AdminOrder[] }) {
+function OrdersArchive() {
+    const { data, isSuccess, isPending } = useGetAdminOrders('archive');
+    const adminOrders: AdminOrder[] = isSuccess ? data.data : [];
     const dates = uniq(
-        orders
+        adminOrders
             .map((order) => order.issuedAt)
             .map((date) => {
                 if (date instanceof Date) {
@@ -15,7 +19,7 @@ function OrdersArchive({ orders }: { orders: AdminOrder[] }) {
                 } else return date;
             })
     );
-    return <AccordionListArchive dates={dates} content={orders} />;
+    return isPending ? <Preloader /> : <AccordionListArchive dates={dates} content={adminOrders} />;
 }
 
 export default OrdersArchive;
