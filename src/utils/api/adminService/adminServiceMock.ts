@@ -18,8 +18,21 @@ export class AdminServiceMock implements AdminService {
         if (success) {
             const result = await Promise.resolve({ data: this.adminOrders });
             const returnResult: AdminOrder[] = result.data.map((item) => {
-                const result = { ...item, waitingTime: item.waiting_time };
-                delete result.waiting_time;
+                const meals = item.meals.map((oldMeal) => {
+                    const { meal, ...rest } = oldMeal;
+                    const newMeal = {
+                        ...rest,
+                        meal: {
+                            id: meal.id,
+                            name: meal.name,
+                            price: meal.price,
+                            waitingTime: meal.waiting_time,
+                        },
+                    };
+                    return newMeal;
+                });
+                const result = { ...item, waitingTime: item.waiting_time, meals };
+                Reflect.deleteProperty(result, 'waiting_time');
                 return result;
             });
             return { data: returnResult };

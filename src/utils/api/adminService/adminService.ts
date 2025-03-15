@@ -52,7 +52,11 @@ export type AdminOrder = {
     waitingTime: number;
 };
 
-export type AdminOrderFromApi = Omit<AdminOrder, 'waitingTime'> & { waiting_time: number };
+export type MealInAdminOrderFromApi = Omit<MealInAdminOrder, 'waitingTime'> & { waiting_time: number };
+export type MealInOrderFromApi = Omit<MealInOrder, 'meal'> & {
+    meal: MealInAdminOrderFromApi;
+};
+export type AdminOrderFromApi = Omit<AdminOrder, 'waitingTime' | 'meals'> & { waiting_time: number; meals: MealInOrderFromApi[] };
 
 export interface AdminService {
     getAdminOrders: () => Promise<{ data: AdminOrder[] }>;
