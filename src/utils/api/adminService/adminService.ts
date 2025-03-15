@@ -8,7 +8,7 @@ export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
     meal: MealInAdminOrder;
     choices: ChoiceInAdminOrder[];
 };
-export type AdminOrderStatus = 'not accepted' | 'being prepared' | 'ready' | 'canceled' | 'archive' | '';
+export type AdminOrderStatus = 'paid' | 'accepted' | 'ready' | 'cancelled_by_admin' | 'archive' | '';
 export type AdminOrder = {
     /**
      * order's id
@@ -41,7 +41,7 @@ export type AdminOrder = {
     /**
      * time order was canceled by admin
      */
-    canceledAt: Date | '';
+    cancelledAt: Date | '';
     /**
      * order's current status
      */
@@ -51,6 +51,8 @@ export type AdminOrder = {
      */
     waitingTime: number;
 };
+
+export type AdminOrderFromApi = Omit<AdminOrder, 'waitingTime'> & { waiting_time: number };
 
 export interface AdminService {
     getAdminOrders: () => Promise<{ data: AdminOrder[] }>;

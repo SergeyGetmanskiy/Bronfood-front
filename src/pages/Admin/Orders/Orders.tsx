@@ -32,8 +32,8 @@ function Orders() {
     const navigate = useNavigate();
     const { data, isSuccess, isPending } = useGetAdminOrders();
     const adminOrders = isSuccess ? data.data : [];
-    const ordersNotAccepted = adminOrders.filter((order) => order.status === 'not accepted');
-    const ordersCooking = adminOrders.filter((order) => order.status === 'being prepared' || order.status === 'ready');
+    const ordersNotAccepted = adminOrders.filter((order) => order.status === 'paid');
+    const ordersCooking = adminOrders.filter((order) => order.status === 'accepted' || order.status === 'ready');
     const ordersArchive = adminOrders.filter((order) => order.status === 'archive');
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const close = () => {

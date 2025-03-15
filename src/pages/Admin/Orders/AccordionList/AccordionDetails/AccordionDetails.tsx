@@ -32,7 +32,7 @@ function OrderNotAcceptedDetails({ id, price, setOrderStatus }: { id: number; pr
     const handleAcceptClick = () => {
         setOrderStatus({
             id,
-            status: 'being prepared',
+            status: 'accepted',
             confirmQuestion: 'acceptOrder',
             isConfirmationPopupOpen: true,
         });
@@ -40,7 +40,7 @@ function OrderNotAcceptedDetails({ id, price, setOrderStatus }: { id: number; pr
     const handleCancelClick = () => {
         setOrderStatus({
             id,
-            status: 'canceled',
+            status: 'cancelled_by_admin',
             confirmQuestion: 'cancelOrder',
             isConfirmationPopupOpen: true,
         });
@@ -68,7 +68,7 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { 
     const handleCancelClick = () => {
         setOrderStatus({
             id,
-            status: 'canceled',
+            status: 'cancelled_by_admin',
             confirmQuestion: 'cancelOrder',
             isConfirmationPopupOpen: true,
         });
@@ -164,7 +164,7 @@ function AccordionDetails({ order, setOrderStatus }: { order: AdminOrder; setOrd
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} setOrderStatus={setOrderStatus} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} setOrderStatus={setOrderStatus} /> : status === 'ready' ? <OrderReadyDetails id={id} setOrderStatus={setOrderStatus} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
+            {status === 'paid' ? <OrderNotAcceptedDetails id={id} price={price} setOrderStatus={setOrderStatus} /> : status === 'accepted' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} setOrderStatus={setOrderStatus} /> : status === 'ready' ? <OrderReadyDetails id={id} setOrderStatus={setOrderStatus} /> : status === 'archive' ? <OrderArchiveDetails issuedAt={issuedAt} /> : null}
         </div>
     );
 }

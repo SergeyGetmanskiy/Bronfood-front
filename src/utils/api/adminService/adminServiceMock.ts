@@ -1,8 +1,8 @@
-import { AdminOrder, AdminOrderStatus, AdminService } from './adminService';
+import { AdminOrder, AdminOrderFromApi, AdminOrderStatus, AdminService } from './adminService';
 import { mockAdminOrders } from './MockAdminOrders';
 
 export class AdminServiceMock implements AdminService {
-    private adminOrders: AdminOrder[] = mockAdminOrders;
+    private adminOrders: AdminOrderFromApi[] = mockAdminOrders;
 
     _getDate() {
         return new Date();
@@ -16,7 +16,13 @@ export class AdminServiceMock implements AdminService {
         await this._wait(1000);
         const success = true;
         if (success) {
-            return await Promise.resolve({ data: this.adminOrders });
+            const result = await Promise.resolve({ data: this.adminOrders });
+            const returnResult: AdminOrder[] = result.data.map((item) => {
+                const result = { ...item, waitingTime: item.waiting_time };
+                delete result.waiting_time;
+                return result;
+            });
+            return { data: returnResult };
         } else {
             return await Promise.reject(new Error('Произошла ошибка'));
         }
@@ -24,7 +30,7 @@ export class AdminServiceMock implements AdminService {
 
     async changeAdminOrderStatus(id: number, status: AdminOrderStatus): Promise<void> {
         await this._wait(500);
-        const actionAt = status === 'being prepared' ? 'acceptedAt' : status === 'ready' ? 'readyAt' : status === 'canceled' ? 'canceledAt' : status === 'archive' ? 'issuedAt' : '';
+        const actionAt = status === 'accepted' ? 'acceptedAt' : status === 'ready' ? 'readyAt' : status === 'cancelled_by_admin' ? 'cancelledAt' : status === 'archive' ? 'issuedAt' : '';
         const success = true;
         if (success) {
             this.adminOrders = this.adminOrders.map((order) => (order.id === id ? { ...order, status, [actionAt]: this._getDate() } : order));
