@@ -20,9 +20,7 @@ export const useFavoritesMutations = () => {
             return response;
         },
         onSuccess: (res, restId) => {
-            console.log(res);
-            if (res) {
-                console.log('success ADD');
+            if (res.ok) {
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
                 queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
             }
@@ -36,7 +34,6 @@ export const useFavoritesMutations = () => {
         },
         onSuccess: (res, restId) => {
             if (res.ok) {
-                console.log('success DELETE');
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
                 queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
             }

@@ -12,7 +12,7 @@ export class FavoritesServiceReal implements FavoritesService {
         return handleFetch('api/restaurants/favorites/');
     }
 
-    async setFavorites(restaurantId: number): Promise<{ data: string }> {
+    async setFavorites(restaurantId: number): Promise<Response> {
         return handleFetch(`api/restaurants/favorites/`, { method: 'POST', data: { restaurantId } });
     }
 
