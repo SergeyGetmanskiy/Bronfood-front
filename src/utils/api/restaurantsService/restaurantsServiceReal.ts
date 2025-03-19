@@ -52,6 +52,6 @@ export class RestaurantsServiceReal implements RestaurantsService {
     async getReviews(restaurantId: number): Promise<{ data: ReviewResponse }> {
         const limit = 100;
         const offset = 0;
-        return handleFetch(`api/review/${restaurantId}/?limit=${limit}&offset=${offset}`);
+        return handleFetch(`api/restaurants/${restaurantId}/reviews/?limit=${limit}&offset=${offset}`);
     }
 }

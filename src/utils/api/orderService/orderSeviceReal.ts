@@ -32,7 +32,7 @@ export class OrderServiceReal {
                   method: 'POST',
                   data: { rating },
               };
-        return handleFetch(`api/review/${restaurantId}/`, options);
+        return handleFetch(`api/restaurants/${restaurantId}/reviews/`, options);
     }
 }
 
