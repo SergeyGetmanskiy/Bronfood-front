@@ -9,14 +9,14 @@ export type FavoriteRestaurant = {
 
 export class FavoritesServiceReal implements FavoritesService {
     async getFavorites(): Promise<{ data: FavoriteRestaurant[] }> {
-        return handleFetch('api/favorites/');
+        return handleFetch('api/restaurants/favorites/');
     }
 
     async setFavorites(restaurantId: number): Promise<{ data: string }> {
-        return handleFetch(`api/favorites/`, { method: 'POST', data: { restaurantId } });
+        return handleFetch(`api/restaurants/favorites/`, { method: 'POST', data: { restaurantId } });
     }
 
     async deleteFavorites(restaurantId: number): Promise<Response> {
-        return handleFetch(`api/favorites/${restaurantId}/`, { method: 'DELETE' });
+        return handleFetch(`api/restaurants/favorites/${restaurantId}/`, { method: 'DELETE' });
     }
 }

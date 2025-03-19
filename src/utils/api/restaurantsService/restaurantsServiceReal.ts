@@ -47,7 +47,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         return handleFetch(`api/restaurants/${restaurantId}/meals/`);
     }
     async getFeatures(restaurantId: number, mealId: number): Promise<{ data: Feature[] }> {
-        return handleFetch(`api/restaurants/${restaurantId}/meal/${mealId}/features/`);
+        return handleFetch(`api/restaurants/${restaurantId}/meals/${mealId}/features/`);
     }
     async getReviews(restaurantId: number): Promise<{ data: ReviewResponse }> {
         const limit = 100;
