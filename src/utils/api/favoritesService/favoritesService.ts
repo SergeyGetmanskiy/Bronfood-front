@@ -2,7 +2,7 @@ import { FavoriteRestaurant, FavoritesServiceReal } from './favoritesServiceReal
 
 export interface FavoritesService {
     getFavorites: (userId: string) => Promise<{ data: FavoriteRestaurant[] }>;
-    setFavorites: (restaurantId: number) => Promise<{ data: string }>;
+    setFavorites: (restaurantId: number) => Promise<Response>;
     deleteFavorites: (restaurantId: number) => Promise<Response>;
 }
 
