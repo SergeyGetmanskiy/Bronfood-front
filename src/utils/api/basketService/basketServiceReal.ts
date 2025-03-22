@@ -3,8 +3,11 @@ import { handleFetch } from '../../serviceFuncs/handleFetch';
 import { OrderState } from '../orderService/orderService';
 
 export class BasketServiceReal implements BasketService {
+    private basketId = null;
     async getBasket(): Promise<{ data: Basket }> {
-        return handleFetch('api/restaurants/basket/');
+        const basketData = await handleFetch('api/restaurants/basket/');
+        this.basketId = basketData.data.id;
+        return basketData;
     }
     async addMeal(restaurantId: number, mealId: number, features: FeatureInPayload[] | never[]): Promise<{ data: MealInBasket }> {
         return handleFetch('api/restaurants/basket/meals/', { method: 'POST', data: { restaurantId, mealId, features } });
@@ -16,7 +19,7 @@ export class BasketServiceReal implements BasketService {
         return handleFetch('api/restaurants/basket/meals/decrement/', { method: 'POST', data: { mealId } });
     }
     async emptyBasket(): Promise<void> {
-        return handleFetch('api/restaurants/basket/', { method: 'DELETE' });
+        return handleFetch(`api/restaurants/basket/${this.basketId}/`, { method: 'DELETE' });
     }
     async placeOrder(userId: string, restaurantId: number): Promise<OrderState> {
         return handleFetch('api/restaurants/orders/', { method: 'POST', data: { restaurantId, userId } });

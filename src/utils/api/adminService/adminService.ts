@@ -1,6 +1,7 @@
-import { AdminServiceMock } from './adminServiceMock';
+//import { AdminServiceMock } from './adminServiceMock';
 import { MealInBasket } from '../basketService/basketService';
 import { Choice, Meal } from '../restaurantsService/restaurantsService';
+import { AdminServiceReal } from './adminServiceReal';
 
 export type ChoiceInAdminOrder = Omit<Choice, 'price' | 'default' | 'feature_name' | 'chosen'>;
 export type MealInAdminOrder = Omit<Meal, 'description' | 'photo' | 'type' | 'hasFeatures'>;
@@ -63,4 +64,5 @@ export interface AdminService {
     changeAdminOrderStatus: (id: number, status: AdminOrderStatus) => Promise<void>;
 }
 
-export const adminService = new AdminServiceMock();
+// export const adminService = new AdminServiceMock();
+export const adminService = new AdminServiceReal();
