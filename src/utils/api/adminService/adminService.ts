@@ -9,7 +9,7 @@ export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
     meal: MealInAdminOrder;
     choices: ChoiceInAdminOrder[];
 };
-export type AdminOrderStatus = 'paid' | 'accepted' | 'ready' | 'cancelled_by_admin' | 'archive' | '';
+export type AdminOrderStatus = 'paid' | 'accepted' | 'ready' | 'cancelled_by_admin' | 'completed' | 'archive' | '';
 export type AdminOrder = {
     /**
      * order's id
@@ -50,7 +50,7 @@ export type AdminOrder = {
     /**
      * time required for order to be ready
      */
-    waitingTime: number;
+    waitingTime: string;
 };
 
 export type MealInAdminOrderFromApi = Omit<MealInAdminOrder, 'waitingTime'> & { waiting_time: number };

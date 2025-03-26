@@ -11,12 +11,13 @@ function OrdersArchive() {
         adminOrders
             .map((order) => order.issuedAt)
             .map((date) => {
-                if (date instanceof Date) {
-                    const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`;
-                    const month = date.getMonth() > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`;
-                    const year = `${date.getFullYear()}`;
+                const d = new Date(date);
+                if (d instanceof Date) {
+                    const day = d.getDate() > 9 ? `${d.getDate()}` : `0${d.getDate()}`;
+                    const month = d.getMonth() > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`;
+                    const year = `${d.getFullYear()}`;
                     return `${day}.${month}.${year}`;
-                } else return date;
+                } else return d;
             })
     );
     return isPending ? <Preloader /> : <AccordionListArchive dates={dates} content={adminOrders} />;
