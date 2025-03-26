@@ -22,7 +22,7 @@ export class AdminServiceReal implements AdminService {
             Reflect.deleteProperty(result, 'waiting_time');
             return result;
         });
-
+        console.log(returnResult);
         return { data: returnResult };
     }
 
