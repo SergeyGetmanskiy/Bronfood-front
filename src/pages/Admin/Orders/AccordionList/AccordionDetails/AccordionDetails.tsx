@@ -123,7 +123,7 @@ function OrderReadyDetails({ id, setOrderStatus }: { id: number; setOrderStatus:
     const handleClick = () => {
         setOrderStatus({
             id,
-            status: 'archive',
+            status: 'completed',
             confirmQuestion: 'issueOrder',
             isConfirmationPopupOpen: true,
         });

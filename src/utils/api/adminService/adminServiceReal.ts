@@ -27,14 +27,6 @@ export class AdminServiceReal implements AdminService {
     }
 
     async changeAdminOrderStatus(id: number, status: AdminOrderStatus): Promise<void> {
-        await this._wait(500);
-        const actionAt = status === 'accepted' ? 'acceptedAt' : status === 'ready' ? 'readyAt' : status === 'cancelled_by_admin' ? 'cancelledAt' : status === 'archive' ? 'issuedAt' : '';
-        const success = true;
-        if (success) {
-            this.adminOrders = this.adminOrders.map((order) => (order.id === id ? { ...order, status, [actionAt]: this._getDate() } : order));
-            return await Promise.resolve();
-        } else {
-            return await Promise.reject(new Error('Произошла ошибка'));
-        }
+        return await handleFetch(`api/restaurants/admin/orders/${id}/${status}/`, { method: 'PATCH' });
     }
 }
