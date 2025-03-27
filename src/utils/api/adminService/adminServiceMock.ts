@@ -44,7 +44,7 @@ export class AdminServiceMock implements AdminService {
 
     async changeAdminOrderStatus(id: number, status: AdminOrderStatus): Promise<void> {
         await this._wait(500);
-        const actionAt = status === 'accepted' ? 'acceptedAt' : status === 'ready' ? 'readyAt' : status === 'cancelled_by_admin' ? 'cancelledAt' : status === 'archive' ? 'issuedAt' : '';
+        const actionAt = status === 'accepted' ? 'acceptedAt' : status === 'ready' ? 'readyAt' : status === 'cancel' ? 'cancelledAt' : status === 'archive' ? 'issuedAt' : '';
         const success = true;
         if (success) {
             this.adminOrders = this.adminOrders.map((order) => (order.id === id ? { ...order, status, [actionAt]: this._getDate() } : order));

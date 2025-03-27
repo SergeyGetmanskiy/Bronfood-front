@@ -54,7 +54,7 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleCancelClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'cancelled_by_admin' });
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'cancel' });
     };
     const handleReadyClick = async () => {
         await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });

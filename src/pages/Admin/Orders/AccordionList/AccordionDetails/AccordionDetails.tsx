@@ -40,7 +40,7 @@ function OrderNotAcceptedDetails({ id, price, setOrderStatus }: { id: number; pr
     const handleCancelClick = () => {
         setOrderStatus({
             id,
-            status: 'cancelled_by_admin',
+            status: 'cancel',
             confirmQuestion: 'cancelOrder',
             isConfirmationPopupOpen: true,
         });
@@ -68,7 +68,7 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { 
     const handleCancelClick = () => {
         setOrderStatus({
             id,
-            status: 'cancelled_by_admin',
+            status: 'cancel',
             confirmQuestion: 'cancelOrder',
             isConfirmationPopupOpen: true,
         });

@@ -5,7 +5,7 @@ import { useGetAdminOrders } from '../../../../utils/hooks/useAdminOrders/useAdm
 import Preloader from '../../../../components/Preloader/Preloader';
 
 function OrdersArchive() {
-    const { data, isSuccess, isPending } = useGetAdminOrders('archive');
+    const { data, isSuccess, isPending } = useGetAdminOrders('completed');
     const adminOrders: AdminOrder[] = isSuccess ? data.data : [];
     const dates = uniq(
         adminOrders
