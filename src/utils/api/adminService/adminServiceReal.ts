@@ -18,11 +18,16 @@ export class AdminServiceReal implements AdminService {
                 };
                 return newMeal;
             });
-            const result = { ...item, waitingTime: item.waiting_time, meals };
+            const result: AdminOrder = {
+                ...item,
+                waitingTime: item.waiting_time,
+                meals,
+                issuedAt: new Date(item.issuedAt),
+            };
             Reflect.deleteProperty(result, 'waiting_time');
             return result;
         });
-        console.log(returnResult);
+
         return { data: returnResult };
     }
 
