@@ -26,6 +26,9 @@ import Orders from './pages/Admin/Orders/Orders';
 import WorkStatus from './pages/Admin/WorkStatus/WorkStatus';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import { Analytics } from '@vercel/analytics/react';
+import Administrators from './pages/Catering/Administrators/Administrators';
+import Catering from './pages/Catering/Catering';
+import AddAdministrator from './pages/Catering/Administrators/AddAdministrator/AddAdministrator';
 
 function App() {
     const [city, setCity] = useState('');
@@ -58,6 +61,13 @@ function App() {
                 </Route>
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
                 <Route path="*" element={<PageNotFound />} />
+
+                <Route path="/catering" element={<Catering />}>
+                    <Route path="administrators">
+                        <Route index element={<Administrators />} />
+                        <Route path="add" element={<AddAdministrator />} />
+                    </Route>
+                </Route>
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />
             <Analytics />

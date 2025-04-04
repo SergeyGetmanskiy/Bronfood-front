@@ -112,6 +112,17 @@ i18n
                             minutes_few: 'минуты',
                             minutes_many: 'минут',
                         },
+
+                        cateringNavigation: {
+                            profile: 'Профиль',
+                            myCaterings: 'Мои заведения',
+                            catering: '{{name}}',
+                            addCatering: 'Добавить заведение',
+                            bankDetails: 'Банковские данные',
+                            administrators: 'Администраторы',
+                            aboutService: 'О сервисе',
+                            signOut: 'Выйти',
+                        },
                     },
                     pages: {
                         signIn: {
@@ -286,6 +297,18 @@ i18n
                             isOrderReady: 'Заказ готов ?',
                             issueOrder: 'Заказ выдан ?',
                             yes: 'Да',
+                        },
+
+                        administrators: {
+                            titleAdd: 'Добавить администратора',
+                            buttonAdd: 'Добавить',
+                            buttonForm: 'Сохранить',
+                            placeholderLogin: 'Иван Иванов',
+                            placeholderPassword: '123456',
+                            nameLabelLogin: 'Логин',
+                            nameLabelPassword: 'Пароль',
+                            titleEdit: 'Редактировать данные',
+                            titleCreate: 'Придумайте логин и пароль',
                         },
                     },
                     errors: {
