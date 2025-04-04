@@ -1,4 +1,4 @@
-import { AdminOrder } from './adminService';
+import { AdminOrderFromApi } from './adminService';
 
 const increment = (function (n) {
     return function () {
@@ -7,7 +7,7 @@ const increment = (function (n) {
     };
 })(0);
 
-export const mockAdminOrders: AdminOrder[] = [
+export const mockAdminOrders: AdminOrderFromApi[] = [
     {
         id: increment(),
         userName: 'Ермек',
@@ -19,7 +19,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Куриный донер',
                     price: 1350,
-                    waitingTime: 10,
+                    waiting_time: 10,
                 },
                 count: 1,
                 choices: [
@@ -44,7 +44,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Говяжий донер',
                     price: 1250,
-                    waitingTime: 15,
+                    waiting_time: 15,
                 },
                 count: 2,
                 choices: [],
@@ -54,9 +54,9 @@ export const mockAdminOrders: AdminOrder[] = [
         acceptedAt: '',
         readyAt: '',
         issuedAt: '',
-        canceledAt: '',
-        status: 'not accepted',
-        waitingTime: 1,
+        cancelledAt: '',
+        status: 'paid',
+        waiting_time: 1,
     },
     {
         id: increment(),
@@ -69,7 +69,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Капуччино',
                     price: 200,
-                    waitingTime: 5,
+                    waiting_time: 5,
                 },
                 count: 1,
                 choices: [],
@@ -79,9 +79,9 @@ export const mockAdminOrders: AdminOrder[] = [
         acceptedAt: '',
         readyAt: '',
         issuedAt: '',
-        canceledAt: '',
-        status: 'not accepted',
-        waitingTime: 1,
+        cancelledAt: '',
+        status: 'paid',
+        waiting_time: 1,
     },
     {
         id: increment(),
@@ -94,7 +94,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Куриный донер',
                     price: 1350,
-                    waitingTime: 10,
+                    waiting_time: 10,
                 },
                 count: 1,
                 choices: [
@@ -119,7 +119,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Говяжий донер',
                     price: 1250,
-                    waitingTime: 15,
+                    waiting_time: 15,
                 },
                 count: 2,
                 choices: [],
@@ -129,9 +129,9 @@ export const mockAdminOrders: AdminOrder[] = [
         acceptedAt: '',
         readyAt: '',
         issuedAt: '',
-        canceledAt: '',
-        status: 'not accepted',
-        waitingTime: 1,
+        cancelledAt: '',
+        status: 'paid',
+        waiting_time: 1,
     },
     {
         id: increment(),
@@ -144,7 +144,7 @@ export const mockAdminOrders: AdminOrder[] = [
                     id: increment(),
                     name: 'Пуддинг',
                     price: 350,
-                    waitingTime: 10,
+                    waiting_time: 10,
                 },
                 count: 1,
                 choices: [],
@@ -154,8 +154,8 @@ export const mockAdminOrders: AdminOrder[] = [
         acceptedAt: '',
         readyAt: '',
         issuedAt: '',
-        canceledAt: '',
-        status: 'not accepted',
-        waitingTime: 10,
+        cancelledAt: '',
+        status: 'paid',
+        waiting_time: 10,
     },
 ];

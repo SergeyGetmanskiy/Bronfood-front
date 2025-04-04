@@ -26,6 +26,10 @@ export type MealInBasket = {
 
 export type Basket = {
     /**
+     * basket's id
+     */
+    id: number;
+    /**
      * Restaurant which meals are in basket
      */
     restaurant: Restaurant | Record<string, never>;

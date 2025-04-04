@@ -1,21 +1,26 @@
 import { uniq } from 'lodash';
 import { AdminOrder } from '../../../../utils/api/adminService/adminService';
 import AccordionListArchive from './AccordionListArchive/AccordionListArchive';
+import { useGetAdminOrders } from '../../../../utils/hooks/useAdminOrders/useAdminOrders';
+import Preloader from '../../../../components/Preloader/Preloader';
 
-function OrdersArchive({ orders }: { orders: AdminOrder[] }) {
+function OrdersArchive() {
+    const { data, isSuccess, isPending } = useGetAdminOrders('completed');
+    const adminOrders: AdminOrder[] = isSuccess ? data.data : [];
     const dates = uniq(
-        orders
+        adminOrders
             .map((order) => order.issuedAt)
             .map((date) => {
-                if (date instanceof Date) {
-                    const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`;
-                    const month = date.getMonth() > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`;
-                    const year = `${date.getFullYear()}`;
+                const d = new Date(date);
+                if (d instanceof Date) {
+                    const day = d.getDate() > 9 ? `${d.getDate()}` : `0${d.getDate()}`;
+                    const month = d.getMonth() > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`;
+                    const year = `${d.getFullYear()}`;
                     return `${day}.${month}.${year}`;
-                } else return date;
+                } else return d;
             })
     );
-    return <AccordionListArchive dates={dates} content={orders} />;
+    return isPending ? <Preloader /> : <AccordionListArchive dates={dates} content={adminOrders} />;
 }
 
 export default OrdersArchive;

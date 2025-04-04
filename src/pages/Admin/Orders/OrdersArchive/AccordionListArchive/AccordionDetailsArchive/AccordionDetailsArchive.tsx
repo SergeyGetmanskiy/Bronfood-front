@@ -32,7 +32,7 @@ function OrderNotAcceptedDetails({ id, price }: { id: number; price: number }) {
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'being prepared' });
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'accepted' });
     };
     return (
         <>
@@ -54,7 +54,7 @@ function OrderCookingDetails({ id, acceptedAt, waitingTime }: { id: number; acce
     const { t } = useTranslation();
     const { changeAdminOrderStatus } = useAdminOrdersMutations();
     const handleCancelClick = async () => {
-        await changeAdminOrderStatus.mutateAsync({ id, status: 'canceled' });
+        await changeAdminOrderStatus.mutateAsync({ id, status: 'cancel' });
     };
     const handleReadyClick = async () => {
         await changeAdminOrderStatus.mutateAsync({ id, status: 'ready' });
@@ -121,7 +121,7 @@ function AccordionDetailsArchive({ id, meals, status, acceptedAt, waitingTime }:
                 })}
             </ul>
             <hr />
-            {status === 'not accepted' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'being prepared' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
+            {status === 'paid' ? <OrderNotAcceptedDetails id={id} price={price} /> : status === 'accepted' ? <OrderCookingDetails id={id} acceptedAt={acceptedAt} waitingTime={waitingTime} /> : status === 'ready' ? <OrderReadyDetails id={id} /> : null}
         </div>
     );
 }

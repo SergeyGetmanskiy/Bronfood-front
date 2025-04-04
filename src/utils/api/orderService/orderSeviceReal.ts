@@ -3,11 +3,11 @@ import { handleFetch } from '../../serviceFuncs/handleFetch';
 
 export class OrderServiceReal {
     async fetchOrderIdByUserId(userId: string): Promise<{ status: 'success'; data: { id: string }[] } | { status: 'error'; error_message: string }> {
-        return handleFetch(`api/orders?clientId=${userId}`);
+        return handleFetch(`api/restaurants/orders/?clientId=${userId}`);
     }
 
     async fetchOrderedMealByOrderId(id: string): Promise<{ status: 'success'; data: OrderState[] } | { status: 'error'; error_message: string }> {
-        return handleFetch(`api/orders?id=${id}`);
+        return handleFetch(`api/restaurants/orders/?id=${id}`);
     }
 
     async cancelOrder(id: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
@@ -15,11 +15,11 @@ export class OrderServiceReal {
             method: 'PATCH',
             data: { cancellationStatus: 'requested', isCancellationRequested: true },
         };
-        return handleFetch(`api/orders/${id}`, options);
+        return handleFetch(`api/restaurants/orders/${id}`, options);
     }
 
     async checkPreparationStatus(orderId: string): Promise<{ status: 'success'; data: { preparationStatus: 'confirmed' | 'waiting' | 'notConfirmed' }[] } | { status: 'error'; error_message: string }> {
-        return handleFetch(`api/orders?id=${orderId}`);
+        return handleFetch(`api/restaurants/orders?id=${orderId}`);
     }
 
     async submitOrderFeedback(restaurantId: number, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
@@ -32,7 +32,7 @@ export class OrderServiceReal {
                   method: 'POST',
                   data: { rating },
               };
-        return handleFetch(`api/review/${restaurantId}/`, options);
+        return handleFetch(`api/restaurants/${restaurantId}/reviews/`, options);
     }
 }
 

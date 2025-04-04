@@ -1,6 +1,7 @@
-import { AdminServiceMock } from './adminServiceMock';
+//import { AdminServiceMock } from './adminServiceMock';
 import { MealInBasket } from '../basketService/basketService';
 import { Choice, Meal } from '../restaurantsService/restaurantsService';
+import { AdminServiceReal } from './adminServiceReal';
 
 export type ChoiceInAdminOrder = Omit<Choice, 'price' | 'default' | 'feature_name' | 'chosen'>;
 export type MealInAdminOrder = Omit<Meal, 'description' | 'photo' | 'type' | 'hasFeatures'>;
@@ -8,7 +9,7 @@ export type MealInOrder = Omit<MealInBasket, 'meal' | 'choices'> & {
     meal: MealInAdminOrder;
     choices: ChoiceInAdminOrder[];
 };
-export type AdminOrderStatus = 'not accepted' | 'being prepared' | 'ready' | 'canceled' | 'archive' | '';
+export type AdminOrderStatus = 'paid' | 'accepted' | 'ready' | 'cancel' | 'completed' | 'archive' | '';
 export type AdminOrder = {
     /**
      * order's id
@@ -41,7 +42,7 @@ export type AdminOrder = {
     /**
      * time order was canceled by admin
      */
-    canceledAt: Date | '';
+    cancelledAt: Date | '';
     /**
      * order's current status
      */
@@ -49,12 +50,19 @@ export type AdminOrder = {
     /**
      * time required for order to be ready
      */
-    waitingTime: number;
+    waitingTime: string;
 };
 
+export type MealInAdminOrderFromApi = Omit<MealInAdminOrder, 'waitingTime'> & { waiting_time: number };
+export type MealInOrderFromApi = Omit<MealInOrder, 'meal'> & {
+    meal: MealInAdminOrderFromApi;
+};
+export type AdminOrderFromApi = Omit<AdminOrder, 'waitingTime' | 'meals'> & { waiting_time: number; meals: MealInOrderFromApi[] };
+
 export interface AdminService {
-    getAdminOrders: () => Promise<{ data: AdminOrder[] }>;
+    getAdminOrders: (status: AdminOrderStatus) => Promise<{ data: AdminOrder[] }>;
     changeAdminOrderStatus: (id: number, status: AdminOrderStatus) => Promise<void>;
 }
 
-export const adminService = new AdminServiceMock();
+// export const adminService = new AdminServiceMock();
+export const adminService = new AdminServiceReal();

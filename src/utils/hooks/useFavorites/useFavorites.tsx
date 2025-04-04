@@ -20,7 +20,7 @@ export const useFavoritesMutations = () => {
             return response;
         },
         onSuccess: (res, restId) => {
-            if (res) {
+            if (res.ok) {
                 queryClient.invalidateQueries({ queryKey: ['userFavorites'] });
                 queryClient.invalidateQueries({ queryKey: ['restaurant', restId] });
             }
