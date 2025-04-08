@@ -14,7 +14,7 @@ export class AuthServiceReal implements AuthService {
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
         try {
-            return handleFetch('client/request_to_signup/', { method: 'POST', data: { phone, password, fullname } });
+            return handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, first_name: fullname, last_name: fullname.slice(0, 5) } });
         } catch (error) {
             if (error instanceof Error) {
                 if (error.message === 'Failed to fetch') {
@@ -29,7 +29,7 @@ export class AuthServiceReal implements AuthService {
     }
 
     async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
-        const result = await handleFetch('client/signup/', { method: 'POST', data: { temp_data_code, confirmation_code } });
+        const result = await handleFetch('api/auth/users/activation/', { method: 'POST', data: { temp_data_code, confirmation_code } });
         const { auth_token } = result.data;
         localStorage.setItem('token', auth_token);
         delete result.data.auth_token;

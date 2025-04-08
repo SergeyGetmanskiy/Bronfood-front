@@ -61,7 +61,7 @@ function OrderNotAcceptedDetails({ id, price, setOrderStatus }: { id: number; pr
     );
 }
 
-function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { id: number; acceptedAt: Date | ''; waitingTime: number; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
+function OrderCookingDetails({ id, acceptedAt, waitingTime, setOrderStatus }: { id: number; acceptedAt: Date | ''; waitingTime: string; setOrderStatus: Dispatch<SetStateAction<OrderStatus>> }) {
     const cookingTime = waitingTime * 60;
     const [remainingTime, setRemainingTime] = useState(cookingTime - (Date.now() - Date.parse(acceptedAt as string)) / 1000);
     const { t } = useTranslation();
