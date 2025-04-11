@@ -29,6 +29,7 @@ import { Analytics } from '@vercel/analytics/react';
 import Administrators from './pages/Catering/Administrators/Administrators';
 import Catering from './pages/Catering/Catering';
 import AddAdministrator from './pages/Catering/Administrators/AddAdministrator/AddAdministrator';
+import EditAdministrator from './pages/Catering/Administrators/EditAdministrator/EditAdministrator';
 
 function App() {
     const [city, setCity] = useState('');
@@ -66,6 +67,7 @@ function App() {
                     <Route path="administrators">
                         <Route index element={<Administrators />} />
                         <Route path="add" element={<AddAdministrator />} />
+                        <Route path="edit/:administratorId" element={<EditAdministrator />} />
                     </Route>
                 </Route>
             </Routes>

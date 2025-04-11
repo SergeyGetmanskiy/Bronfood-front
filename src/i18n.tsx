@@ -78,7 +78,9 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                             areYouSureYouWantToCancelTheOrder: 'Вы уверены, что хотите отменить заказ?',
+                            areYouSureYouWantToRemoveTheAdministrator: 'Вы уверены, что хотите удалить администратора?',
                             yes: 'Да',
+                            delete: 'Удалить',
                         },
 
                         orderTimeCounter: {
@@ -303,12 +305,15 @@ i18n
                             titleAdd: 'Добавить администратора',
                             buttonAdd: 'Добавить',
                             buttonForm: 'Сохранить',
+                            buttonDelete: 'Удалить',
                             placeholderLogin: 'Иван Иванов',
                             placeholderPassword: '123456',
                             nameLabelLogin: 'Логин',
                             nameLabelPassword: 'Пароль',
                             titleEdit: 'Редактировать данные',
                             titleCreate: 'Придумайте логин и пароль',
+                            copyInvitationLink: 'Скопировать ссылку приглашение',
+                            successMessage: 'Данные скопированы в буфер обмена',
                         },
                     },
                     errors: {

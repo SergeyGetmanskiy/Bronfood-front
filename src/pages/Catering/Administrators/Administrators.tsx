@@ -19,8 +19,8 @@ const Administrators = () => {
         navigate('/catering/administrators/add');
     };
 
-    const editAdministrator = () => {
-        navigate('/catering/administrators/edit');
+    const editAdministrator = (administratorId: string) => {
+        navigate(`/catering/administrators/edit/${administratorId}`);
     };
 
     return (
