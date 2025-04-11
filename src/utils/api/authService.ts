@@ -26,8 +26,8 @@ export interface UpdateUser {
  confirmation_code: 4-digit code that user shoud enter to confirm registration
  */
 export interface ConfirmRegisterPhoneData {
-    temp_data_code: string;
-    confirmation_code: string;
+    phone: string;
+    code: string;
 }
 
 export interface ConfirmUpdateUser {
@@ -39,6 +39,22 @@ export interface User {
     fullname: string;
     role?: 'CLIENT';
 }
+
+export interface UserExtended {
+    exp: number;
+    iat: number;
+    is_banned: boolean;
+    is_staff: boolean;
+    is_verified: boolean;
+    jti: string;
+    name: string;
+    phone: string;
+    role: string;
+    token_type: number;
+    user_id: number;
+    username: string;
+}
+
 export interface UserExtra {
     userId: string;
     phone: PhoneNumber;
@@ -58,9 +74,9 @@ export interface ErrorProfileResponse {
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { temp_data_code: string } }>;
+    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { id: number; name: string; phone: string } }>;
 
-    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
+    confirmRegisterPhone: ({ phone, code }: ConfirmRegisterPhoneData) => Promise<{ data: UserExtended }>;
 
     updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
@@ -68,7 +84,7 @@ export interface AuthService {
 
     logOut: () => Promise<void>;
 
-    checkAuthorization: () => Promise<{ data: User }>;
+    checkAuthorization: () => Promise<{ data: UserExtended }>;
 }
 
 // export const authService = new AuthServiceMock();

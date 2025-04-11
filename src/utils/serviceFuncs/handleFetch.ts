@@ -14,7 +14,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     const token = localStorage.getItem('token');
     const headers: RequestInit['headers'] = {};
     if (token) {
-        headers.Authorization = `Token ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
     if (data) {
         headers['Content-Type'] = 'application/json;charset=utf-8';

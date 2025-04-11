@@ -128,8 +128,8 @@ i18n
                         signUp: {
                             signUpHeading: 'Регистрация',
                             password: 'Пароль',
-                            name: 'Имя Фамилия',
-                            namePlaceholder: 'Владислав Иванов',
+                            name: 'Имя',
+                            namePlaceholder: 'Алькей',
                             registerButton: 'Регистрация',
                             connectionError: 'Сервер не отвечает. Попробуйте позже',
                             phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',

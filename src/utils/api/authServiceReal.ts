@@ -1,5 +1,6 @@
-import { AuthService, ConfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
+import { AuthService, ConfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra, UserExtended } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
+import { jwtDecode } from 'jwt-decode';
 
 export class AuthServiceReal implements AuthService {
     /* contracts https://www.notion.so/Api-Auth-b7317228f7134259a5089a7d05e79bb2 */
@@ -12,28 +13,20 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
-        try {
-            return handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, first_name: fullname, last_name: fullname.slice(0, 5) } });
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.message === 'Failed to fetch') {
-                    throw new Error('connectionError');
-                } else {
-                    throw new Error(error.message);
-                }
-            } else {
-                throw new Error('unknownError');
-            }
-        }
+    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { id: number; name: string; phone: string } }> {
+        const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name: fullname } });
+        return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
-        const result = await handleFetch('api/auth/users/activation/', { method: 'POST', data: { temp_data_code, confirmation_code } });
-        const { auth_token } = result.data;
-        localStorage.setItem('token', auth_token);
-        delete result.data.auth_token;
-        return result;
+    async confirmRegisterPhone({ phone, code }: ConfirmRegisterPhoneData): Promise<{ data: UserExtended }> {
+        const result = await handleFetch('api/auth/users/activation/', { method: 'POST', data: { phone, code } });
+        const { access, refresh } = result.data;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refresh', refresh);
+        const decoded = jwtDecode(access);
+        delete result.data.access;
+        delete result.data.refresh;
+        return decoded;
     }
 
     async updateUser({ fullname, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
