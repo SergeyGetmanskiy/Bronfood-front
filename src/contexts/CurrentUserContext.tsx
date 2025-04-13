@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
@@ -27,38 +27,27 @@ export const CurrentUserContext = createContext<CurrentUserContext>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [phone, setPhone] = useState<string>('');
     const client = useQueryClient();
 
     const profile = useQuery({
         queryKey: ['profile'],
         queryFn: authService.checkAuthorization,
-        initialData: {},
-        enabled: false,
     });
-    console.log(profile.data);
 
-    const isLogin = false;
+    const isLogin = !!profile.data;
 
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
-        onSuccess: () => {
-            profile.refetch();
-        },
+        onSuccess: () => profile.refetch(),
     });
     const signUp = useMutation({
         mutationFn: (variables: RegisterData) => authService.register(variables),
-        onSuccess: (res) => {
-            console.log(res);
-            client.setQueryData('profile', () => res);
-            console.log(profile.data);
-        },
+        onSuccess: (res) => setPhone(res.data.phone),
     });
     const confirmSignUp = useMutation({
-        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ phone: user.phone, code: variables.confirmation_code }),
-        onSuccess: (res) => {
-            console.log(res);
-            client.setQueryData('profile', res);
-        },
+        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ phone, code: variables.confirmation_code }),
+        onSuccess: () => profile.refetch(),
     });
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
@@ -82,12 +71,13 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <CurrentUserContext.Provider
             value={{
-                /* currentUser: {
-                    userId: user.user_id,
-                    phone: user.phone,
-                    fullname: user.name,
-                    role: user.role,
-                } || null, */
+                currentUser:
+                    {
+                        userId: profile.data?.user_id,
+                        phone: profile.data?.phone,
+                        fullname: profile.data?.name,
+                        role: profile.data?.role,
+                    } || null,
                 isLogin,
                 signIn,
                 signUp,

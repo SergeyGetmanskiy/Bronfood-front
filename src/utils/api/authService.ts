@@ -1,5 +1,4 @@
 import { AuthServiceReal } from './authServiceReal';
-// import { AuthServiceMock } from './authServiceMock';
 
 /**
  11 digits string, no space, brackets, or +
@@ -87,5 +86,4 @@ export interface AuthService {
     checkAuthorization: () => Promise<{ data: UserExtended }>;
 }
 
-// export const authService = new AuthServiceMock();
 export const authService = new AuthServiceReal();

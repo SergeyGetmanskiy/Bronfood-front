@@ -1,16 +1,19 @@
-import { AuthService, ConfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra, UserExtended } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra, UserExtended } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 import { jwtDecode } from 'jwt-decode';
 
 export class AuthServiceReal implements AuthService {
     /* contracts https://www.notion.so/Api-Auth-b7317228f7134259a5089a7d05e79bb2 */
 
-    async login({ phone, password }: LoginData): Promise<{ data: User }> {
-        const result = await handleFetch('signin/', { method: 'POST', data: { phone, password } });
-        const { auth_token } = result.data;
-        localStorage.setItem('token', auth_token);
-        delete result.data.auth_token;
-        return result;
+    async login({ phone, password }: LoginData): Promise<{ data: UserExtended }> {
+        const result = await handleFetch('api/auth/jwt/create/', { method: 'POST', data: { username: phone, password } });
+        const { access, refresh } = result.data;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refresh', refresh);
+        const decoded = jwtDecode(access);
+        delete result.data.access;
+        delete result.data.refresh;
+        return decoded;
     }
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { id: number; name: string; phone: string } }> {
@@ -45,15 +48,23 @@ export class AuthServiceReal implements AuthService {
     }
 
     async logOut() {
-        return handleFetch('client/signout/', { method: 'POST' });
+        const currentRefresh = localStorage.getItem('refresh');
+        const result = await handleFetch('api/auth/jwt/logout/', { method: 'POST', data: { refresh: currentRefresh } });
+        if (result) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('refresh');
+        }
     }
 
-    async checkAuthorization(): Promise<{ data: User }> {
-        const result = await handleFetch('client/profile/', { method: 'GET' });
-        const { auth_token } = result.data;
-        localStorage.setItem('token', auth_token);
-        delete result.data.auth_token;
-        delete result.status;
-        return result;
+    async checkAuthorization(): Promise<{ data: UserExtended }> {
+        const currentRefresh = localStorage.getItem('refresh');
+        const result = await handleFetch('api/auth/jwt/refresh/', { method: 'POST', data: { refresh: currentRefresh } });
+        const { access, refresh } = result.data;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refresh', refresh);
+        const decoded = jwtDecode(access);
+        delete result.data.access;
+        delete result.data.refresh;
+        return decoded;
     }
 }
