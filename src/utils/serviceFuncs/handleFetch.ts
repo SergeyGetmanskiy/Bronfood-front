@@ -43,7 +43,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
         if (res.ok) {
             return result;
         } else {
-            throw new Error(result.error_message);
+            throw new Error(result.data.detail);
         }
     } catch (error) {
         if (error instanceof TypeError) {

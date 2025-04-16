@@ -40,17 +40,13 @@ export interface User {
 }
 
 export interface UserExtended {
-    exp: number;
-    iat: number;
+    id: number;
     is_banned: boolean;
     is_staff: boolean;
     is_verified: boolean;
-    jti: string;
     name: string;
     phone: string;
     role: string;
-    token_type: number;
-    user_id: number;
     username: string;
 }
 
@@ -75,7 +71,7 @@ export interface AuthService {
 
     register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { id: number; name: string; phone: string } }>;
 
-    confirmRegisterPhone: ({ phone, code }: ConfirmRegisterPhoneData) => Promise<{ data: UserExtended }>;
+    confirmRegisterPhone: ({ phone, code }: ConfirmRegisterPhoneData) => Promise<void>;
 
     updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
@@ -83,7 +79,7 @@ export interface AuthService {
 
     logOut: () => Promise<void>;
 
-    checkAuthorization: () => Promise<{ data: UserExtended }>;
+    getProfile: () => Promise<{ data: UserExtended }>;
 }
 
 export const authService = new AuthServiceReal();

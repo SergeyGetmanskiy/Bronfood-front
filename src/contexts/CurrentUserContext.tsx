@@ -32,11 +32,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const profile = useQuery({
         queryKey: ['profile'],
-        queryFn: authService.checkAuthorization,
+        queryFn: () => authService.getProfile(),
+        retry: 0,
     });
 
     const isLogin = !!profile.data;
-
+    console.log(profile.data);
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
         onSuccess: () => profile.refetch(),
