@@ -5,7 +5,7 @@ export type Administrator = {
     id: string;
     login: string;
     password: string;
-    restaurant?: Restaurant;
+    restaurant: Restaurant;
 };
 
 export interface CateringService {
