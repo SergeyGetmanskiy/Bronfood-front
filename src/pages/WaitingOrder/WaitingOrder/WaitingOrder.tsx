@@ -28,7 +28,7 @@ const WaitingOrder: FC = () => {
     const location = useLocation();
     const { placedOrder } = location.state || {};
 
-    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder, isLoading, preparationStatus } = useOrderData(userId ?? '', placedOrder);
+    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder, isLoading, preparationStatus } = useOrderData(userId ?? null, placedOrder);
 
     useTimers({
         setPreparationTime,

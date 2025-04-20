@@ -41,7 +41,7 @@ export interface User {
 }
 
 export interface UserExtra {
-    userId: string;
+    userId: number;
     phone: string;
     name: string;
     role?: 'CLIENT';

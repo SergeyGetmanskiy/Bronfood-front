@@ -78,7 +78,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser: profile.data,
+                currentUser: profile.data?.data || null,
                 isLogin,
                 signIn,
                 signUp,
