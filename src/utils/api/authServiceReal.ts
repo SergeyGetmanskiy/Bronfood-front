@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra, UserExtended } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUser, UserExtra, UserExtended, RegisterPromise } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -10,12 +10,12 @@ export class AuthServiceReal implements AuthService {
         return decoded;
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { id: number; name: string; phone: string } }> {
+    async register({ fullname, phone, password }: RegisterPayload): Promise<{ data: RegisterPromise }> {
         const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name: fullname } });
         return result;
     }
 
-    async confirmRegisterPhone({ phone, code }: ConfirmRegisterPhoneData): Promise<void> {
+    async confirmRegister({ phone, code }: ConfirmRegisterPayload): Promise<void> {
         const result = await handleFetch('api/auth/users/activation/', { method: 'POST', data: { phone, code } });
         const { access } = result.data;
         localStorage.setItem('token', access);

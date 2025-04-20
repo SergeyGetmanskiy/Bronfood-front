@@ -12,7 +12,7 @@ interface QueryPhone {
     /**
      * Submit form action
      */
-    onSubmit: (PhoneNumber: string) => void;
+    onSubmit: (string: string) => void;
     /**
      * Flag that determines whether to show or not to show the error
      */

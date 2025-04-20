@@ -1,15 +1,15 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
+import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContext = {
     currentUser: User | null;
     isLogin: boolean;
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
-    signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
+    signUp: UseMutationResult<{ data: RegisterPromise }, Error, RegisterPayload, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
-    confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
+    confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     profile: UseQueryResult<User, Error> | Record<string, never>;
 };
@@ -43,11 +43,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: () => profile.refetch(),
     });
     const signUp = useMutation({
-        mutationFn: (variables: RegisterData) => authService.register(variables),
+        mutationFn: (variables: RegisterPayload) => authService.register(variables),
         onSuccess: (res) => setPhone(res.data.phone),
     });
     const confirmSignUp = useMutation({
-        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ phone, code: variables.confirmation_code }),
+        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegister({ phone, code: variables.confirmation_code }),
         onSuccess: () => profile.refetch(),
     });
     const updateUser = useMutation({

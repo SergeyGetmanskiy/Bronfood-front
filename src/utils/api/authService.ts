@@ -1,32 +1,28 @@
 import { AuthServiceReal } from './authServiceReal';
 
-/**
- 11 digits string, no space, brackets, or +
- */
-export type PhoneNumber = string;
-
 export interface LoginData {
-    phone: PhoneNumber;
+    phone: string;
     password: string;
 }
-export interface RegisterData {
-    phone: PhoneNumber;
+export interface RegisterPayload {
+    phone: string;
     password: string;
     fullname: string;
+}
+export interface RegisterPromise {
+    id: number;
+    name: string;
+    phone: string;
+}
+export interface ConfirmRegisterPayload {
+    phone: string;
+    code: string;
 }
 export interface UpdateUser {
     fullname: string;
-    phone: PhoneNumber;
+    phone: string;
     password?: string;
     password_confirm?: string;
-}
-/*
- temp_data_code: Temporary code that the server assign to the user in db during registration
- confirmation_code: 4-digit code that user shoud enter to confirm registration
- */
-export interface ConfirmRegisterPhoneData {
-    phone: string;
-    code: string;
 }
 
 export interface ConfirmUpdateUser {
@@ -34,7 +30,7 @@ export interface ConfirmUpdateUser {
 }
 export interface User {
     userId: string;
-    phone: PhoneNumber;
+    phone: string;
     fullname: string;
     role?: 'CLIENT';
 }
@@ -52,7 +48,7 @@ export interface UserExtended {
 
 export interface UserExtra {
     userId: string;
-    phone: PhoneNumber;
+    phone: string;
     fullname: string;
     role?: 'CLIENT';
     auth_token: string;
@@ -69,9 +65,9 @@ export interface ErrorProfileResponse {
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { id: number; name: string; phone: string } }>;
+    register: ({ fullname, phone, password }: RegisterPayload) => Promise<{ data: RegisterPromise }>;
 
-    confirmRegisterPhone: ({ phone, code }: ConfirmRegisterPhoneData) => Promise<void>;
+    confirmRegister: ({ phone, code }: ConfirmRegisterPayload) => Promise<void>;
 
     updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
