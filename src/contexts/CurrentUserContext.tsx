@@ -1,17 +1,17 @@
-import { createContext, FC, useState, PropsWithChildren } from 'react';
-import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
+import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
+import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContext = {
     currentUser: User | null;
     isLogin: boolean;
-    signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
-    signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
+    signIn: UseMutationResult<void, Error, LoginData, unknown> | Record<string, never>;
+    signUp: UseMutationResult<{ data: RegisterPromise }, Error, RegisterPayload, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
-    confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
+    confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
-    profile: UseQueryResult<User, Error> | Record<string, never>;
+    profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContext>({
@@ -27,46 +27,40 @@ export const CurrentUserContext = createContext<CurrentUserContext>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [serverSMSCode, setServerSMSCode] = useState<string>('');
-    const token = localStorage.getItem('token');
+    const [phone, setPhone] = useState<string>('');
+    const client = useQueryClient();
+
     const profile = useQuery({
         queryKey: ['profile'],
-        queryFn: authService.checkAuthorization,
-        select: (data) => data.data,
-        staleTime: 1000 * 0,
-        retry: false,
-        enabled: !!token,
+        queryFn: () => authService.getProfile(),
+
+        //retry: false,
+        staleTime: 5 * 60 * 1000 * 0,
     });
 
     const isLogin = !!profile.data;
+
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
-        onSuccess: () => {
-            profile.refetch();
-        },
+        onSuccess: () => profile.refetch(),
     });
     const signUp = useMutation({
-        mutationFn: (variables: RegisterData) => authService.register(variables),
-        onSuccess: (res) => setServerSMSCode(res.data.temp_data_code),
+        mutationFn: (variables: RegisterPayload) => authService.register(variables),
+        onSuccess: (res) => setPhone(res.data.phone),
     });
     const confirmSignUp = useMutation({
-        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: variables.confirmation_code }),
-        onSuccess: () => {
-            setServerSMSCode('');
-        },
+        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegister({ phone, code: variables.confirmation_code }),
+        onSuccess: () => profile.refetch(),
     });
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
     });
-
-    const client = useQueryClient();
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
         onSuccess: () => {
             client.invalidateQueries({ queryKey: ['profile'] });
         },
     });
-
     const logout = useMutation({
         mutationFn: () => authService.logOut(),
         onSuccess: () => {
@@ -75,10 +69,16 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         },
     });
 
+    useEffect(() => {
+        if (profile.error?.message === 'Authentication credentials were not provided.') {
+            authService.refreshToken();
+        }
+    }, [profile.error]);
+
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser: profile.data || null,
+                currentUser: profile.data?.data || null,
                 isLogin,
                 signIn,
                 signUp,

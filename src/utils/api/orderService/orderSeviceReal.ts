@@ -2,7 +2,7 @@ import { OrderState } from './orderService';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
 
 export class OrderServiceReal {
-    async fetchOrderIdByUserId(userId: string): Promise<{ status: 'success'; data: { id: string }[] } | { status: 'error'; error_message: string }> {
+    async fetchOrderIdByUserId(userId: number): Promise<{ status: 'success'; data: { id: string }[] } | { status: 'error'; error_message: string }> {
         return handleFetch(`api/restaurants/orders/?clientId=${userId}`);
     }
 

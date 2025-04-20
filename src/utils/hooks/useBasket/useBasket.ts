@@ -62,7 +62,7 @@ export const useBasketMutations = () => {
         emptyBasket.reset();
     };
     const placeOrder = useMutation({
-        mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: number }) => basketService.placeOrder(userId, restaurantId),
+        mutationFn: ({ userId, restaurantId }: { userId: number; restaurantId: number }) => basketService.placeOrder(userId, restaurantId),
         onSuccess: (result) => {
             queryClient.setQueryData(['basket'], result);
         },
