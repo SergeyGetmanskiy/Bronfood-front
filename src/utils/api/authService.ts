@@ -71,5 +71,4 @@ export interface AuthService {
     checkAuthorization: () => Promise<{ data: User }>;
 }
 
-// export const authService = new AuthServiceMock();
 export const authService = new AuthServiceReal();
