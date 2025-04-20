@@ -37,7 +37,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         //retry: false,
         staleTime: 5 * 60 * 1000 * 0,
     });
-    console.log(profile.error);
+
     const isLogin = !!profile.data;
 
     const signIn = useMutation({

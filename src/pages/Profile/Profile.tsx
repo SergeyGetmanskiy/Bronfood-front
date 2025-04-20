@@ -32,7 +32,6 @@ const Profile = () => {
 
     const phoneNumberField = getFieldState('phoneNumber');
     const newPasswordField = getFieldState('newPassword');
-    console.log(phoneNumberField, newPasswordField);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
@@ -73,7 +72,7 @@ const Profile = () => {
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.fullname}></Input>
                                 <InputPhone register={register} errors={errors} value={user.phone}></InputPhone>
-                                <InputPassword register={register} errors={errors} name="currentPassword" nameLabel={t('pages.profile.nameLabelCurrentPassword')} required={false} />
+                                <InputPassword register={register} errors={errors} name="currentPassword" nameLabel={t('pages.profile.nameLabelCurrentPassword')} required={phoneNumberField.isDirty || newPasswordField.isDirty} />
                                 <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
                                 <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
                             </FormInputs>

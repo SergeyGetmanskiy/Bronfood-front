@@ -43,7 +43,6 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
         if (res.ok) {
             return result;
         } else {
-            console.log(result.data.detail);
             throw new Error(result.data.detail);
         }
     } catch (error) {

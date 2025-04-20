@@ -45,13 +45,11 @@ export class AuthServiceReal implements AuthService {
 
     async getProfile(): Promise<{ data: UserExtended }> {
         const result = await handleFetch('api/auth/users/me/');
-        console.log(result);
         return result;
     }
 
     async refreshToken(): Promise<void> {
         const result = await handleFetch('api/auth/jwt/refresh/', { method: 'POST' });
-        console.log(result);
         const { access } = result.data;
         localStorage.setItem('token', access);
         delete result.data.access;
