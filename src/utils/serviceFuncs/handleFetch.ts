@@ -25,6 +25,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             ...headers,
             ...customOptions.headers,
         },
+        /* credentials: 'include', */
         ...customOptions,
     };
     if (data) {
@@ -32,17 +33,17 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     }
     try {
         const res = await fetch(`${API_URL}/${endpoint}`, options);
+        const result = await res.json();
         if (res.status === 401) {
             localStorage.removeItem('token');
-            throw new Error('Unauthorized');
         }
         if (res.status === 204) {
             return res;
         }
-        const result = await res.json();
         if (res.ok) {
             return result;
         } else {
+            console.log(result.data.detail);
             throw new Error(result.data.detail);
         }
     } catch (error) {

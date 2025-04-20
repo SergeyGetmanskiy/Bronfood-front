@@ -63,7 +63,7 @@ export interface ErrorProfileResponse {
 }
 
 export interface AuthService {
-    login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
+    login: ({ phone, password }: LoginData) => Promise<void>;
 
     register: ({ fullname, phone, password }: RegisterPayload) => Promise<{ data: RegisterPromise }>;
 
@@ -76,6 +76,8 @@ export interface AuthService {
     logOut: () => Promise<void>;
 
     getProfile: () => Promise<{ data: UserExtended }>;
+
+    refreshToken: () => Promise<void>;
 }
 
 export const authService = new AuthServiceReal();

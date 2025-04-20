@@ -2,12 +2,11 @@ import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegi
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
-    async login({ phone, password }: LoginData): Promise<{ data: UserExtended }> {
+    async login({ phone, password }: LoginData): Promise<void> {
         const result = await handleFetch('api/auth/jwt/create/', { method: 'POST', data: { username: phone, password } });
         const { access } = result.data;
         localStorage.setItem('token', access);
         delete result.data.access;
-        return decoded;
     }
 
     async register({ fullname, phone, password }: RegisterPayload): Promise<{ data: RegisterPromise }> {
@@ -27,7 +26,7 @@ export class AuthServiceReal implements AuthService {
         if (password && password_confirm) {
             requestData = { ...requestData, password, password_confirm };
         }
-        return handleFetch('client/profile/update_request/', { method: 'POST', data: requestData });
+        return handleFetch('api/auth/users/me/', { method: 'PATCH', data: requestData });
     }
 
     async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
@@ -37,7 +36,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async logOut() {
+    async logOut(): Promise<void> {
         const result = await handleFetch('api/auth/jwt/logout/', { method: 'POST' });
         if (result) {
             localStorage.removeItem('token');
@@ -46,6 +45,15 @@ export class AuthServiceReal implements AuthService {
 
     async getProfile(): Promise<{ data: UserExtended }> {
         const result = await handleFetch('api/auth/users/me/');
+        console.log(result);
         return result;
+    }
+
+    async refreshToken(): Promise<void> {
+        const result = await handleFetch('api/auth/jwt/refresh/', { method: 'POST' });
+        console.log(result);
+        const { access } = result.data;
+        localStorage.setItem('token', access);
+        delete result.data.access;
     }
 }
