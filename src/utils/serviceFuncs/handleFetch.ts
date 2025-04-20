@@ -25,21 +25,22 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             ...headers,
             ...customOptions.headers,
         },
-        /* credentials: 'include', */
+        credentials: 'include',
         ...customOptions,
     };
     if (data) {
         options.body = JSON.stringify(data);
     }
+    console.log(options);
     try {
         const res = await fetch(`${API_URL}/${endpoint}`, options);
-        const result = await res.json();
         if (res.status === 401) {
             localStorage.removeItem('token');
         }
         if (res.status === 204) {
             return res;
         }
+        const result = await res.json();
         if (res.ok) {
             return result;
         } else {
