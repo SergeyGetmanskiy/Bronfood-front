@@ -5,13 +5,13 @@ import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClien
 type CurrentUserContext = {
     currentUser: User | null;
     isLogin: boolean;
-    signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
+    signIn: UseMutationResult<void, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: RegisterPromise }, Error, RegisterPayload, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
-    profile: UseQueryResult<UserExtended, Error> | Record<string, never>;
+    profile: UseQueryResult<{ data: UserExtended }, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContext>({
@@ -39,6 +39,14 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
 
     const isLogin = !!profile.data;
+    const user: User | null = isLogin
+        ? {
+              userId: profile.data?.data.id,
+              phone: profile.data?.data.phone,
+              fullname: profile.data?.data.name,
+              role: profile.data?.data.role,
+          }
+        : null;
 
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
@@ -78,13 +86,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser:
-                    {
-                        userId: profile.data?.user_id,
-                        phone: profile.data?.phone,
-                        fullname: profile.data?.name,
-                        role: profile.data?.role,
-                    } || null,
+                currentUser: user,
                 isLogin,
                 signIn,
                 signUp,

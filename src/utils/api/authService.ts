@@ -29,10 +29,10 @@ export interface ConfirmUpdateUser {
     confirmation_code: string;
 }
 export interface User {
-    userId: string;
+    userId: number;
     phone: string;
     fullname: string;
-    role?: 'CLIENT';
+    role?: string;
 }
 
 export interface UserExtended {

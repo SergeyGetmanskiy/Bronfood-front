@@ -4,7 +4,7 @@ import { OrderState } from '../../api/orderService/orderService';
 import OrderServiceReal from '../../api/orderService/orderSeviceReal';
 import i18n from 'i18next';
 
-export const useOrderData = (userId: string, placedOrder: OrderState | null) => {
+export const useOrderData = (userId: number, placedOrder: OrderState | null) => {
     const queryClient = useQueryClient();
     const orderService = new OrderServiceReal();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);

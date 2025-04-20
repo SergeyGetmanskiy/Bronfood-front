@@ -70,7 +70,7 @@ const Profile = () => {
                         {updateUser.isError && <ErrorMessage message={t(`pages.profile.${updateUser.error.message}`)} />}
                         {isSuccess && (
                             <FormInputs>
-                                <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.fullname}></Input>
+                                <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.name}></Input>
                                 <InputPhone register={register} errors={errors} value={user.phone}></InputPhone>
                                 <InputPassword register={register} errors={errors} name="currentPassword" nameLabel={t('pages.profile.nameLabelCurrentPassword')} required={phoneNumberField.isDirty || newPasswordField.isDirty} />
                                 <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
