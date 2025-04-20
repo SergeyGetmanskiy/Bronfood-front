@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUser, User, UserExtended, UserExtra } from '../utils/api/authService';
+import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContext = {
@@ -11,7 +11,7 @@ type CurrentUserContext = {
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
-    profile: UseQueryResult<{ data: UserExtended }, Error> | Record<string, never>;
+    profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContext>({
@@ -39,14 +39,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
 
     const isLogin = !!profile.data;
-    const user: User | null = isLogin
-        ? {
-              userId: profile.data?.data.id,
-              phone: profile.data?.data.phone,
-              fullname: profile.data?.data.name,
-              role: profile.data?.data.role,
-          }
-        : null;
 
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
@@ -86,7 +78,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser: user,
+                currentUser: profile.data,
                 isLogin,
                 signIn,
                 signUp,

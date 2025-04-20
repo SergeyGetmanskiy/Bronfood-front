@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUser, UserExtra, UserExtended, RegisterPromise } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUser, UserExtra, User, RegisterPromise } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -9,8 +9,8 @@ export class AuthServiceReal implements AuthService {
         delete result.data.access;
     }
 
-    async register({ fullname, phone, password }: RegisterPayload): Promise<{ data: RegisterPromise }> {
-        const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name: fullname } });
+    async register({ name, phone, password }: RegisterPayload): Promise<{ data: RegisterPromise }> {
+        const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name } });
         return result;
     }
 
@@ -21,8 +21,8 @@ export class AuthServiceReal implements AuthService {
         delete result.data.access;
     }
 
-    async updateUser({ fullname, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
-        let requestData: UpdateUser = { fullname, phone };
+    async updateUser({ name, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
+        let requestData: UpdateUser = { name, phone };
         if (password && password_confirm) {
             requestData = { ...requestData, password, password_confirm };
         }
@@ -43,7 +43,7 @@ export class AuthServiceReal implements AuthService {
         }
     }
 
-    async getProfile(): Promise<{ data: UserExtended }> {
+    async getProfile(): Promise<{ data: User }> {
         const result = await handleFetch('api/auth/users/me/');
         return result;
     }

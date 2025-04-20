@@ -7,7 +7,7 @@ export interface LoginData {
 export interface RegisterPayload {
     phone: string;
     password: string;
-    fullname: string;
+    name: string;
 }
 export interface RegisterPromise {
     id: number;
@@ -19,7 +19,7 @@ export interface ConfirmRegisterPayload {
     code: string;
 }
 export interface UpdateUser {
-    fullname: string;
+    name: string;
     phone: string;
     password?: string;
     password_confirm?: string;
@@ -28,14 +28,8 @@ export interface UpdateUser {
 export interface ConfirmUpdateUser {
     confirmation_code: string;
 }
-export interface User {
-    userId: number;
-    phone: string;
-    fullname: string;
-    role?: string;
-}
 
-export interface UserExtended {
+export interface User {
     id: number;
     is_banned: boolean;
     is_staff: boolean;
@@ -49,7 +43,7 @@ export interface UserExtended {
 export interface UserExtra {
     userId: string;
     phone: string;
-    fullname: string;
+    name: string;
     role?: 'CLIENT';
     auth_token: string;
 }
@@ -65,17 +59,17 @@ export interface ErrorProfileResponse {
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<void>;
 
-    register: ({ fullname, phone, password }: RegisterPayload) => Promise<{ data: RegisterPromise }>;
+    register: ({ name, phone, password }: RegisterPayload) => Promise<{ data: RegisterPromise }>;
 
     confirmRegister: ({ phone, code }: ConfirmRegisterPayload) => Promise<void>;
 
-    updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
+    updateUser: ({ name, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
     logOut: () => Promise<void>;
 
-    getProfile: () => Promise<{ data: UserExtended }>;
+    getProfile: () => Promise<{ data: User }>;
 
     refreshToken: () => Promise<void>;
 }

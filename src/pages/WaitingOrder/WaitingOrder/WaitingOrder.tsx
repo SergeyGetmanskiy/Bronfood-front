@@ -19,7 +19,7 @@ const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
 const WaitingOrder: FC = () => {
     const { currentUser } = useCurrentUser();
-    const userId = currentUser?.userId;
+    const userId = currentUser?.id;
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [waitOrderIdTime, setWaitOrderIdTime] = useState(WAIT_ORDER_ID_INITIAL_TIME);
