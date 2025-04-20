@@ -31,7 +31,6 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     if (data) {
         options.body = JSON.stringify(data);
     }
-    console.log(options);
     try {
         const res = await fetch(`${API_URL}/${endpoint}`, options);
         if (res.status === 401) {
