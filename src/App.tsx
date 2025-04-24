@@ -67,7 +67,7 @@ function App() {
                     <Route path="administrators">
                         <Route index element={<Administrators />} />
                         <Route path="add" element={<AddAdministrator />} />
-                        <Route path="edit/:administratorId" element={<EditAdministrator />} />
+                        <Route path=":administratorId" element={<EditAdministrator />} />
                     </Route>
                 </Route>
             </Routes>

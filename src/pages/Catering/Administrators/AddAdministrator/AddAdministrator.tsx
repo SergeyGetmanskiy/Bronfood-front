@@ -5,19 +5,24 @@ import { useCreateAdministrator } from '../../../../utils/hooks/useAdministrator
 import Preloader from '../../../../components/Preloader/Preloader';
 import ErrorMessage from '../../../../components/ErrorMessage/ErrorMessage';
 import AdministratorForm from '../AdministratorForm/AdministratorForm';
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 const AddAdministrator = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { mutateAsync, isPending, error } = useCreateAdministrator();
 
-    const onSubmit = async (data: FieldValues) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await mutateAsync({
             login: data.login,
             password: data.password,
+            restaurant: data.restaurant,
         });
-        navigate('/catering/administrators');
+        navigate('/catering/administrators', {
+            state: {
+                fromSubmit: true,
+            },
+        });
     };
 
     const onClose = () => {
