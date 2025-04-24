@@ -1,48 +1,49 @@
 import { AuthServiceReal } from './authServiceReal';
-// import { AuthServiceMock } from './authServiceMock';
-
-/**
- 11 digits string, no space, brackets, or +
- */
-export type PhoneNumber = string;
 
 export interface LoginData {
-    phone: PhoneNumber;
+    phone: string;
     password: string;
 }
-export interface RegisterData {
-    phone: PhoneNumber;
+export interface RegisterPayload {
+    phone: string;
     password: string;
-    fullname: string;
+    name: string;
+}
+export interface RegisterPromise {
+    id: number;
+    name: string;
+    phone: string;
+}
+export interface ConfirmRegisterPayload {
+    phone: string;
+    code: string;
 }
 export interface UpdateUser {
-    fullname: string;
-    phone: PhoneNumber;
+    name: string;
+    phone: string;
     password?: string;
     password_confirm?: string;
-}
-/*
- temp_data_code: Temporary code that the server assign to the user in db during registration
- confirmation_code: 4-digit code that user shoud enter to confirm registration
- */
-export interface ConfirmRegisterPhoneData {
-    temp_data_code: string;
-    confirmation_code: string;
 }
 
 export interface ConfirmUpdateUser {
     confirmation_code: string;
 }
+
 export interface User {
-    userId: string;
-    phone: PhoneNumber;
-    fullname: string;
-    role?: 'CLIENT';
+    id: number;
+    is_banned: boolean;
+    is_staff: boolean;
+    is_verified: boolean;
+    name: string;
+    phone: string;
+    role: string;
+    username: string;
 }
+
 export interface UserExtra {
-    userId: string;
-    phone: PhoneNumber;
-    fullname: string;
+    userId: number;
+    phone: string;
+    name: string;
     role?: 'CLIENT';
     auth_token: string;
 }
@@ -56,20 +57,21 @@ export interface ErrorProfileResponse {
 }
 
 export interface AuthService {
-    login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
+    login: ({ phone, password }: LoginData) => Promise<void>;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { temp_data_code: string } }>;
+    register: ({ name, phone, password }: RegisterPayload) => Promise<{ data: RegisterPromise }>;
 
-    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
+    confirmRegister: ({ phone, code }: ConfirmRegisterPayload) => Promise<void>;
 
-    updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
+    updateUser: ({ name, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
     logOut: () => Promise<void>;
 
-    checkAuthorization: () => Promise<{ data: User }>;
+    getProfile: () => Promise<{ data: User }>;
+
+    refreshToken: () => Promise<void>;
 }
 
-// export const authService = new AuthServiceMock();
 export const authService = new AuthServiceReal();

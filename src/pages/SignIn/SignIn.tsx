@@ -16,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 const SignIn = () => {
     const queryClient = useQueryClient();
-    const { currentUser, signIn } = useCurrentUser();
+    const { signIn, isLogin } = useCurrentUser();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -26,10 +26,10 @@ const SignIn = () => {
     } = useForm();
 
     useEffect(() => {
-        if (currentUser) {
+        if (isLogin) {
             navigate('/restaurants');
         }
-    }, [currentUser, navigate]);
+    }, [isLogin, navigate]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;

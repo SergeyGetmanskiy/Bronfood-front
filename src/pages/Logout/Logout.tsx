@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 const Logout: FC = () => {
     const queryClient = useQueryClient();
-    const { currentUser, logout } = useCurrentUser();
+    const { isLogin, logout } = useCurrentUser();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -39,10 +39,10 @@ const Logout: FC = () => {
         navigate('/');
     };
     useEffect(() => {
-        if (!currentUser) {
+        if (!isLogin) {
             navigate('/');
         }
-    }, [currentUser, navigate]);
+    }, [isLogin, navigate]);
     useEsc(() => {
         onClose();
     }, []);

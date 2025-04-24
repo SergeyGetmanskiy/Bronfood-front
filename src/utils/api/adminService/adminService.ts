@@ -50,7 +50,7 @@ export type AdminOrder = {
     /**
      * time required for order to be ready
      */
-    waitingTime: string;
+    waitingTime: number;
 };
 
 export type MealInAdminOrderFromApi = Omit<MealInAdminOrder, 'waitingTime'> & { waiting_time: number };

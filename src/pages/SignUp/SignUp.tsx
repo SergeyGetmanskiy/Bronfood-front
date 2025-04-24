@@ -30,7 +30,7 @@ const SignUp = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        await signUp.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password, fullname: username });
+        await signUp.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password, name: username });
         setIsConfirmOpen(true);
     };
     const confirm = async (code: string) => {

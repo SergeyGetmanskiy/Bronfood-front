@@ -14,7 +14,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     const token = localStorage.getItem('token');
     const headers: RequestInit['headers'] = {};
     if (token) {
-        headers.Authorization = `Token ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
     if (data) {
         headers['Content-Type'] = 'application/json;charset=utf-8';
@@ -25,6 +25,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             ...headers,
             ...customOptions.headers,
         },
+        credentials: 'include',
         ...customOptions,
     };
     if (data) {
@@ -34,7 +35,6 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
         const res = await fetch(`${API_URL}/${endpoint}`, options);
         if (res.status === 401) {
             localStorage.removeItem('token');
-            throw new Error('Unauthorized');
         }
         if (res.status === 204) {
             return res;
@@ -43,7 +43,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
         if (res.ok) {
             return result;
         } else {
-            throw new Error(result.error_message);
+            throw new Error(result.data.detail);
         }
     } catch (error) {
         if (error instanceof TypeError) {

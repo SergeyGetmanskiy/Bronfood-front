@@ -21,7 +21,7 @@ export class BasketServiceReal implements BasketService {
     async emptyBasket(): Promise<void> {
         return handleFetch(`api/restaurants/basket/${this.basketId}/`, { method: 'DELETE' });
     }
-    async placeOrder(userId: string, restaurantId: number): Promise<OrderState> {
+    async placeOrder(userId: number, restaurantId: number): Promise<OrderState> {
         return handleFetch('api/restaurants/orders/', { method: 'POST', data: { restaurantId, userId } });
     }
 }

@@ -15,7 +15,7 @@ export interface OrderState {
     /**
      * id for the user who made the order.
      */
-    userId: string;
+    userId: number;
     /**
      * Unique identifier for the client who made the order.
      */

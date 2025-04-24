@@ -32,7 +32,7 @@ function Basket() {
     const commission = isSuccess ? data.data.basket_commission : 0;
     const isLoading = addMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
-    const userId = currentUser?.userId;
+    const userId = currentUser?.id;
     const restaurantId = restaurant.id;
     const close = () => {
         reset();
