@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import AdministratorsList from './AdministratorsList/AdministratorsList';
 import { useGetAdministrators } from '../../../utils/hooks/useAdministrators/useAdministrators';
