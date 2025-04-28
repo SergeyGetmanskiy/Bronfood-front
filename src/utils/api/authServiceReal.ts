@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUser, UserExtra, User, RegisterPromise } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, UserExtra, User, RegisterPromise } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -21,11 +21,12 @@ export class AuthServiceReal implements AuthService {
         delete result.data.access;
     }
 
-    async updateUser({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUser): Promise<void> {
-        let requestData: UpdateUser = { name, phone };
+    async updateUser({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUserPayload): Promise<void> {
+        let requestData;
         if (currentPassword && newPassword && newPasswordConfirm) {
             requestData = {
-                ...requestData,
+                name,
+                phone,
                 current_password: currentPassword,
                 new_password: newPassword,
                 re_new_password: newPasswordConfirm,

@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUser, User, UserExtra } from '../utils/api/authService';
+import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUserPayload, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContext = {
@@ -8,7 +8,7 @@ type CurrentUserContext = {
     signIn: UseMutationResult<void, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: RegisterPromise }, Error, RegisterPayload, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
-    updateUser: UseMutationResult<void, Error, UpdateUser, unknown> | Record<string, never>;
+    updateUser: UseMutationResult<void, Error, UpdateUserPayload, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
@@ -53,7 +53,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: () => profile.refetch(),
     });
     const updateUser = useMutation({
-        mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
+        mutationFn: (variables: UpdateUserPayload) => authService.updateUser(variables),
     });
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),

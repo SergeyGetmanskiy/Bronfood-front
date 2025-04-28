@@ -18,7 +18,7 @@ export interface ConfirmRegisterPayload {
     phone: string;
     code: string;
 }
-export interface UpdateUser {
+export interface UpdateUserPayload {
     name?: string;
     phone?: string;
     currentPassword?: string;
@@ -64,7 +64,7 @@ export interface AuthService {
 
     confirmRegister: ({ phone, code }: ConfirmRegisterPayload) => Promise<void>;
 
-    updateUser: ({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUser) => Promise<void>;
+    updateUser: ({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUserPayload) => Promise<void>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
