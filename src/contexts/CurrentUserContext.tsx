@@ -8,7 +8,7 @@ type CurrentUserContext = {
     signIn: UseMutationResult<void, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: RegisterPromise }, Error, RegisterPayload, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
-    updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
+    updateUser: UseMutationResult<void, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<void, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
