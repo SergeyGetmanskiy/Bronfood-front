@@ -43,7 +43,15 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
         if (res.ok) {
             return result;
         } else {
-            throw new Error(result.data.detail);
+            if (result.data.detail) {
+                throw new Error(result.data.detail);
+            } else {
+                const errorCause = {};
+                for (const key in result.data) {
+                    errorCause[key] = result.data[key];
+                }
+                throw new Error('Validation Error', { cause: errorCause });
+            }
         }
     } catch (error) {
         if (error instanceof TypeError) {
