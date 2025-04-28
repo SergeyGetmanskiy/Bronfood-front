@@ -46,7 +46,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
             if (result.data.detail) {
                 throw new Error(result.data.detail);
             } else {
-                const errorCause = {};
+                const errorCause: Record<string, string> = {};
                 for (const key in result.data) {
                     errorCause[key] = result.data[key];
                 }
