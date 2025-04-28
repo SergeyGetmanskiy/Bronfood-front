@@ -27,15 +27,23 @@ export const CurrentUserContext = createContext<CurrentUserContext>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
+    const token = localStorage.getItem('token');
     const [phone, setPhone] = useState<string>('');
     const client = useQueryClient();
+
+    useQuery({
+        queryKey: ['refresh token'],
+        queryFn: () => authService.refreshToken(),
+        refetchInterval: 4.9 * 60 * 1000,
+        refetchIntervalInBackground: true,
+        retry: false,
+    });
 
     const profile = useQuery({
         queryKey: ['profile'],
         queryFn: () => authService.getProfile(),
-
-        //retry: false,
-        staleTime: 5 * 60 * 1000 * 0,
+        retry: false,
+        enabled: !!token,
     });
 
     const isLogin = !!profile.data;
