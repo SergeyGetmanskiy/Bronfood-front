@@ -19,10 +19,11 @@ export interface ConfirmRegisterPayload {
     code: string;
 }
 export interface UpdateUser {
-    name: string;
-    phone: string;
-    password?: string;
-    password_confirm?: string;
+    name?: string;
+    phone?: string;
+    currentPassword?: string;
+    newPassword?: string;
+    newPasswordConfirm?: string;
 }
 
 export interface ConfirmUpdateUser {
@@ -63,7 +64,7 @@ export interface AuthService {
 
     confirmRegister: ({ phone, code }: ConfirmRegisterPayload) => Promise<void>;
 
-    updateUser: ({ name, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
+    updateUser: ({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUser) => Promise<void>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 

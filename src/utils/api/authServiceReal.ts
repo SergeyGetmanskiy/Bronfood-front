@@ -21,12 +21,18 @@ export class AuthServiceReal implements AuthService {
         delete result.data.access;
     }
 
-    async updateUser({ name, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
+    async updateUser({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUser): Promise<void> {
         let requestData: UpdateUser = { name, phone };
-        if (password && password_confirm) {
-            requestData = { ...requestData, password, password_confirm };
+        if (currentPassword && newPassword && newPasswordConfirm) {
+            requestData = {
+                ...requestData,
+                current_password: currentPassword,
+                new_password: newPassword,
+                re_new_password: newPasswordConfirm,
+            };
         }
-        return handleFetch('api/auth/users/me/', { method: 'PATCH', data: requestData });
+        const result = await handleFetch('api/auth/users/me/', { method: 'PATCH', data: requestData });
+        return result;
     }
 
     async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {

@@ -37,12 +37,12 @@ const Profile = () => {
         await updateUser.mutateAsync({
             phone: data.phoneNumber.replace(/\D/g, ''),
             name: data.username,
-            password: data.newPassword || null,
-            password_confirm: data.newPasswordConfirm || null,
+            currentPassword: data.currentPassword,
+            newPassword: data.newPassword || null,
+            newPasswordConfirm: data.newPasswordConfirm || null,
         });
         setIsConfirmOpen(true);
     };
-
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.profile.passwordDontMatch');
