@@ -79,7 +79,9 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                             areYouSureYouWantToCancelTheOrder: 'Вы уверены, что хотите отменить заказ?',
+                            areYouSureYouWantToRemoveTheAdministrator: 'Вы уверены, что хотите удалить администратора?',
                             yes: 'Да',
+                            delete: 'Удалить',
                         },
 
                         orderTimeCounter: {
@@ -304,13 +306,17 @@ i18n
                         administrators: {
                             titleAdd: 'Добавить администратора',
                             buttonAdd: 'Добавить',
-                            buttonForm: 'Сохранить',
-                            placeholderLogin: 'Иван Иванов',
+                            buttonSaveAndCopy: 'Сохранить и скопировать',
+                            buttonDelete: 'Удалить',
+                            placeholderLogin: 'Название точки',
                             placeholderPassword: '123456',
                             nameLabelLogin: 'Логин',
                             nameLabelPassword: 'Пароль',
                             titleEdit: 'Редактировать данные',
                             titleCreate: 'Придумайте логин и пароль',
+                            copyInvitationText: 'После отправки формы данные будут сохранены и скопированы в буфер обмена.',
+                            successMessage: 'Данные добавлены и скопированы в буфер обмена. Сохраните их в безопасном месте.',
+                            chooseAnRestaurant: 'Выберите заведение',
                         },
                     },
                     errors: {

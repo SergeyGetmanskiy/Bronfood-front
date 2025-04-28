@@ -21,3 +21,15 @@ export const useCreateAdministrator = () => {
         mutationFn: (data: Omit<Administrator, 'id'>) => cateringService.createAdministrator(data),
     });
 };
+
+export const useUpdateAdministrator = () => {
+    return useMutation({
+        mutationFn: (data: Partial<Administrator> & { id: string }) => cateringService.updateAdministrator(data),
+    });
+};
+
+export const useDeleteAdministrator = () => {
+    return useMutation({
+        mutationFn: (id: string) => cateringService.deleteAdministrator(id),
+    });
+};
