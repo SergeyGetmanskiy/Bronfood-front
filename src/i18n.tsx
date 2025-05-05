@@ -150,7 +150,7 @@ i18n
                             phoneThisPhoneNumberIsAlreadyInUse: 'Такой номер телефона уже зарегистрирован',
                             passwordThisPasswordIsTooShortItMustContainAtLeast8Characters: 'Пароль слишком короткий. Он должен быть больше 7 символов',
                             passwordThisPasswordIsTooCommon: 'Пароль слишком простой',
-                            passwordThisPasswordIsEntirelyNumeric: 'Пароль не должен быть только из цифр',
+                            passwordThisPasswordIsEntirelyNumeric: 'Пароль не должен состоять только из цифр',
                             invalidCodeOrExpired: 'Неправильный код из СМС',
                         },
                         confirmation: {
