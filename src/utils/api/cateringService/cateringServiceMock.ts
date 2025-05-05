@@ -1,8 +1,9 @@
-import { mockCateringService } from './MockCateringService';
-import { CateringService, Administrator } from './cateringService';
+import { emptyCaterings, mockCateringService } from './MockCateringService';
+import { CateringService, Administrator, Catering } from './cateringService';
 
 export class CateringServiceMock implements CateringService {
     private administrators: Administrator[] = mockCateringService;
+    private caterings: Catering[] = emptyCaterings;
 
     async getAdministrators(): Promise<{ data: Administrator[] }> {
         const success = true;
@@ -50,6 +51,46 @@ export class CateringServiceMock implements CateringService {
             return await Promise.resolve({ success: true });
         } else {
             return await Promise.reject(new Error('Error: administrator not found'));
+        }
+    }
+
+    async getCaterings(): Promise<{ data: Catering[] }> {
+        const success = true;
+        if (success) {
+            return await Promise.resolve({ data: this.caterings });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
+
+    async getCateringById(id: number): Promise<{ data: Catering }> {
+        const numericId = Number(id);
+        const catering = this.caterings.find((c) => c.id === numericId);
+        if (catering) {
+            return await Promise.resolve({ data: catering });
+        }
+        return await Promise.reject(new Error('Error: catering not found'));
+    }
+
+    async createCatering(data: Omit<Catering, 'id'>): Promise<{ data: Catering }> {
+        const newCatering = {
+            ...data,
+            id: Date.now(),
+        };
+
+        this.caterings.push(newCatering);
+        return { data: newCatering };
+    }
+
+    async deleteCatering(id: number): Promise<{ success: boolean }> {
+        const numericId = Number(id);
+        const index = this.caterings.findIndex((c) => c.id === numericId);
+
+        if (index !== -1) {
+            this.caterings.slice(index, 1);
+            return await Promise.resolve({ success: true });
+        } else {
+            return await Promise.reject(new Error('Error: catering not found'));
         }
     }
 }
