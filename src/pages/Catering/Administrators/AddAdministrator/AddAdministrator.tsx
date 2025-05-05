@@ -16,7 +16,7 @@ const AddAdministrator = () => {
         await mutateAsync({
             login: data.login,
             password: data.password,
-            restaurant: data.restaurant,
+            catering: data.restaurant,
         });
         navigate('/catering/administrators', {
             state: {

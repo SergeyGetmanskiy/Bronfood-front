@@ -1,7 +1,17 @@
-import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
+import { Catering } from '../../../utils/api/cateringService/cateringService';
 import styles from './RestaurantCardCompact.module.scss';
+import { useTranslation } from 'react-i18next';
 
-function RestaurantCardCompact({ card, isTheOnlyOne, isActive }: { card: Restaurant; isTheOnlyOne: boolean; isActive: boolean }) {
+function RestaurantCardCompact({ card, isTheOnlyOne, isActive }: { card: Catering; isTheOnlyOne: boolean; isActive: boolean }) {
+    const { t } = useTranslation();
+
+    const formatWorkingTime = (time?: { open: string | null; close: string | null }) => {
+        if (!time || time.open === null || time.close === null) {
+            return t('pages.cateringManagement.noWorkingTime');
+        }
+        return `${time.open} - ${time.close}`;
+    };
+
     return (
         <div className={`${styles.card} ${isTheOnlyOne || isActive ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
@@ -16,7 +26,7 @@ function RestaurantCardCompact({ card, isTheOnlyOne, isActive }: { card: Restaur
                     </div>
                     <div className={styles.card__feature}>
                         <div className={`${styles.card__icon} ${styles.card__icon_clock} ${styles.card__icon_small}`} />
-                        <p className={styles.card__feature_title}>{card.workingTime}</p>
+                        <p className={styles.card__feature_title}>{formatWorkingTime(card.workingTime?.monday)}</p>
                     </div>
                 </div>
             </div>
