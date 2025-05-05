@@ -23,7 +23,6 @@ const SignUp = () => {
     const { signUp, confirmSignUp } = useCurrentUser();
     const signUpErrorMessage = signUp.isError ? getErrorMessage(signUp.error, 'pages.signUp.') : '';
     const confirmSignUpErrorMessage = confirmSignUp.isError ? getErrorMessage(confirmSignUp.error, 'pages.signUp.') : '';
-    console.log(confirmSignUpErrorMessage);
     const { t } = useTranslation();
     const {
         register,
