@@ -147,6 +147,11 @@ i18n
                             connectionError: 'Сервер не отвечает. Попробуйте позже',
                             phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
                             unknownError: 'Неизвестная ошибка',
+                            phoneThisPhoneNumberIsAlreadyInUse: 'Такой номер телефона уже зарегистрирован',
+                            passwordThisPasswordIsTooShortItMustContainAtLeast8Characters: 'Пароль слишком короткий. Он должен быть больше 7 символов',
+                            passwordThisPasswordIsTooCommon: 'Пароль слишком простой',
+                            passwordThisPasswordIsEntirelyNumeric: 'Пароль не должен быть только из цифр',
+                            invalidCodeOrExpired: 'Неправильный код из СМС',
                         },
                         confirmation: {
                             phoneConfirmation: 'Подтверждение номера',

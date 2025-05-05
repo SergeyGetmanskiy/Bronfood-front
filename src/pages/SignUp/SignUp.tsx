@@ -16,10 +16,14 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import SMSVerify from '../../components/SMSVerify/SMSVerify';
+import { getErrorMessage } from '../../utils/serviceFuncs/getErrorMessage';
 
 const SignUp = () => {
     const navigate = useNavigate();
     const { signUp, confirmSignUp } = useCurrentUser();
+    const signUpErrorMessage = signUp.isError ? getErrorMessage(signUp.error, 'pages.signUp.') : '';
+    const confirmSignUpErrorMessage = confirmSignUp.isError ? getErrorMessage(confirmSignUp.error, 'pages.signUp.') : '';
+    console.log(confirmSignUpErrorMessage);
     const { t } = useTranslation();
     const {
         register,
@@ -42,7 +46,7 @@ const SignUp = () => {
     return (
         <>
             {isConfirmOpen && isInfoPopupOpen && <PopupSignupSuccess isOpened={isInfoPopupOpen} />}
-            {isConfirmOpen && !isInfoPopupOpen && <SMSVerify onClose={confirmSignUp.reset} isErrorVisible={confirmSignUp.isError} isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} onSubmit={confirm} />}
+            {isConfirmOpen && !isInfoPopupOpen && <SMSVerify onClose={confirmSignUp.reset} isErrorVisible={confirmSignUp.isError} isLoading={confirmSignUp.isPending} error={confirmSignUpErrorMessage} onSubmit={confirm} />}
             {!isConfirmOpen && (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}
@@ -53,7 +57,7 @@ const SignUp = () => {
                 >
                     {signUp.isPending && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {signUp.isError && <ErrorMessage message={t(`pages.signUp.${signUp.error.message}`)} />}
+                        {signUp.isError && <ErrorMessage message={signUpErrorMessage} />}
                         <fieldset className={styles.form__field} disabled={signUp.isPending}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>

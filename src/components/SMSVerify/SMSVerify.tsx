@@ -66,7 +66,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
         >
             <div className={styles['sms-verify__layout']}>
                 {props.isLoading && <Preloader />}
-                {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
+                {props.isErrorVisible && <ErrorMessage message={props.error} />}
                 <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
                     <div className={styles['sms-verify__inputs']}>
                         <PinField length={4} className={`${styles['sms-verify__input']}`} onComplete={handleComplete} />
