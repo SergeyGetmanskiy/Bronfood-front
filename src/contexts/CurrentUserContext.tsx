@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUserPayload, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
@@ -62,6 +62,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUserPayload) => authService.updateUser(variables),
+        onSuccess: () => profile.refetch(),
     });
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
@@ -76,12 +77,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             profile.refetch();
         },
     });
-
-    useEffect(() => {
-        if (profile.error?.message === 'Authentication credentials were not provided.') {
-            authService.refreshToken();
-        }
-    }, [profile.error]);
 
     return (
         <CurrentUserContext.Provider

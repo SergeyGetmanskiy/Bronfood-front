@@ -22,16 +22,13 @@ export class AuthServiceReal implements AuthService {
     }
 
     async updateUser({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUserPayload): Promise<void> {
-        let requestData;
-        if (currentPassword && newPassword && newPasswordConfirm) {
-            requestData = {
-                name,
-                phone,
-                current_password: currentPassword,
-                new_password: newPassword,
-                re_new_password: newPasswordConfirm,
-            };
-        }
+        const requestData = {
+            name,
+            phone,
+            current_password: currentPassword,
+            new_password: newPassword,
+            re_new_password: newPasswordConfirm,
+        };
         const result = await handleFetch('api/auth/users/me/', { method: 'PATCH', data: requestData });
         return result;
     }
