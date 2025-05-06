@@ -29,7 +29,6 @@ export class AuthServiceReal implements AuthService {
             new_password: newPassword,
             re_new_password: newPasswordConfirm,
         };
-        console.log(requestData);
         const result = await handleFetch('api/auth/users/me/', { method: 'PATCH', data: requestData });
         return result;
     }

@@ -37,7 +37,7 @@ const Profile = () => {
     const newPasswordField = getFieldState('newPassword');
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const submitData = {};
+        const submitData: FieldValues = {};
         for (const inputData in data) {
             if (!data[inputData]) {
                 continue;
