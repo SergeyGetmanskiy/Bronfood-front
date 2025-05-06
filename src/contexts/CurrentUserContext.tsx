@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { authService, LoginData, RegisterPayload, RegisterPromise, UpdateUserPayload, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
@@ -76,12 +76,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             profile.refetch();
         },
     });
-
-    useEffect(() => {
-        if (profile.error?.message === 'Authentication credentials were not provided.') {
-            authService.refreshToken();
-        }
-    }, [profile.error]);
 
     return (
         <CurrentUserContext.Provider
