@@ -22,7 +22,7 @@ interface InputPhone {
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
-    const [inputValue, setInputValue] = useState(format(props.value, { mask: '+_ (___) ___-__-__', replacement: { _: /\d/ } }));
+    const [inputValue, setInputValue] = useState(props.value ? format(props.value, { mask: '+_ (___) ___-__-__', replacement: { _: /\d/ } }) : '');
     const { t } = useTranslation();
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
     const id = useId();
