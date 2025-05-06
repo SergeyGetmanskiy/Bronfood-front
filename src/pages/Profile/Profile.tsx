@@ -37,13 +37,20 @@ const Profile = () => {
     const newPasswordField = getFieldState('newPassword');
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        await updateUser.mutateAsync({
-            phone: data.phoneNumber.replace(/\D/g, ''),
-            name: data.username,
-            currentPassword: data.currentPassword,
-            newPassword: data.newPassword || null,
-            newPasswordConfirm: data.newPasswordConfirm || null,
-        });
+        const submitData = {};
+        for (const inputData in data) {
+            if (!data[inputData]) {
+                continue;
+            }
+            if (inputData === 'phoneNumber') {
+                submitData['phone'] = data[inputData].replace(/\D/g, '');
+            } else if (inputData === 'username') {
+                submitData['name'] = data[inputData];
+            } else {
+                submitData[inputData] = data[inputData];
+            }
+        }
+        await updateUser.mutateAsync(submitData);
         setIsConfirmOpen(true);
     };
     const validatePasswordMatch = (value: FieldValues) => {

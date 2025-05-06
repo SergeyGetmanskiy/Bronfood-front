@@ -62,6 +62,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUserPayload) => authService.updateUser(variables),
+        onSuccess: () => profile.refetch(),
     });
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
