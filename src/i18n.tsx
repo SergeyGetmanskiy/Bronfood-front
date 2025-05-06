@@ -137,6 +137,7 @@ i18n
                             loginButton: 'Войти',
                             registartion: 'Регистрация',
                             checkYourInternetConnection: 'Проверьте ваше соединение с интернетом',
+                            noActiveAccountFoundWithTheGivenCredentials: 'Пользователя с такими данными не существует',
                         },
                         signUp: {
                             signUpHeading: 'Регистрация',
