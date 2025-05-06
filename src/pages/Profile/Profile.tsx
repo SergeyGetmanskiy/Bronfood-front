@@ -15,6 +15,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import SMSVerify from '../../components/SMSVerify/SMSVerify';
+import { getErrorMessage } from '../../utils/serviceFuncs/getErrorMessage';
 
 const Profile = () => {
     const {
@@ -27,6 +28,8 @@ const Profile = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { updateUser, confirmUpdateUser, profile } = useCurrentUser();
+    const updateUserErrorMessage = updateUser.isError ? getErrorMessage(updateUser.error, 'pages.profile.') : '';
+    const confirmUpdateUserErrorMessage = confirmUpdateUser.isError ? getErrorMessage(confirmUpdateUser.error, 'pages.profile.') : '';
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const { data: user, isLoading, isSuccess } = profile;
 
@@ -56,7 +59,7 @@ const Profile = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSVerify onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} isErrorVisible={confirmUpdateUser.isError} error={confirmUpdateUser.error?.message} onSubmit={confirm} />
+                <SMSVerify onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} isErrorVisible={confirmUpdateUser.isError} error={confirmUpdateUserErrorMessage} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}
@@ -67,7 +70,7 @@ const Profile = () => {
                 >
                     {isLoading && <Preloader />}
                     <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                        {updateUser.isError && <ErrorMessage message={t(`pages.profile.${updateUser.error.message}`)} />}
+                        {updateUser.isError && <ErrorMessage message={updateUserErrorMessage} />}
                         {isSuccess && (
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.data.name}></Input>
