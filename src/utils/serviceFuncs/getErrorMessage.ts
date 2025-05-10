@@ -9,6 +9,7 @@ export const getErrorMessage = (error: Error, path: string) => {
         let errorMessage: string = '';
         for (const key in cause) {
             cause[key].forEach((cause) => {
+                cause = cause.replace("'", '');
                 errorMessage = errorMessage.concat(i18next.t(`${path}${camelCase(key + ' ' + cause)}`), '\n');
             });
         }

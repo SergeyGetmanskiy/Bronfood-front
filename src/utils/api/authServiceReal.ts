@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, UserExtra, User, RegisterPromise } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, User, RegisterPromise } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -33,11 +33,8 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
-        const result = await handleFetch('client/profile/', { method: 'PATCH', data: { confirmation_code } });
-        delete result.data.auth_token;
-        delete result.data.role;
-        return result;
+    async confirmUpdateUser({ code }: ConfirmUpdateUser): Promise<void> {
+        await handleFetch('api/auth/users/me/set-phone/confirm/', { method: 'POST', data: { code } });
     }
 
     async logOut(): Promise<void> {

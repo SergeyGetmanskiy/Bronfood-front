@@ -27,7 +27,7 @@ export interface UpdateUserPayload {
 }
 
 export interface ConfirmUpdateUser {
-    confirmation_code: string;
+    code: string;
 }
 
 export interface User {
@@ -41,13 +41,6 @@ export interface User {
     username: string;
 }
 
-export interface UserExtra {
-    userId: number;
-    phone: string;
-    name: string;
-    role?: 'CLIENT';
-    auth_token: string;
-}
 export interface SuccessProfileResponse {
     status: 'success';
     data: User;
@@ -66,7 +59,7 @@ export interface AuthService {
 
     updateUser: ({ name, phone, currentPassword, newPassword, newPasswordConfirm }: UpdateUserPayload) => Promise<void>;
 
-    confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
+    confirmUpdateUser: ({ code }: ConfirmUpdateUser) => Promise<void>;
 
     logOut: () => Promise<void>;
 
