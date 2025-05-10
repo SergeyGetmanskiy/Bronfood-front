@@ -57,6 +57,8 @@ i18n
                             serverDoesntRespond: 'Сервер не отвечает. Попытайтесь еще раз позже',
                             validationError: 'Введен некорректный номер телефона.',
                             userWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
+                            smsCodeCanOnlyBeSentOnceEvery2Minutes: 'Между отправками кодов из SMS должно пройти больше 2-х минут',
+                            invalidCodeOrExpired: 'Неправильный код из СМС.',
                         },
 
                         newPassword: {

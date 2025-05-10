@@ -25,11 +25,9 @@ export interface UpdateUserPayload {
     newPassword?: string;
     newPasswordConfirm?: string;
 }
-
 export interface ConfirmUpdateUser {
     code: string;
 }
-
 export interface User {
     id: number;
     is_banned: boolean;
@@ -40,7 +38,6 @@ export interface User {
     role: string;
     username: string;
 }
-
 export interface SuccessProfileResponse {
     status: 'success';
     data: User;
@@ -48,6 +45,15 @@ export interface SuccessProfileResponse {
 export interface ErrorProfileResponse {
     status: 'error';
     error_message: string;
+}
+export interface RestorePasswordPayload {
+    phone: string;
+}
+export interface confirmRestorePasswordPayload {
+    phone: string;
+    newPassword: string;
+    reNewPassword: string;
+    code: string;
 }
 
 export interface AuthService {
@@ -66,6 +72,10 @@ export interface AuthService {
     getProfile: () => Promise<{ data: User }>;
 
     refreshToken: () => Promise<void>;
+
+    restorePassword: ({ phone }: RestorePasswordPayload) => Promise<void>;
+
+    confirmRestorePassword: ({ phone, newPassword, reNewPassword, code }: confirmRestorePasswordPayload) => Promise<void>;
 }
 
 export const authService = new AuthServiceReal();

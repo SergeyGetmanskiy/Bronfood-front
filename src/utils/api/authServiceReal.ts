@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, User, RegisterPromise } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, User, RegisterPromise, RestorePasswordPayload, confirmRestorePasswordPayload } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -54,5 +54,19 @@ export class AuthServiceReal implements AuthService {
         const { access } = result.data;
         localStorage.setItem('token', access);
         delete result.data.access;
+    }
+
+    async restorePassword({ phone }: RestorePasswordPayload): Promise<void> {
+        return handleFetch('api/auth/users/password/reset/send-code/', { method: 'POST', data: { phone } });
+    }
+
+    async confirmRestorePassword({ phone, newPassword, reNewPassword, code }: confirmRestorePasswordPayload): Promise<void> {
+        const requestData = {
+            phone,
+            new_password: newPassword,
+            re_new_password: reNewPassword,
+            code,
+        };
+        return handleFetch('api/auth/users/password/reset/', { method: 'POST', data: requestData });
     }
 }
