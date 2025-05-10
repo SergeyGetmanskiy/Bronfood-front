@@ -51,16 +51,18 @@ const Profile = () => {
             }
         }
         await updateUser.mutateAsync(submitData);
-        setIsConfirmOpen(true);
+        if (`+${submitData.phone}` !== profile.data?.data.phone) {
+            setIsConfirmOpen(true);
+        } else navigate('/');
     };
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.profile.passwordDontMatch');
     };
-
     const confirm = async (code: string) => {
         await confirmUpdateUser.mutateAsync({ confirmation_code: code });
         setIsConfirmOpen(false);
+        navigate('/');
     };
 
     return (

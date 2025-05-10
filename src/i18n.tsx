@@ -212,6 +212,13 @@ i18n
                             passwordDontMatch: 'Пароли не совпадают',
                             errorMessage: 'Не удалось изменить данные',
                             phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
+                            currentPasswordYourCurrentPasswordIsIncorrect: 'Текущий пароль введён неверно',
+                            phoneThisPhoneNumberIsAlreadyInUse: 'Такой номер телефона уже зарегистрирован',
+                            passwordThisPasswordIsTooShortItMustContainAtLeast8Characters: 'Пароль слишком короткий. Он должен быть больше 7 символов.',
+                            passwordThisPasswordIsTooCommon: 'Пароль слишком простой.',
+                            passwordThisPasswordIsEntirelyNumeric: 'Пароль не должен состоять только из цифр.',
+                            phoneYouCantEditPhoneNumberWithoutCurrentPassword: 'При редактировании телефона нужно указать текущий пароль',
+                            smsCodeCanOnlyBeSentOnceEvery2Minutes: 'Между отправками кодов из SMS должно пройти больше 2-х минут',
                         },
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',

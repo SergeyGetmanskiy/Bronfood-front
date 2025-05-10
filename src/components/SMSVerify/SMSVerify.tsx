@@ -60,7 +60,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
         <Popup
             title={t('pages.confirmation.enterSmsCode')}
             onClose={() => {
-                props.onClose?.();
+                props.onClose();
                 navigate('/');
             }}
         >

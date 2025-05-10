@@ -33,11 +33,9 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
-        const result = await handleFetch('client/profile/', { method: 'PATCH', data: { confirmation_code } });
-        delete result.data.auth_token;
-        delete result.data.role;
-        return result;
+    async confirmUpdateUser({ code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
+        const result = await handleFetch('api/auth/users/me/set-phone/confirm/', { method: 'POST', data: { code } });
+        console.log(result);
     }
 
     async logOut(): Promise<void> {

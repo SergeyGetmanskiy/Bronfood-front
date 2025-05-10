@@ -65,10 +65,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: () => profile.refetch(),
     });
     const confirmUpdateUser = useMutation({
-        mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
-        onSuccess: () => {
-            client.invalidateQueries({ queryKey: ['profile'] });
-        },
+        mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ code: variables.confirmation_code }),
+        onSuccess: () => profile.refetch(),
     });
     const logout = useMutation({
         mutationFn: () => authService.logOut(),
