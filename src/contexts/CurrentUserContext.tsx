@@ -81,7 +81,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const restorePassword = useMutation({
         mutationFn: (variables: RestorePasswordPayload) => authService.restorePassword(variables),
-        onSuccess: (res, variables: RestorePasswordPayload) => setPhone(variables.phone),
+        onSuccess: (res, variables: RestorePasswordPayload) => {
+            if (res.ok) setPhone(variables.phone);
+        },
     });
     const confirmRestorePassword = useMutation({
         mutationFn: (variables: { newPassword: string; reNewPassword: string; code: string }) => authService.confirmRestorePassword({ phone, newPassword: variables.newPassword, reNewPassword: variables.reNewPassword, code: variables.code }),

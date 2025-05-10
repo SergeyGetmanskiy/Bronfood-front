@@ -57,7 +57,7 @@ export class AuthServiceReal implements AuthService {
     }
 
     async restorePassword({ phone }: RestorePasswordPayload): Promise<void> {
-        await handleFetch('api/auth/users/password/reset/send-code/', { method: 'POST', data: { phone } });
+        return handleFetch('api/auth/users/password/reset/send-code/', { method: 'POST', data: { phone } });
     }
 
     async confirmRestorePassword({ phone, newPassword, reNewPassword, code }: confirmRestorePasswordPayload): Promise<void> {
@@ -67,6 +67,6 @@ export class AuthServiceReal implements AuthService {
             re_new_password: reNewPassword,
             code,
         };
-        await handleFetch('api/auth/users/password/reset/', { method: 'POST', data: requestData });
+        return handleFetch('api/auth/users/password/reset/', { method: 'POST', data: requestData });
     }
 }
