@@ -34,10 +34,10 @@ const RestorePassword = () => {
         const timeoutQueryPhone = timeoutRequest();
         try {
             const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
-            if (res.status === 'success') {
+            if (res.ok) {
                 clearError();
                 setIsLoading(false);
-                setTempDataCode(res.data.temp_data_code);
+                setTempDataCode('0000');
                 setStage('PHONE-EXIST');
             }
         } catch (err) {
@@ -55,7 +55,7 @@ const RestorePassword = () => {
         const timeoutChangePassword = timeoutRequest();
         try {
             const res = await restorePasswordService.setNewPassword(password, password_confirm, tempDataCode);
-            if (res.status === 'success') {
+            if (res.ok) {
                 clearError();
                 setIsLoading(false);
                 setTempDataCode(res.data.temp_data_code);
@@ -76,7 +76,7 @@ const RestorePassword = () => {
         const timeoutApplyPassword = timeoutRequest();
         try {
             const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
-            if (res.status === 'success') {
+            if (res.ok) {
                 clearError();
                 setIsLoading(false);
                 setStage('SUCCESS');
