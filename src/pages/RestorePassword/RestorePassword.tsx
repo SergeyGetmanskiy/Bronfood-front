@@ -58,7 +58,7 @@ const RestorePassword = () => {
             if (res.ok) {
                 clearError();
                 setIsLoading(false);
-                setTempDataCode(res.data.temp_data_code);
+                setTempDataCode('0000');
                 setStage('NEW-PASSWORD-GIVEN');
             }
         } catch (err) {

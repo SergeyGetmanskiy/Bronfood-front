@@ -23,9 +23,9 @@ export type NewPassword = {
 };
 
 export interface RestorePasswordService {
-    queryPhoneNumber: (phone: string) => Promise<void>;
-    setNewPassword: (phone: string, newPassword: string, verificationCode: string) => Promise<void>;
-    verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<void>;
+    queryPhoneNumber: (phone: string) => Promise<Response>;
+    setNewPassword: (phone: string, newPassword: string, verificationCode: string) => Promise<Response>;
+    verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<Response>;
 }
 
 export const restorePasswordService = new RestorePasswordServiceReal();
