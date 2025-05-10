@@ -34,8 +34,7 @@ export class AuthServiceReal implements AuthService {
     }
 
     async confirmUpdateUser({ code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
-        const result = await handleFetch('api/auth/users/me/set-phone/confirm/', { method: 'POST', data: { code } });
-        console.log(result);
+        await handleFetch('api/auth/users/me/set-phone/confirm/', { method: 'POST', data: { code } });
     }
 
     async logOut(): Promise<void> {
