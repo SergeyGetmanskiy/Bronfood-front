@@ -220,6 +220,7 @@ i18n
                             phoneYouCantEditPhoneNumberWithoutCurrentPassword: 'При редактировании телефона нужно указать текущий пароль',
                             smsCodeCanOnlyBeSentOnceEvery2Minutes: 'Между отправками кодов из SMS должно пройти больше 2-х минут',
                             newPasswordYouCantSetANewPasswordWithoutTheCurrentOne: 'Чтобы установить новый пароль, введите текущий пароль',
+                            invalidCodeOrExpired: 'Неправильный код из СМС.',
                         },
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',
