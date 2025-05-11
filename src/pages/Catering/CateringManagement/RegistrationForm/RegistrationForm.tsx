@@ -10,7 +10,6 @@ import MediaStep from './RegistrationStepsCatering/MediaStep/MediaStep';
 import { useNavigate } from 'react-router-dom';
 import RegistrationPopup from './RegistrationPopup/RegistrationPopup';
 import { useRestaurantsContext } from '../../../../utils/hooks/useRestaurants/useRestaurantsContext';
-import restaurant1 from '../../../../utils/api/cateringService/MockImages/restaurant1.png';
 
 type RegistrationFormProps = {
     title: string;
@@ -23,6 +22,7 @@ type RegistrationFormProps = {
         cancellationDeadlineMinutes?: number | null;
         photo: string;
         rating: number;
+        tags: string[];
     };
     isLoading?: boolean;
 };
@@ -37,10 +37,13 @@ const RegistrationForm = ({
         description: '',
         cancellationDeadlineMinutes: null,
         rating: 0,
-        photo: restaurant1,
+        photo: '',
+        tags: [],
     },
 }: RegistrationFormProps) => {
     const [currentStep, setCurrentStep] = useState(1);
+    const [tags, setTags] = useState<string[]>(defaultValues.tags || []);
+    const [previewImage, setPreviewImage] = useState<string | null>(defaultValues.photo || null);
     const navigate = useNavigate();
     const totalSteps = 3;
     const { t } = useTranslation();
@@ -95,13 +98,31 @@ const RegistrationForm = ({
         setValue('type', type, { shouldValidate: true });
     };
 
+    const handleAddTag = (tag: string) => {
+        const newTags = [...tags, tag];
+        setTags(newTags);
+        setValue('tags', newTags, { shouldValidate: true });
+    };
+
+    const handleDeleteTag = (index: number) => {
+        const newTags = tags.filter((_, i) => i !== index);
+        setTags(newTags);
+        setValue('tags', newTags, { shouldValidate: true });
+    };
+
+    const handleImageChange = (image: string) => {
+        setPreviewImage(image);
+
+        setValue('photo', image, { shouldValidate: true });
+    };
+
     return (
         <RegistrationPopup title={title} close={onClose} {...(currentStep !== 1 && { prevStep: handlePrevClick })}>
             <ProgressSteps currentStep={currentStep} totalSteps={totalSteps}></ProgressSteps>
             <Form name="form-registration-establishments" onSubmit={(e) => e.preventDefault()}>
-                {currentStep === 1 && <TypeStep selectedType={formValues.type} onTypeChange={handleTypeChange} types={venueTypes.all} />}
+                {currentStep === 1 && <TypeStep selectedType={formValues.type} onTypeChange={handleTypeChange} types={venueTypes.all} tags={tags} onAddTag={handleAddTag} onDeleteTag={handleDeleteTag} />}
                 {currentStep === 2 && <LocationStep register={register} errors={errors} values={formValues} />}
-                {currentStep === 3 && <MediaStep register={register} errors={errors} values={formValues} />}
+                {currentStep === 3 && <MediaStep register={register} errors={errors} values={formValues} previewImage={previewImage} onImageChange={handleImageChange} />}
                 {currentStep < totalSteps ? (
                     <Button type="button" onClick={handleNextClick}>
                         {t('pages.cateringManagement.buttonNext')}

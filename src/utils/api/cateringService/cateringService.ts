@@ -5,11 +5,20 @@ type TimeString = `${number}:${number}` | null;
 interface DailyWorkingHours {
     open: TimeString;
     close: TimeString;
-    is24h?: boolean;
 }
 
-type WeekDay = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
-type WeeklySchedule = Record<WeekDay, DailyWorkingHours>;
+interface WorkingTime {
+    schedule: {
+        monday: DailyWorkingHours;
+        tuesday: DailyWorkingHours;
+        wednesday: DailyWorkingHours;
+        thursday: DailyWorkingHours;
+        friday: DailyWorkingHours;
+        saturday: DailyWorkingHours;
+        sunday: DailyWorkingHours;
+    };
+    is24h: boolean;
+}
 
 export type Catering = {
     /**
@@ -54,7 +63,7 @@ export type Catering = {
     /**
      * Venue's working hours for each day of the week
      */
-    workingTime?: WeeklySchedule;
+    workingTime?: WorkingTime;
     /**
      * Deadline for order cancellation
      */

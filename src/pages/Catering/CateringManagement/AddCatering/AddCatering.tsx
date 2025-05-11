@@ -21,6 +21,7 @@ const AddCatering = () => {
             cancellationDeadlineMinutes: Number(data.cancellationDeadlineMinutes) || null,
             photo: data.photo,
             rating: data.rating,
+            tags: data.tags,
         };
         const response = await mutateAsync(cateringData);
         const createdCatering = response.data;
