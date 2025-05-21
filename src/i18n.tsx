@@ -223,6 +223,7 @@ i18n
                             smsCodeCanOnlyBeSentOnceEvery2Minutes: 'Между отправками кодов из SMS должно пройти больше 2-х минут',
                             newPasswordYouCantSetANewPasswordWithoutTheCurrentOne: 'Чтобы установить новый пароль, введите текущий пароль',
                             invalidCodeOrExpired: 'Неправильный код из СМС.',
+                            authenticationCredentialsWereNotProvided: 'Вы не авторизованы',
                         },
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',
