@@ -25,7 +25,7 @@ const EditAdministrator = () => {
             id: administratorId!,
             login: data.login,
             password: data.password,
-            restaurant: data.restaurant,
+            catering: data.catering,
         });
         navigate('/catering/administrators', {
             state: {
@@ -65,7 +65,7 @@ const EditAdministrator = () => {
                         defaultValues={{
                             login: administrator.data.login,
                             password: '',
-                            restaurant: administrator.data.restaurant,
+                            catering: administrator.data.catering,
                         }}
                         renderDeleteButton={
                             <ButtonGrey type="button" onClick={handleDelete}>
