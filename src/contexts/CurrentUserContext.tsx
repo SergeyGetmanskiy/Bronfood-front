@@ -50,7 +50,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         enabled: !!token,
     });
 
-    const isLogin = !!profile.data;
+    const isLogin = !!token;
 
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
