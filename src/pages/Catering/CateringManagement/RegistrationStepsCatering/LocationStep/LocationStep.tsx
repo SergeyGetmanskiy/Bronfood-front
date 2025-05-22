@@ -1,19 +1,22 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import FormInputs from '../../../../../../components/FormInputs/FormInputs';
-import Input from '../../../../../../components/Input/Input';
 import styles from './LocationStep.module.scss';
 import { useTranslation } from 'react-i18next';
-import { regexAddress, regexClientName } from '../../../../../../utils/consts';
-import Textarea from '../../../../../../components/Textarea/Textarea';
+import { useFormContext } from 'react-hook-form';
+import FormInputs from '../../../../../components/FormInputs/FormInputs';
+import Input from '../../../../../components/Input/Input';
+import Textarea from '../../../../../components/Textarea/Textarea';
+import { regexAddress, regexClientName } from '../../../../../utils/consts';
 
-type LocationStepProps = {
-    register: UseFormRegister<FieldValues>;
-    errors: FieldErrors;
-    values: FieldValues;
-};
-
-const LocationStep = ({ register, errors, values }: LocationStepProps) => {
+const LocationStep = () => {
     const { t } = useTranslation();
+
+    const {
+        register,
+        formState: { errors },
+        watch,
+    } = useFormContext();
+
+    const values = watch();
+
     return (
         <fieldset className={styles.fieldset}>
             <FormInputs>

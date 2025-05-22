@@ -69,7 +69,7 @@ const Textarea: FC<Textarea> = (props) => {
                 {...props.register(props.name, {
                     pattern: {
                         value: props.pattern,
-                        message: t('components.textarea.errorMessage'),
+                        message: t('components.input.errorMessage'),
                     },
                     validate: props.validate,
                 })}

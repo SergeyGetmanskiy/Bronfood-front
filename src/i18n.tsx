@@ -49,6 +49,8 @@ i18n
                         input: {
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
+                            requiredTime: 'Обязательно, заполните оба поля',
+                            errorMessageTime: 'Неверный формат времени',
                         },
                         passwordRecovery: {
                             title: 'Восстановить пароль',
@@ -338,6 +340,9 @@ i18n
                             placeholderTags: 'Бургер, каппучино ...',
                             nameLabelPhoto: 'Фото заведения',
                             nameLabelWorkingTime: 'График работы',
+                            nameLabelWorkingTimeTwentyFourHour: 'Круглосуточно',
+                            placeholderTimeOpen: '09:00',
+                            placeholderTimeClose: '22:00',
                             chooseTypeOfVenue: 'Выберите тип заведения',
                             fastFood: 'Фаст Фуд',
                             cafe: 'Кафе',
@@ -346,6 +351,14 @@ i18n
                             placeholderTimeToCancel: '3 мин.',
                             nameLabelTimeToCancel: 'Минуты',
                             noWorkingTime: 'График работы отсутствует',
+                            monday: 'Пн',
+                            tuesday: 'Вт',
+                            wednesday: 'Ср',
+                            thursday: 'Чт',
+                            friday: 'Пт',
+                            saturday: 'Сб',
+                            sunday: 'Вс',
+                            infoTextTimeToCancel: 'Указывая время для отмены заказа, вы даёте возможность клиенту в течении указанного Вами времени успеть отменить заказ. Тогда сумма вернётся клиенту.',
                         },
                     },
                     errors: {

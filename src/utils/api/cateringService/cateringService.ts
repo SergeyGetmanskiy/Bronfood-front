@@ -1,24 +1,14 @@
 import { CateringServiceMock } from './cateringServiceMock';
 
-type TimeString = `${number}:${number}` | null;
+export type VenueType = { type: number; name: string };
+export const weekdayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+export type TimeString = `${number}:${number}`;
 
-interface DailyWorkingHours {
-    open: TimeString;
-    close: TimeString;
-}
-
-interface WorkingTime {
-    schedule: {
-        monday: DailyWorkingHours;
-        tuesday: DailyWorkingHours;
-        wednesday: DailyWorkingHours;
-        thursday: DailyWorkingHours;
-        friday: DailyWorkingHours;
-        saturday: DailyWorkingHours;
-        sunday: DailyWorkingHours;
-    };
-    is24h: boolean;
-}
+export type Day = {
+    weekday: number;
+    open_time: TimeString | null;
+    close_time: TimeString | null;
+};
 
 export type Catering = {
     /**
@@ -63,11 +53,14 @@ export type Catering = {
     /**
      * Venue's working hours for each day of the week
      */
-    workingTime?: WorkingTime;
+    workingTime?: {
+        schedule: Day[];
+        is24h: boolean;
+    };
     /**
      * Deadline for order cancellation
      */
-    cancellationDeadlineMinutes?: number | null;
+    cancellationTime?: number;
 };
 
 export type Administrator = {
@@ -76,6 +69,16 @@ export type Administrator = {
     password: string;
     catering: Catering;
 };
+
+export const DAYS: Day[] = Array.from({ length: 7 }, (_, weekday) => ({
+    weekday,
+    open_time: null,
+    close_time: null,
+}));
+
+export const TYPES = ['fastFood', 'cafe', 'cafeBar'].map((type, index) => {
+    return { type: index, name: type };
+});
 
 export interface CateringService {
     getAdministrators: () => Promise<{ data: Administrator[] }>;

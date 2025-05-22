@@ -1,4 +1,4 @@
-@use '../../../../../../styles/variables';
+@use '../../../../../styles/variables';
 
 .fieldset {
     border: none;
@@ -47,7 +47,7 @@
 
         &:checked {
             background-color: variables.$orange;
-            background-image: url('../../../../../../vendor/images/icons/radioButton/check.svg');
+            background-image: url('../../../../../vendor/images/icons/radioButton/check.svg');
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -142,6 +142,6 @@
         cursor: pointer;
         background-size: cover;
         background-position: center;
-        background-image: url('../../../../../../vendor/images/icons/close-icon.svg');
+        background-image: url('../../../../../vendor/images/icons/close-icon.svg');
     }
 }

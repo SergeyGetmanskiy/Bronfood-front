@@ -1,28 +1,41 @@
-import { VenueType } from '../../../../../../contexts/RestaurantsContext';
 import styles from './TypeStep.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { VenueType } from '../../../../../utils/api/cateringService/cateringService';
 
 type TypeStepProps = {
-    selectedType: string;
-    onTypeChange: (type: string) => void;
     types: VenueType[];
-    tags: string[];
-    onAddTag: (tag: string) => void;
-    onDeleteTag: (index: number) => void;
 };
 
-const TypeStep = ({ selectedType, onTypeChange, types, tags, onAddTag, onDeleteTag }: TypeStepProps) => {
+const TypeStep = ({ types }: TypeStepProps) => {
     const { t } = useTranslation();
-
+    const { setValue, watch } = useFormContext();
     const [currentTag, setCurrentTag] = useState('');
+
+    const selectedType = watch('type');
+    const tags: string[] = watch('tags') || [];
+
+    const handleTypeChange = (type: VenueType) => {
+        setValue('type', type, { shouldValidate: true });
+    };
+
+    const handleAddTag = (tag: string) => {
+        const newTags = [...tags, tag];
+        setValue('tags', newTags, { shouldValidate: true });
+    };
+
+    const handleDeleteTag = (index: number) => {
+        const newTags = tags.filter((_, i) => i !== index);
+        setValue('tags', newTags, { shouldValidate: true });
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             const value = currentTag.trim();
             if (value) {
-                onAddTag(value);
+                handleAddTag(value);
                 setCurrentTag('');
             }
         }
@@ -38,11 +51,11 @@ const TypeStep = ({ selectedType, onTypeChange, types, tags, onAddTag, onDeleteT
                 <label className={styles.types__title}>{t('pages.cateringManagement.chooseTypeOfVenue')}</label>
                 <ul className={styles.types__list}>
                     {types.map((type) => {
-                        const isSelected = selectedType === type.name;
+                        const isSelected = selectedType.type === type.type;
                         return (
-                            <li key={type.id}>
+                            <li key={type.type}>
                                 <label className={styles.type__container}>
-                                    <input className={styles.type__input} type="radio" checked={isSelected} onChange={() => onTypeChange(type.name)} />
+                                    <input className={styles.type__input} type="radio" checked={isSelected} onChange={() => handleTypeChange(type)} />
                                     <span className={`${styles.type__text} ${isSelected ? styles.type__text_active : ''}`}>{t(`pages.cateringManagement.${type.name}`)}</span>
                                 </label>
                             </li>
@@ -59,7 +72,7 @@ const TypeStep = ({ selectedType, onTypeChange, types, tags, onAddTag, onDeleteT
                                 <li key={index}>
                                     <div className={styles.tag__container}>
                                         <p className={styles.tag__text}>{tag}</p>
-                                        <button className={styles.tag__button} type="button" onClick={() => onDeleteTag(index)}></button>
+                                        <button className={styles.tag__button} type="button" onClick={() => handleDeleteTag(index)}></button>
                                     </div>
                                 </li>
                             );

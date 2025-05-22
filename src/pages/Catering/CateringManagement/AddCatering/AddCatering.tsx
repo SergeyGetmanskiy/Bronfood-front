@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import { useCreateCatering } from '../../../../utils/hooks/useCatering/useCatering';
 import Preloader from '../../../../components/Preloader/Preloader';
 import ErrorMessage from '../../../../components/ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
+import RegistrationStepsCatering from '../RegistrationStepsCatering/RegistrationStepsCatering';
 
 const AddCatering = () => {
     const { t } = useTranslation();
@@ -18,10 +18,11 @@ const AddCatering = () => {
             address: data.address,
             description: data.description,
             type: data.type,
-            cancellationDeadlineMinutes: Number(data.cancellationDeadlineMinutes) || null,
+            cancellationTime: data.cancellationTime,
             photo: data.photo,
             rating: data.rating,
             tags: data.tags,
+            workingTime: data.workingTime,
         };
         const response = await mutateAsync(cateringData);
         const createdCatering = response.data;
@@ -38,7 +39,7 @@ const AddCatering = () => {
         <>
             {isPending && <Preloader />}
             {error && <ErrorMessage message={error.message} />}
-            <RegistrationForm title={t('pages.cateringManagement.titleRegistration')} onSubmit={onSubmit} isLoading={isPending} />
+            <RegistrationStepsCatering title={t('pages.cateringManagement.titleRegistration')} onSubmit={onSubmit} />
         </>
     );
 };
