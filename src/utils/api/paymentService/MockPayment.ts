@@ -28,7 +28,7 @@ export const mockPayment: PaymentRequest = {
             excluded_brands: ['visa', 'google_pay'],
         },
         order: {
-            currency: 'GBP',
+            currency: 'KZT',
             amount: 4299,
             description: 'Order description',
         },

@@ -20,7 +20,6 @@ export class PaymentServiceReal implements PaymentService {
             const res = await fetch(`https://checkout.paylink.kz/ctp/api/checkouts`, options);
             const result = await res.json();
             if (res.ok) {
-                console.log(result);
                 return result;
             } else {
                 throw new Error('Error');
