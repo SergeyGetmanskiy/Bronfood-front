@@ -4,14 +4,14 @@ import { paymentService } from '../../api/paymentService/paymentService';
 
 export const usePaymentMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
-    const getPaymentOptions = useMutation({
-        mutationFn: () => paymentService.getPayment(),
+    const getPaymentToken = useMutation({
+        mutationFn: (payload) => paymentService.getPaymentToken(payload),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     return {
-        getPaymentOptions,
+        getPaymentToken,
         errorMessage,
     };
 };

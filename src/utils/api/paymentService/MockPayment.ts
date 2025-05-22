@@ -1,29 +1,42 @@
-import { Payment } from './paymentService';
+import { PaymentRequest } from './paymentService';
 
-export const MockPayment: Payment = {
-    amount: 10,
-    currency: 'KZT',
-    order_id: '',
-    description: '',
-    payment_type: 'pay',
-    payment_method: 'ecom',
-    items: [
-        {
-            merchant_id: import.meta.env.VITE_ONEVISION_MID,
-            service_id: import.meta.env.VITE_ONEVISION_SID,
-            merchant_name: 'Example',
-            name: 'Example',
-            quantity: 1,
-            amount_one_pcs: 10,
-            amount_sum: 10,
+export const mockPayment: PaymentRequest = {
+    checkout: {
+        test: true,
+        transaction_type: 'payment',
+        attempts: 1,
+        settings: {
+            success_url: 'http://localhost:5173/waiting-order',
+            fail_url: 'http://localhost:5173/basket',
+            button_text: 'Привязать карту',
+            button_next_text: 'Вернуться в магазин',
+            language: 'ru',
+            customer_fields: {
+                visible: ['first_name', 'last_name'],
+                read_only: ['email'],
+            },
+            credit_card_fields: {
+                holder: 'Rick Astley',
+                read_only: ['holder'],
+            },
         },
-    ],
-    email: '',
-    success_url: 'https://bronfood.vercel.app',
-    failure_url: 'https://bronfood.vercel.app',
-    payment_lifetime: 0,
-    lang: 'ru',
-    extra_params: {},
-    payment_gateway_host: 'https://api.paysage.kz/',
-    payment_widget_host: 'https://widget.paysage.kz',
+        payment_method: {
+            types: ['credit_card', 'bank_transfer'],
+            bank_transfer: {
+                account: 'DE89370400440532013000',
+            },
+            excluded_brands: ['visa', 'google_pay'],
+        },
+        order: {
+            currency: 'GBP',
+            amount: 4299,
+            description: 'Order description',
+        },
+        customer: {
+            address: 'Baker street 221b',
+            country: 'GB',
+            city: 'London',
+            email: 'jake@example.com',
+        },
+    },
 };
