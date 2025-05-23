@@ -4,7 +4,7 @@ import { PaymentRequest, PaymentResponse, PaymentService } from './paymentServic
 export class PaymentServiceReal implements PaymentService {
     private paymentRequest: PaymentRequest = basePaymentRequest;
 
-    async getPaymentToken({ amount, description }): Promise<PaymentResponse> {
+    async getPaymentToken({ amount, description }: { amount: number; description: string }): Promise<PaymentResponse> {
         const encodedData = window.btoa(`${import.meta.env.VITE_SHOP_ID}:${import.meta.env.VITE_SHOP_SECRET}`);
         const headers: RequestInit['headers'] = {
             Authorization: `Basic ${encodedData}`,

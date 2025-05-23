@@ -49,7 +49,7 @@ export type PaymentResponse = {
 };
 
 export interface PaymentService {
-    getPaymentToken: (payload: PaymentRequest) => Promise<PaymentResponse>;
+    getPaymentToken: ({ amount, description }: { amount: number; description: string }) => Promise<PaymentResponse>;
 }
 
 export const paymentService = new PaymentServiceReal();

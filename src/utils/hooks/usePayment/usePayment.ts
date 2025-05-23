@@ -5,7 +5,7 @@ import { paymentService } from '../../api/paymentService/paymentService';
 export const usePaymentMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const getPaymentToken = useMutation({
-        mutationFn: (variables) => paymentService.getPaymentToken(variables),
+        mutationFn: (variables: { amount: number; description: string }) => paymentService.getPaymentToken(variables),
         onError: (error) => {
             setErrorMessage(error.message);
         },
