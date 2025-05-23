@@ -15,7 +15,6 @@ import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/us
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
 import { usePaymentMutations } from '../../utils/hooks/usePayment/usePayment';
-import { mockPayment } from '../../utils/api/paymentService/MockPayment';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
@@ -45,7 +44,8 @@ function Basket() {
         }
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
-        const payment = await getPaymentToken.mutateAsync(mockPayment);
+        const orderDescription = meals.map((meal) => meal.meal.name).join(',');
+        const payment = await getPaymentToken.mutateAsync({ amount: price * 100, description: orderDescription });
         window.location.href = payment.checkout.redirect_url;
         if (userId) {
             await placeOrder.mutate({ userId, restaurantId });

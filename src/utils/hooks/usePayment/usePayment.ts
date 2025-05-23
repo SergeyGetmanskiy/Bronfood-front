@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { PaymentRequest, paymentService } from '../../api/paymentService/paymentService';
+import { paymentService } from '../../api/paymentService/paymentService';
 
 export const usePaymentMutations = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const getPaymentToken = useMutation({
-        mutationFn: (payload: PaymentRequest) => paymentService.getPaymentToken(payload),
+        mutationFn: (variables) => paymentService.getPaymentToken(variables),
         onError: (error) => {
             setErrorMessage(error.message);
         },
