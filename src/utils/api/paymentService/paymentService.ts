@@ -32,6 +32,8 @@ export type PaymentRequest = {
         currency: 'KZT';
         amount: number;
         description: string;
+        tracking_id?: string;
+        expired_at?: string;
     };
     customer?: {
         address: string;

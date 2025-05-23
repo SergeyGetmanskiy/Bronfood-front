@@ -25,6 +25,7 @@ export class PaymentServiceReal implements PaymentService {
                     currency: this.paymentRequest.order.currency,
                     amount,
                     description,
+                    tracking_id: amount.toString(),
                 },
             },
         });
