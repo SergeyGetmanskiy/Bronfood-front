@@ -12,7 +12,7 @@ export const basePaymentRequest: PaymentRequest = {
     },
     order: {
         currency: 'KZT',
-        amount: 4299,
+        amount: 0,
         description: 'Order description',
     },
 };
