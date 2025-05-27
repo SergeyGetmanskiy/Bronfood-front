@@ -44,7 +44,7 @@ function Basket() {
         }
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
-        const orderDescription = meals.map((meal) => meal.meal.name).join(',');
+        const orderDescription = meals.map((meal) => meal.meal.name).join(', ');
         const payment = await getPaymentToken.mutateAsync({ amount: price * 100, description: orderDescription });
         window.location.href = payment.checkout.redirect_url;
         if (userId) {

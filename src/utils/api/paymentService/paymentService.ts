@@ -9,7 +9,7 @@ export type PaymentRequest = {
     settings: {
         success_url: string;
         fail_url: string;
-        button_text: string;
+        button_text?: string;
         button_next_text: string;
         language: 'ru' | 'en' | 'kk';
         customer_fields?: {
