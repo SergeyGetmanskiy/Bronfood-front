@@ -27,3 +27,9 @@ export const useDeleteCatering = () => {
         mutationFn: (id: number) => cateringService.deleteCatering(id),
     });
 };
+
+export const useUpdateCatering = () => {
+    return useMutation({
+        mutationFn: (data: Partial<Catering> & { id: number }) => cateringService.updateCatering(data),
+    });
+};

@@ -39,12 +39,16 @@ const CateringDetails = () => {
         navigate('/');
     };
 
+    const onEdit = () => {
+        navigate(`/catering/${cateringId}/edit`);
+    };
+
     return (
         <>
             <Popup arrowBack onClose={onClose}>
                 {isFetching && <Preloader />}
                 <div className={`${styles['container']} ${styles['container__catering']}`}>
-                    <ButtonUnderline onClick={onClose}>{t('pages.cateringManagement.buttonEditEstablishment')}</ButtonUnderline>
+                    <ButtonUnderline onClick={onEdit}>{t('pages.cateringManagement.buttonEditCatering')}</ButtonUnderline>
                     {сatering && <CateringCard card={сatering.data} onDelete={handleDeleteClick} />}
                 </div>
                 <div className={`${styles['container']} ${styles['container__menu']}`}>

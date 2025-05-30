@@ -10,9 +10,9 @@ export const emptyCaterings: Catering[] = [
         name: 'Jahu',
         description: 'Самые вкусные донеры и кофе',
         rating: 4.7,
-        address: 'ул. Березовая 21',
-        coordinates: { latitude: 0, longitude: 0 },
-        tags: ['vegan', 'organic', 'coffee'],
+        address: 'Казахстан, Астана, улица Бухар Жырау, 34/2',
+        coordinates: { latitude: 51.09835783805425, longitude: 71.43399606766961 },
+        tags: [{ name: 'каппучино' }, { name: 'свежый салат' }, { name: 'бистро' }],
         workingTime: {
             schedule: [
                 { weekday: 0, open_time: '08:00', close_time: '23:00' },
@@ -25,7 +25,7 @@ export const emptyCaterings: Catering[] = [
             ],
             is24h: false,
         },
-        type: 'fastFood',
+        type: 'cafe',
         cancellationTime: 7,
     },
     {
@@ -34,9 +34,9 @@ export const emptyCaterings: Catering[] = [
         name: 'Boom',
         description: 'Самые вкусные донеры и кофе',
         rating: 4.8,
-        address: 'ул. Березовая 21',
+        address: 'Казахстан, Астана, ул. Сыгынак, 60/3',
         coordinates: { latitude: 0, longitude: 0 },
-        tags: ['vegan', 'organic', 'coffee'],
+        tags: [{ name: 'вкусно' }, { name: 'дешево' }, { name: 'сердито' }],
         workingTime: {
             schedule: [
                 { weekday: 0, open_time: '08:00', close_time: '23:00' },
@@ -58,9 +58,9 @@ export const emptyCaterings: Catering[] = [
         name: 'Moon',
         description: 'Необычные цветные бургеры и сочная пицца',
         rating: 4.8,
-        address: 'ул. Морозова 56/1',
-        coordinates: { latitude: 0, longitude: 0 },
-        tags: ['vegan', 'organic', 'coffee'],
+        address: 'Казахстан, Астана, ул. Акмешит, д 19А',
+        coordinates: { latitude: 51.095427, longitude: 71.415832 },
+        tags: [{ name: 'сок' }, { name: 'соус' }, { name: 'оладьи' }],
         workingTime: {
             schedule: [
                 { weekday: 0, open_time: '07:00', close_time: '23:00' },
@@ -73,7 +73,7 @@ export const emptyCaterings: Catering[] = [
             ],
             is24h: false,
         },
-        type: 'fastFood',
+        type: 'cafeBar',
         cancellationTime: 5,
     },
 ];
@@ -84,9 +84,9 @@ export const emptyCatering: Catering = {
     name: 'Boom',
     description: 'Самые вкусные донеры и кофе',
     rating: 4.8,
-    address: 'ул. Березовая 21',
-    coordinates: { latitude: 0, longitude: 0 },
-    tags: ['vegan', 'organic', 'coffee'],
+    address: 'Казахстан, Астана, улица Бухар Жырау, 34/2',
+    coordinates: { latitude: 51.09835783805425, longitude: 71.43399606766961 },
+    tags: [{ name: 'веган' }, { name: 'органичное' }, { name: 'кофе' }],
     workingTime: {
         schedule: [
             { weekday: 0, open_time: '08:00', close_time: '23:00' },

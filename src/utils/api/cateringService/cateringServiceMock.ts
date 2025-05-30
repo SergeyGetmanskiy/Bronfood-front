@@ -93,4 +93,16 @@ export class CateringServiceMock implements CateringService {
             return await Promise.reject(new Error('Error: catering not found'));
         }
     }
+
+    async updateCatering(data: Partial<Catering> & { id: number }): Promise<{ data: Catering }> {
+        const numericId = Number(data.id);
+        const index = this.caterings.findIndex((c) => c.id === numericId);
+
+        if (index !== -1) {
+            this.caterings[index] = { ...this.caterings[index], ...data };
+            return await Promise.resolve({ data: this.caterings[index] });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
 }

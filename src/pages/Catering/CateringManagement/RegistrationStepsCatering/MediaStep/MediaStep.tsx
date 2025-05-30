@@ -5,7 +5,7 @@ import InputWorkingHours from './InputWorkingHours/InputWorkingHours';
 import { useFormContext } from 'react-hook-form';
 import { Day, weekdayNames } from '../../../../../utils/api/cateringService/cateringService';
 import { regexTime } from '../../../../../utils/consts';
-import ButtonIconRound from '../../../../../components/ButtonIconRound/ButtonIconRound';
+import InputImage from '../../../../../components/InputImage/InputImage';
 
 type MediaStepProps = {
     days: Day[];
@@ -13,13 +13,17 @@ type MediaStepProps = {
 
 const MediaStep = ({ days }: MediaStepProps) => {
     const { t } = useTranslation();
-    const { register, watch, setValue } = useFormContext();
+    const {
+        register,
+        watch,
+        formState: { errors },
+        setValue,
+    } = useFormContext();
 
     const values = watch();
     const [previewImage, setPreviewImage] = useState<string | null>(values.photo || null);
     const [isActive, setIsActive] = useState(false);
     const [isInfo, setIsInfo] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
     const infoRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const is24h = values?.workingTime?.is24h || false;
@@ -30,17 +34,9 @@ const MediaStep = ({ days }: MediaStepProps) => {
         return `${digitsOnly.slice(0, 2)}:${digitsOnly.slice(2, 4)}`;
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file || !file.type.startsWith('image/')) return;
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const base64String = event.target?.result as string;
-            setPreviewImage(base64String);
-            setValue('photo', base64String, { shouldValidate: true });
-        };
-        reader.readAsDataURL(file);
+    const handleImageUpload = (image: string | null) => {
+        setPreviewImage(image);
+        setValue('photo', image || '', { shouldValidate: true });
     };
 
     const handleTimeChange = (weekday: number, field: 'open' | 'close', value: string) => {
@@ -94,10 +90,6 @@ const MediaStep = ({ days }: MediaStepProps) => {
         return '';
     };
 
-    const triggerFileInput = () => {
-        fileInputRef.current?.click();
-    };
-
     const handleInfoToggle = () => {
         setIsInfo(!isInfo);
     };
@@ -114,24 +106,7 @@ const MediaStep = ({ days }: MediaStepProps) => {
 
     return (
         <fieldset className={styles.fieldset}>
-            <div className={styles.photo}>
-                <label>{t('pages.cateringManagement.nameLabelPhoto')}</label>
-                <input className={styles.photo__input} type="file" onChange={handleImageUpload} accept="image/*" ref={fileInputRef} />
-
-                {previewImage ? (
-                    <div className={styles.photo__image} style={{ backgroundImage: `url(${previewImage})` }}>
-                        <div className={styles.photo__image_edit}>
-                            <ButtonIconRound icon="edit" onClick={triggerFileInput} />
-                        </div>
-                    </div>
-                ) : (
-                    <div className={styles.photo__upload} onClick={triggerFileInput}>
-                        <div className={styles.photo__upload_wrapper}>
-                            <button className={styles.photo__upload_add}></button>
-                        </div>
-                    </div>
-                )}
-            </div>
+            <InputImage nameLabel={t('pages.cateringManagement.nameLabelPhoto')} name="imageCatering" register={register} errors={errors} onChange={handleImageUpload} previewImage={previewImage} />
             <div className={styles.schedule}>
                 <label>{t('pages.cateringManagement.nameLabelWorkingTime')}</label>
 

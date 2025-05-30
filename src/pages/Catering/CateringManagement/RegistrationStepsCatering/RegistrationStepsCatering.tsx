@@ -8,28 +8,12 @@ import TypeStep from './TypeStep/TypeStep';
 type RegistrationStepsCateringProps = {
     title: string;
     onSubmit: SubmitHandler<FieldValues>;
+    defaultValues?: FieldValues;
 };
 
-const RegistrationStepsCatering = ({ title, onSubmit }: RegistrationStepsCateringProps) => {
+const RegistrationStepsCatering = ({ title, onSubmit, defaultValues }: RegistrationStepsCateringProps) => {
     return (
-        <RegistrationForm
-            title={title}
-            onSubmit={onSubmit}
-            defaultValues={{
-                type: TYPES[0],
-                tags: [],
-                name: '',
-                address: '',
-                description: '',
-                cancellationTime: undefined,
-                rating: 0,
-                photo: '',
-                workingTime: {
-                    schedule: [...DAYS],
-                    is24h: false,
-                },
-            }}
-        >
+        <RegistrationForm title={title} onSubmit={onSubmit} defaultValues={defaultValues}>
             <TypeStep types={TYPES} />
             <LocationStep />
             <MediaStep days={DAYS} />

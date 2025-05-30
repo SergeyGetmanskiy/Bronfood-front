@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { VenueType } from '../../../../../utils/api/cateringService/cateringService';
+import InputTag from '../../../../../components/InputTag/InputTag';
 
 type TypeStepProps = {
     types: VenueType[];
@@ -14,15 +15,16 @@ const TypeStep = ({ types }: TypeStepProps) => {
     const [currentTag, setCurrentTag] = useState('');
 
     const selectedType = watch('type');
-    const tags: string[] = watch('tags') || [];
+    const tags: { name: string }[] = watch('tags') || [];
 
     const handleTypeChange = (type: VenueType) => {
         setValue('type', type, { shouldValidate: true });
     };
 
     const handleAddTag = (tag: string) => {
-        const newTags = [...tags, tag];
+        const newTags = [...tags, { name: tag }];
         setValue('tags', newTags, { shouldValidate: true });
+        setCurrentTag('');
     };
 
     const handleDeleteTag = (index: number) => {
@@ -30,19 +32,8 @@ const TypeStep = ({ types }: TypeStepProps) => {
         setValue('tags', newTags, { shouldValidate: true });
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const value = currentTag.trim();
-            if (value) {
-                handleAddTag(value);
-                setCurrentTag('');
-            }
-        }
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentTag(e.target.value);
+    const handleTagChange = (tag: string) => {
+        setCurrentTag(tag);
     };
 
     return (
@@ -63,24 +54,7 @@ const TypeStep = ({ types }: TypeStepProps) => {
                     })}
                 </ul>
             </div>
-            <div className={styles.tags}>
-                <label className={styles.tags__title}>{t('pages.cateringManagement.nameLabelTags')}</label>
-                <div className={styles.tags__container}>
-                    <ul className={styles.tags__list}>
-                        {tags.map((tag, index) => {
-                            return (
-                                <li key={index}>
-                                    <div className={styles.tag__container}>
-                                        <p className={styles.tag__text}>{tag}</p>
-                                        <button className={styles.tag__button} type="button" onClick={() => handleDeleteTag(index)}></button>
-                                    </div>
-                                </li>
-                            );
-                        })}
-                        <input className={styles.tags__input} type="text" placeholder={t('pages.cateringManagement.placeholderTags')} value={currentTag} onKeyDown={handleKeyDown} onChange={handleChange} />
-                    </ul>
-                </div>
-            </div>
+            <InputTag tags={tags} onDelete={handleDeleteTag} onAdd={handleAddTag} onChange={handleTagChange} nameLabel={t('pages.cateringManagement.nameLabelTags')} placeholder={t('pages.cateringManagement.placeholderTags')} value={currentTag} />
         </fieldset>
     );
 };

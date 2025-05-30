@@ -45,7 +45,7 @@ export type Catering = {
     /**
      * Venue's tags
      */
-    tags?: string[];
+    tags?: { name: string }[];
     /**
      * Venue's type
      */
@@ -91,6 +91,7 @@ export interface CateringService {
     getCateringById: (id: number) => Promise<{ data: Catering }>;
     createCatering: (data: Omit<Catering, 'id'>) => Promise<{ data: Catering }>;
     deleteCatering: (id: number) => Promise<{ success: boolean }>;
+    updateCatering: (data: Partial<Catering> & { id: number }) => Promise<{ data: Catering }>;
 }
 
 export const cateringService = new CateringServiceMock();
