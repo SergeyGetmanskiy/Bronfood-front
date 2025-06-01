@@ -8,10 +8,10 @@ import FormInputs from '../../../../components/FormInputs/FormInputs';
 import { regexClientName } from '../../../../utils/consts';
 import { useRestaurantsContext } from '../../../../utils/hooks/useRestaurants/useRestaurantsContext';
 import RestaurantCardCompact from '../../../../components/Cards/RestaurantCardCompact/RestaurantCardCompact';
-import { emptyRestaurants } from '../../../../utils/api/cateringService/MockCateringService';
+import { emptyCaterings } from '../../../../utils/api/cateringService/MockCateringService';
 import { useEffect } from 'react';
-import { Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
 import styles from './AdministratorForm.module.scss';
+import { Catering } from '../../../../utils/api/cateringService/cateringService';
 
 type AdministratorFormProps = {
     onSubmit: SubmitHandler<FieldValues>;
@@ -19,13 +19,13 @@ type AdministratorFormProps = {
     defaultValues?: {
         login: string;
         password: string;
-        restaurant: Restaurant;
+        catering: Catering;
     };
     onCopied?: () => void;
     renderDeleteButton?: React.ReactNode;
 };
 
-const AdministratorForm = ({ onSubmit, isLoading, defaultValues = { login: '', password: '', restaurant: emptyRestaurants[0] }, onCopied, renderDeleteButton }: AdministratorFormProps) => {
+const AdministratorForm = ({ onSubmit, isLoading, defaultValues = { login: '', password: '', catering: emptyCaterings[0] }, onCopied, renderDeleteButton }: AdministratorFormProps) => {
     const { t } = useTranslation();
     const {
         register,
@@ -39,14 +39,14 @@ const AdministratorForm = ({ onSubmit, isLoading, defaultValues = { login: '', p
     const selectedRestaurant = watch('restaurant');
 
     useEffect(() => {
-        if (defaultValues.restaurant) {
-            setLastClickedRestaurantId(defaultValues.restaurant.id);
-            setActiveRestaurant(defaultValues.restaurant.id);
-            setValue('restaurant', defaultValues.restaurant);
+        if (defaultValues.catering) {
+            setLastClickedRestaurantId(defaultValues.catering.id);
+            setActiveRestaurant(defaultValues.catering.id);
+            setValue('restaurant', defaultValues.catering);
         }
-    }, [defaultValues.restaurant, setLastClickedRestaurantId, setActiveRestaurant, setValue]);
+    }, [defaultValues.catering, setLastClickedRestaurantId, setActiveRestaurant, setValue]);
 
-    const handleRestaurantClick = (restaurant: Restaurant) => {
+    const handleRestaurantClick = (restaurant: Catering) => {
         setLastClickedRestaurantId(restaurant.id);
         setActiveRestaurant(restaurant.id);
         setValue('restaurant', restaurant);
@@ -75,15 +75,15 @@ const AdministratorForm = ({ onSubmit, isLoading, defaultValues = { login: '', p
                     <p className={styles['restaurant__title']}>{t('pages.administrators.chooseAnRestaurant')}</p>
                     <input type="hidden" {...register('restaurant')} />
                     <ul className={styles['restaurant__list']}>
-                        {emptyRestaurants.map((restaurant) => (
+                        {emptyCaterings.map((catering) => (
                             <li
-                                key={restaurant.id}
+                                key={catering.id}
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleRestaurantClick(restaurant);
+                                    handleRestaurantClick(catering);
                                 }}
                             >
-                                <RestaurantCardCompact card={restaurant} isTheOnlyOne={emptyRestaurants.length === 1} isActive={restaurant.id === selectedRestaurant?.id} />
+                                <RestaurantCardCompact card={catering} isTheOnlyOne={emptyCaterings.length === 1} isActive={catering.id === selectedRestaurant?.id} />
                             </li>
                         ))}
                     </ul>

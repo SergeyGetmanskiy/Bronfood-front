@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__catering {
+        margin-top: 25px;
+        padding: 0 12.5px;
+    }
+
+    &__menu {
+        margin-top: 35px;
+        padding: 0 14.5px;
+    }
+}
+
+.confirmation-popup-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 122px;
+    position: relative;
+    z-index: 2;
+    background: rgb(135 133 133 / 75%);
+    backdrop-filter: blur(2.5px);
+}
+
+.preloader-wrapper {
+    position: absolute;
+}

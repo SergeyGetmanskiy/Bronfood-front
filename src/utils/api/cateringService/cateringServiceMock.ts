@@ -1,8 +1,10 @@
-import { mockCateringService } from './MockCateringService';
-import { CateringService, Administrator } from './cateringService';
+import { emptyCaterings, emptyMeals, mockCateringService } from './MockCateringService';
+import { CateringService, Administrator, Catering, CateringMeal } from './cateringService';
 
 export class CateringServiceMock implements CateringService {
     private administrators: Administrator[] = mockCateringService;
+    private caterings: Catering[] = emptyCaterings;
+    private meals: CateringMeal[] = emptyMeals;
 
     async getAdministrators(): Promise<{ data: Administrator[] }> {
         const success = true;
@@ -51,5 +53,76 @@ export class CateringServiceMock implements CateringService {
         } else {
             return await Promise.reject(new Error('Error: administrator not found'));
         }
+    }
+
+    async getCaterings(): Promise<{ data: Catering[] }> {
+        const success = true;
+        if (success) {
+            return await Promise.resolve({ data: this.caterings });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
+
+    async getCateringById(id: number): Promise<{ data: Catering }> {
+        const numericId = Number(id);
+        const catering = this.caterings.find((c) => c.id === numericId);
+        if (catering) {
+            return await Promise.resolve({ data: catering });
+        }
+        return await Promise.reject(new Error('Error: catering not found'));
+    }
+
+    async createCatering(data: Omit<Catering, 'id'>): Promise<{ data: Catering }> {
+        const newCatering = {
+            ...data,
+            id: Date.now(),
+        };
+
+        this.caterings.push(newCatering);
+        return { data: newCatering };
+    }
+
+    async deleteCatering(id: number): Promise<{ success: boolean }> {
+        const numericId = Number(id);
+        const index = this.caterings.findIndex((c) => c.id === numericId);
+
+        if (index !== -1) {
+            this.caterings.slice(index, 1);
+            return await Promise.resolve({ success: true });
+        } else {
+            return await Promise.reject(new Error('Error: catering not found'));
+        }
+    }
+
+    async updateCatering(data: Partial<Catering> & { id: number }): Promise<{ data: Catering }> {
+        const numericId = Number(data.id);
+        const index = this.caterings.findIndex((c) => c.id === numericId);
+
+        if (index !== -1) {
+            this.caterings[index] = { ...this.caterings[index], ...data };
+            return await Promise.resolve({ data: this.caterings[index] });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
+
+    async getMeals(): Promise<{ data: CateringMeal[] }> {
+        const success = true;
+        if (success) {
+            return await Promise.resolve({ data: this.meals });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
+
+    async createMeal(data: Omit<CateringMeal, 'id'>): Promise<{ data: CateringMeal }> {
+        const newMeal = {
+            ...data,
+            id: Date.now(),
+        };
+
+        this.meals.push(newMeal);
+        return { data: newMeal };
     }
 }
