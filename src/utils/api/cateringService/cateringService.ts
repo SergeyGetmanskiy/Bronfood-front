@@ -63,6 +63,41 @@ export type Catering = {
     cancellationTime?: number;
 };
 
+export type CateringMeal = {
+    /**
+     * Meal's id
+     */
+    id: number;
+    /**
+     * Meal's name
+     */
+    name: string;
+    /**
+     * Meal's description
+     */
+    description?: string;
+    /**
+     * Link to meal's image
+     */
+    photo: string;
+    /**
+     * Meal's price
+     */
+    price: number;
+    /**
+     * Meal's type
+     */
+    type?: 'food' | 'drink' | 'dessert';
+    /**
+     * Time taken for meal to be prepared in minutes
+     */
+    waitingTime?: number;
+    /**
+     * Venue's tags
+     */
+    tags?: { name: string }[];
+};
+
 export type Administrator = {
     id: string;
     login: string;
@@ -92,6 +127,9 @@ export interface CateringService {
     createCatering: (data: Omit<Catering, 'id'>) => Promise<{ data: Catering }>;
     deleteCatering: (id: number) => Promise<{ success: boolean }>;
     updateCatering: (data: Partial<Catering> & { id: number }) => Promise<{ data: Catering }>;
+
+    getMeals: () => Promise<{ data: CateringMeal[] }>;
+    createMeal: (data: Omit<CateringMeal, 'id'>) => Promise<{ data: CateringMeal }>;
 }
 
 export const cateringService = new CateringServiceMock();

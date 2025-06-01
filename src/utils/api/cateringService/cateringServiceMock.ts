@@ -1,9 +1,10 @@
-import { emptyCaterings, mockCateringService } from './MockCateringService';
-import { CateringService, Administrator, Catering } from './cateringService';
+import { emptyCaterings, emptyMeals, mockCateringService } from './MockCateringService';
+import { CateringService, Administrator, Catering, CateringMeal } from './cateringService';
 
 export class CateringServiceMock implements CateringService {
     private administrators: Administrator[] = mockCateringService;
     private caterings: Catering[] = emptyCaterings;
+    private meals: CateringMeal[] = emptyMeals;
 
     async getAdministrators(): Promise<{ data: Administrator[] }> {
         const success = true;
@@ -104,5 +105,24 @@ export class CateringServiceMock implements CateringService {
         } else {
             return await Promise.reject(new Error('Error server'));
         }
+    }
+
+    async getMeals(): Promise<{ data: CateringMeal[] }> {
+        const success = true;
+        if (success) {
+            return await Promise.resolve({ data: this.meals });
+        } else {
+            return await Promise.reject(new Error('Error server'));
+        }
+    }
+
+    async createMeal(data: Omit<CateringMeal, 'id'>): Promise<{ data: CateringMeal }> {
+        const newMeal = {
+            ...data,
+            id: Date.now(),
+        };
+
+        this.meals.push(newMeal);
+        return { data: newMeal };
     }
 }

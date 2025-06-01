@@ -1,7 +1,8 @@
-import { Administrator, Catering } from './cateringService';
+import { Administrator, Catering, CateringMeal } from './cateringService';
 import restaurant1 from './MockImages/restaurant1.png';
 import restaurant2 from './MockImages/restaurant2.png';
 import restaurant3 from './MockImages/restaurant3.png';
+import meal1 from './MockImages/meal1.png';
 
 export const emptyCaterings: Catering[] = [
     {
@@ -121,5 +122,17 @@ export const mockCateringService: Administrator[] = [
         login: 'Moon',
         password: '258693',
         catering: emptyCaterings[2],
+    },
+];
+
+export const emptyMeals: CateringMeal[] = [
+    {
+        id: 1,
+        name: 'Куриный донер',
+        description: 'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
+        photo: meal1,
+        price: 1050,
+        type: 'food',
+        waitingTime: 15,
     },
 ];
