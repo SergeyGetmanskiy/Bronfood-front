@@ -12,6 +12,7 @@ export const emptyRestaurants: Restaurant[] = [
         workingTime: '09:00-22:00',
         isFavorite: false,
         type: 'fastFood',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
     {
         id: 2,
@@ -23,6 +24,7 @@ export const emptyRestaurants: Restaurant[] = [
         workingTime: '09:00-22:00',
         isFavorite: false,
         type: 'fastFood',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
     {
         id: 3,
@@ -34,6 +36,7 @@ export const emptyRestaurants: Restaurant[] = [
         workingTime: '09:00-22:00',
         isFavorite: false,
         type: 'fastFood',
+        description: null,
     },
 ];
 
