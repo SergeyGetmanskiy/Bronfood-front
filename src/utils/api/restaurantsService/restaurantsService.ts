@@ -128,6 +128,10 @@ export type Restaurant = {
      * Venue's type
      */
     type: 'fastFood' | 'cafe' | 'cafeBar';
+    /**
+     * Venue's description
+     */
+    description: string | null;
 };
 
 export type Review = {

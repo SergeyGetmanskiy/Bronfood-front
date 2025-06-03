@@ -90,7 +90,7 @@ function Restaurant() {
         <>
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={rating} reviews={reviewsCount} onReviews={handleReviewsClick} />
+                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={rating} reviews={reviewsCount} onReviews={handleReviewsClick} description={restaurant.description} />
                 {isReviewsVisible ? (
                     <Reviews reviews={reviews} />
                 ) : (
