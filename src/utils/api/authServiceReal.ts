@@ -1,4 +1,4 @@
-import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, User, RegisterPromise, RestorePasswordPayload, confirmRestorePasswordPayload } from './authService';
+import { AuthService, ConfirmUpdateUser, LoginData, RegisterPayload, ConfirmRegisterPayload, UpdateUserPayload, User, RegisterPromise, RestorePasswordPayload, confirmRestorePasswordPayload, CaptchaResponse } from './authService';
 import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
@@ -9,8 +9,13 @@ export class AuthServiceReal implements AuthService {
         delete result.data.access;
     }
 
-    async register({ name, phone, password }: RegisterPayload): Promise<{ data: RegisterPromise }> {
-        const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name } });
+    async getCaptcha(): Promise<CaptchaResponse> {
+        const result = await handleFetch('api/auth/users/captcha/', { method: 'GET' });
+        return result.data;
+    }
+
+    async register({ name, phone, password, captcha }: RegisterPayload): Promise<{ data: RegisterPromise }> {
+        const result = await handleFetch('api/auth/users/', { method: 'POST', data: { phone, password, name, captcha } });
         return result;
     }
 
