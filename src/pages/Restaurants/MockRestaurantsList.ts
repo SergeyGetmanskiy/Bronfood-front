@@ -22,6 +22,7 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '09:00-22.00',
         isFavorite: false,
         type: 'cafe',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
     {
         id: 2,
@@ -36,6 +37,7 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '10:00-23.00',
         isFavorite: false,
         type: 'cafe',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
     {
         id: 3,
@@ -50,6 +52,7 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '12:00-01.00',
         isFavorite: false,
         type: 'cafe',
+        description: null,
     },
     {
         id: 4,
@@ -64,6 +67,7 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '09:00-22.00',
         isFavorite: false,
         type: 'fastFood',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
     {
         id: 5,
@@ -78,6 +82,7 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '12:00-01.00',
         isFavorite: false,
         type: 'cafeBar',
+        description: 'Изысканные блюда европейской кухни. К нам хочется вернуться.',
     },
 ];
 
