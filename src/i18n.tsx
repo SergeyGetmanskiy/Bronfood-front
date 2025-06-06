@@ -146,6 +146,9 @@ i18n
                             password: 'Пароль',
                             name: 'Имя',
                             namePlaceholder: 'Алькей',
+                            captcha: 'Капча',
+                            reloadCaptcha: 'Обновить капчу',
+                            captchaPlaceholder: '7uR9ot',
                             registerButton: 'Регистрация',
                             connectionError: 'Сервер не отвечает. Попробуйте позже',
                             phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
@@ -155,6 +158,7 @@ i18n
                             passwordThisPasswordIsTooCommon: 'Пароль слишком простой.',
                             passwordThisPasswordIsEntirelyNumeric: 'Пароль не должен состоять только из цифр.',
                             invalidCodeOrExpired: 'Неправильный код из СМС.',
+                            captchaTheCaptchaIsIncorrect: 'Капча введена неверно.',
                         },
                         confirmation: {
                             phoneConfirmation: 'Подтверждение номера',

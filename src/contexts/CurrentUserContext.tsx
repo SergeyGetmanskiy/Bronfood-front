@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { authService, LoginData, RegisterPayload, RegisterPromise, RestorePasswordPayload, UpdateUserPayload, User } from '../utils/api/authService';
+import { authService, CaptchaResponse, LoginData, RegisterPayload, RegisterPromise, RestorePasswordPayload, UpdateUserPayload, User } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContext = {
@@ -14,6 +14,7 @@ type CurrentUserContext = {
     profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
     restorePassword: UseMutationResult<void, Error, RestorePasswordPayload, unknown> | Record<string, never>;
     confirmRestorePassword: UseMutationResult<void, Error, { newPassword: string; reNewPassword: string; code: string }, unknown> | Record<string, never>;
+    getCaptcha: UseMutationResult<CaptchaResponse, Error, void, unknown> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContext>({
@@ -28,6 +29,7 @@ export const CurrentUserContext = createContext<CurrentUserContext>({
     profile: {},
     restorePassword: {},
     confirmRestorePassword: {},
+    getCaptcha: {},
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -87,6 +89,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         mutationFn: (variables: { newPassword: string; reNewPassword: string; code: string }) => authService.confirmRestorePassword({ phone, newPassword: variables.newPassword, reNewPassword: variables.reNewPassword, code: variables.code }),
         onSuccess: () => profile.refetch(),
     });
+    const getCaptchaMutation = useMutation({
+        mutationFn: () => authService.getCaptcha(),
+    });
 
     return (
         <CurrentUserContext.Provider
@@ -102,6 +107,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 profile,
                 restorePassword,
                 confirmRestorePassword,
+                getCaptcha: getCaptchaMutation,
             }}
         >
             {children}

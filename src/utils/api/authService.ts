@@ -8,6 +8,7 @@ export interface RegisterPayload {
     phone: string;
     password: string;
     name: string;
+    captcha: string;
 }
 export interface RegisterPromise {
     id: number;
@@ -56,6 +57,11 @@ export interface confirmRestorePasswordPayload {
     code: string;
 }
 
+export interface CaptchaResponse {
+    image: string;
+    ttl: number;
+}
+
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<void>;
 
@@ -76,6 +82,8 @@ export interface AuthService {
     restorePassword: ({ phone }: RestorePasswordPayload) => Promise<void>;
 
     confirmRestorePassword: ({ phone, newPassword, reNewPassword, code }: confirmRestorePasswordPayload) => Promise<void>;
+
+    getCaptcha(): Promise<CaptchaResponse>;
 }
 
 export const authService = new AuthServiceReal();
