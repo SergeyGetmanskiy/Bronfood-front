@@ -14,7 +14,7 @@ type CurrentUserContext = {
     profile: UseQueryResult<{ data: User }, Error> | Record<string, never>;
     restorePassword: UseMutationResult<void, Error, RestorePasswordPayload, unknown> | Record<string, never>;
     confirmRestorePassword: UseMutationResult<void, Error, { newPassword: string; reNewPassword: string; code: string }, unknown> | Record<string, never>;
-    getCaptcha: UseMutationResult<CaptchaResponse, Error, void, unknown> | Record<string, never>;
+    getCaptcha: UseQueryResult<CaptchaResponse, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContext>({
@@ -52,7 +52,13 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         enabled: !!token,
     });
 
-    const isLogin = !!token;
+    const captcha = useQuery({
+        queryKey: ['captcha'],
+        queryFn: () => authService.getCaptcha(),
+        retry: false,
+    });
+
+    const isLogin = !!profile.data;
 
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
@@ -89,9 +95,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         mutationFn: (variables: { newPassword: string; reNewPassword: string; code: string }) => authService.confirmRestorePassword({ phone, newPassword: variables.newPassword, reNewPassword: variables.reNewPassword, code: variables.code }),
         onSuccess: () => profile.refetch(),
     });
-    const getCaptchaMutation = useMutation({
-        mutationFn: () => authService.getCaptcha(),
-    });
 
     return (
         <CurrentUserContext.Provider
@@ -107,7 +110,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 profile,
                 restorePassword,
                 confirmRestorePassword,
-                getCaptcha: getCaptchaMutation,
+                getCaptcha: captcha,
             }}
         >
             {children}
