@@ -60,15 +60,15 @@ export type RestaurantsContext = {
         /**
          * List of options selected by user
          */
-        selectedOptions: string[];
+        selectedOptions: SearchSuggestion[];
         /**
          * Add option to the list of selected options
          */
-        addOption: (option: string) => void;
+        addOption: (option: SearchSuggestion) => void;
         /**
          * Remove option from the list of selected options
          */
-        deleteOption: (option: string) => void;
+        deleteOption: (option: SearchSuggestion) => void;
     };
     /**
      * Types of venues states and control
@@ -106,7 +106,7 @@ export type RestaurantsContext = {
     /**
      * Search suggestions on user input
      */
-    searchSuggestions: string[];
+    searchSuggestions: SearchSuggestion[];
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
@@ -144,7 +144,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const searchSuggestions = useMemo(() => (isSearchSuggestionsSuccess ? searchSuggestionsData.data : []), [isSearchSuggestionsSuccess, searchSuggestionsData]);
     const [selectedOptions, setSelectedOptions] = useState<SearchSuggestion[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
-    const { isLoading, isError, restaurantsOnMap: restaurantsFiltered, refetch } = useRestaurants(bounds as LngLatBounds, selectedOptions as SearchSuggestion, selectedVenueTypes as VenueType);
+    const { isLoading, isError, restaurantsOnMap: restaurantsFiltered, refetch } = useRestaurants(bounds as LngLatBounds, selectedOptions as SearchSuggestion[], selectedVenueTypes as VenueType[]);
     const setActiveRestaurant = useCallback((id: number) => {
         setInView(id);
     }, []);
