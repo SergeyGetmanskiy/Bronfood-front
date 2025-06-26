@@ -1,6 +1,6 @@
 import { LngLatBounds } from '@yandex/ymaps3-types';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
-import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse, SearchSuggestions } from './restaurantsService';
+import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse, SearchSuggestion } from './restaurantsService';
 
 type WorkingTime = {
     close_time: string;
@@ -28,13 +28,18 @@ export class RestaurantsServiceReal implements RestaurantsService {
             return newRestaurant;
         });
     }
-    async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
-        const coords = bounds.flat();
-        const swlat = `swlat=${coords[1]}`;
-        const swlon = `swlon=${coords[0]}`;
-        const nelat = `nelat=${coords[3]}`;
-        const nelon = `nelon=${coords[2]}`;
-        const endpoint = `api/restaurants/?${swlat}&${swlon}&${nelat}&${nelon}`;
+    async getRestaurants(bounds: LngLatBounds, ids: number[], types: string[]): Promise<{ data: Restaurant[] }> {
+        let endpoint;
+        if (ids.length > 0) {
+            endpoint = `api/restaurants/?ids=${ids}&types=${types}`;
+        } else {
+            const coords = bounds.flat();
+            const swlat = `swlat=${coords[1]}`;
+            const swlon = `swlon=${coords[0]}`;
+            const nelat = `nelat=${coords[3]}`;
+            const nelon = `nelon=${coords[2]}`;
+            endpoint = `api/restaurants/?${swlat}&${swlon}&${nelat}&${nelon}&types=${types}`;
+        }
         const responseData = await handleFetch(endpoint);
         const restaurants = this.addWorkingTime(responseData.data);
         return { data: restaurants };
@@ -53,7 +58,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         const offset = 0;
         return handleFetch(`api/restaurants/${restaurantId}/reviews/?limit=${limit}&offset=${offset}`);
     }
-    async getSearchSuggestions(searchQuery: string): Promise<{ data: SearchSuggestions[] }> {
+    async getSearchSuggestions(searchQuery: string): Promise<{ data: SearchSuggestion[] }> {
         return handleFetch(`api/restaurants/search/?q=${searchQuery}`);
     }
 }

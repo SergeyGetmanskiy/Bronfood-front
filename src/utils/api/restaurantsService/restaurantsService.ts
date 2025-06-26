@@ -155,7 +155,7 @@ export type ReviewResponse = {
     };
 };
 
-export type SearchSuggestions = {
+export type SearchSuggestion = {
     text: string;
     item_ids: number[];
     restaurant_ids: number[];
@@ -163,12 +163,12 @@ export type SearchSuggestions = {
 };
 
 export interface RestaurantsService {
-    getRestaurants: (bounds: LngLatBounds) => Promise<{ data: Restaurant[] }>;
+    getRestaurants: (bounds: LngLatBounds, ids: number[], types: string[]) => Promise<{ data: Restaurant[] }>;
     getRestaurantById: (id: number) => Promise<{ data: Restaurant }>;
     getMeals: (restaurantId: number) => Promise<{ data: Meal[] }>;
     getFeatures: (restaurantId: number, mealId: number) => Promise<{ data: Feature[] }>;
     getReviews: (restaurantId: number) => Promise<{ data: ReviewResponse }>;
-    getRestaurantsIdsBySearchQuery: (searchQuery: string) => Promise<{ data: SearchSuggestions[] }>;
+    getRestaurantsIdsBySearchQuery: (searchQuery: string) => Promise<{ data: SearchSuggestion[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

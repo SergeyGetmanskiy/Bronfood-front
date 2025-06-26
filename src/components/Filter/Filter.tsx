@@ -3,32 +3,32 @@ import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
 import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
-import { Option } from '../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
 import { useEsc } from '../../utils/hooks/useEsc/useEsc';
+import { SearchSuggestion } from '../../utils/api/restaurantsService/restaurantsService';
 
 type OptionListTypes = {
     /**
      * List of options to be rendered
      */
-    options: Option[];
+    options: SearchSuggestion[];
     /**
      * Indicates whether option has been selected by user
      */
     selected: boolean;
     /**
      * Fires when user clicks on option. Sets option selected or deselected
-     * @param {Option} option
+     * @param {string} option
      */
-    action: (option: Option) => void;
+    action: (option: SearchSuggestion) => void;
 };
 
 const OptionList = ({ options, selected, action }: OptionListTypes) => {
     return (
         <ul className={`${styles.filter__options} ${!selected && styles.filter__options_nowrap}`}>
             {options.map((option) => (
-                <li key={option.id}>
-                    <OptionElement text={option} selected={selected} onClick={() => action(option)} />
+                <li key={option.text}>
+                    <OptionElement text={option.text} selected={selected} onClick={() => action(option)} />
                 </li>
             ))}
         </ul>
