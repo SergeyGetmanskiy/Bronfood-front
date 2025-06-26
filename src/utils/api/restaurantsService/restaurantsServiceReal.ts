@@ -1,6 +1,6 @@
 import { LngLatBounds } from '@yandex/ymaps3-types';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
-import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse } from './restaurantsService';
+import { Feature, Meal, Restaurant, RestaurantsService, ReviewResponse, SearchSuggestions } from './restaurantsService';
 
 type WorkingTime = {
     close_time: string;
@@ -28,7 +28,6 @@ export class RestaurantsServiceReal implements RestaurantsService {
             return newRestaurant;
         });
     }
-
     async getRestaurants(bounds: LngLatBounds): Promise<{ data: Restaurant[] }> {
         const coords = bounds.flat();
         const swlat = `swlat=${coords[1]}`;
@@ -53,5 +52,8 @@ export class RestaurantsServiceReal implements RestaurantsService {
         const limit = 100;
         const offset = 0;
         return handleFetch(`api/restaurants/${restaurantId}/reviews/?limit=${limit}&offset=${offset}`);
+    }
+    async getSearchSuggestions(searchQuery: string): Promise<{ data: SearchSuggestions[] }> {
+        return handleFetch(`api/restaurants/search/?q=${searchQuery}`);
     }
 }

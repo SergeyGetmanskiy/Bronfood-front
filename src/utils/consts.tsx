@@ -1,4 +1,5 @@
 import { MealType } from './api/restaurantsService/restaurantsService';
+import { increment } from './serviceFuncs/increment';
 /**
  * includes cyrillic alphabet, * includes latin alphabet, * includes kazakh alphabet,
  * includes dash, * only one space after words, * not space in the end
@@ -10,5 +11,8 @@ export const regexCaptcha: RegExp = /^[A-Za-z0-9]+$/;
 
 export const API_URL = 'http://localhost:8000';
 export const mealTypes: MealType[] = ['food', 'drink', 'dessert'];
+export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
+    return { id: increment(), name: type, selected: false };
+});
 
 export const DEBOUNCE_VALUE = 1000;

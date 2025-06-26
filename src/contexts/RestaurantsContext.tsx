@@ -1,8 +1,9 @@
 import { FC, PropsWithChildren, createContext, useCallback, useState, Dispatch, SetStateAction, useMemo } from 'react';
 import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { LngLatBounds } from '@yandex/ymaps3-types';
 import { useRestaurants } from '../utils/hooks/useRestaurants/useRestaurants';
+import { useSearchSuggestions } from '../utils/hooks/useSearchSuggestions/useSearchSuggestions';
+import { types } from '../utils/consts';
 
 export type Option = {
     /**
@@ -40,10 +41,6 @@ export type RestaurantsContext = {
      */
     inView?: number;
     /**
-     * List of restaurants currently on map
-     */
-    restaurantsOnMap: Restaurant[];
-    /**
      * List of restaurants filtered with user selected options
      */
     restaurantsFiltered: Restaurant[];
@@ -71,10 +68,6 @@ export type RestaurantsContext = {
      * Options' states and controls. Options come from user's input
      */
     options: {
-        /**
-         * List of all options available
-         */
-        all: Option[];
         /**
          * List of options selected by user
          */
@@ -113,11 +106,22 @@ export type RestaurantsContext = {
      * Sets Yandex map's bounds
      */
     setBounds: Dispatch<SetStateAction<LngLatBounds | never[]>>;
+    /**
+     * Input value
+     */
+    searchQuery: string;
+    /**
+     * Sets input value
+     */
+    setSearchQuery: Dispatch<SetStateAction<string>>;
+    /**
+     * Search suggestions on user input
+     */
+    searchSuggestions: string[];
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
     setActiveRestaurant: () => {},
-    restaurantsOnMap: [],
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
@@ -126,7 +130,6 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     lastClickedRestaurantId: null,
     setLastClickedRestaurantId: () => {},
     options: {
-        all: [],
         selectedOptions: [],
         addOption: () => {},
         deleteOption: () => {},
@@ -138,13 +141,19 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
         deleteVenueType: () => {},
     },
     setBounds: () => {},
+    searchQuery: '',
+    setSearchQuery: () => {},
+    searchSuggestions: [],
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<number | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<number | null>(null);
     const [bounds, setBounds] = useState<LngLatBounds | never[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const { isLoading, isError, restaurantsOnMap, refetch } = useRestaurants(bounds as LngLatBounds);
+    const { isSuccess: isSearchSuggestionsSuccess, data: searchSuggestionsData } = useSearchSuggestions(searchQuery);
+    const searchSuggestions = useMemo(() => (isSearchSuggestionsSuccess ? searchSuggestionsData.data.map((item) => item.text) : []), [isSearchSuggestionsSuccess, searchSuggestionsData]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const restaurantsFiltered: Restaurant[] = useMemo(() => filterRestaurants(selectedOptions, selectedVenueTypes, restaurantsOnMap), [selectedOptions, selectedVenueTypes, restaurantsOnMap]);
@@ -187,13 +196,11 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             setActiveRestaurant,
             restaurantsFiltered,
             refetch: refetch,
-            restaurantsOnMap,
             inView,
             setInView,
             lastClickedRestaurantId,
             setLastClickedRestaurantId,
             options: {
-                all: options,
                 selectedOptions,
                 addOption,
                 deleteOption,
@@ -205,8 +212,11 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 deleteVenueType,
             },
             setBounds,
+            searchQuery,
+            setSearchQuery,
+            searchSuggestions,
         }),
-        [isLoading, isError, setActiveRestaurant, restaurantsFiltered, refetch, restaurantsOnMap, inView, setInView, lastClickedRestaurantId, setLastClickedRestaurantId, selectedOptions, addOption, deleteOption, selectedVenueTypes, addVenueType, deleteVenueType, setBounds]
+        [isLoading, isError, setActiveRestaurant, restaurantsFiltered, refetch, inView, setInView, lastClickedRestaurantId, setLastClickedRestaurantId, selectedOptions, addOption, deleteOption, selectedVenueTypes, addVenueType, deleteVenueType, setBounds, searchQuery, setSearchQuery, searchSuggestions]
     );
 
     return <RestaurantsContext.Provider value={contextValue}>{children}</RestaurantsContext.Provider>;
