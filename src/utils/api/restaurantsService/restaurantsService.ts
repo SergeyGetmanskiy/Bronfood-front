@@ -1,4 +1,4 @@
-import { LngLatBounds } from '@yandex/ymaps3-types';
+import { LngLat, LngLatBounds } from '@yandex/ymaps3-types';
 import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
 export type Choice = {
@@ -163,7 +163,7 @@ export type SearchSuggestion = {
 };
 
 export interface RestaurantsService {
-    getRestaurants: (bounds: LngLatBounds, ids: number[], types: string[]) => Promise<{ data: Restaurant[] }>;
+    getRestaurants: (bounds: LngLatBounds, userLocation: LngLat, ids: number[], types: string[]) => Promise<{ data: Restaurant[] }>;
     getRestaurantById: (id: number) => Promise<{ data: Restaurant }>;
     getMeals: (restaurantId: number) => Promise<{ data: Meal[] }>;
     getFeatures: (restaurantId: number, mealId: number) => Promise<{ data: Feature[] }>;

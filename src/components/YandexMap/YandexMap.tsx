@@ -50,7 +50,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                 setCenter([position.coords.longitude, position.coords.latitude]);
             });
         }
-    }, []);
+    }, [setUserLocation]);
 
     useEffect(() => {
         if (inView && activePlaceId !== inView) {
