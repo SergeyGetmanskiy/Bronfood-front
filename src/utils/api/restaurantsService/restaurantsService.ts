@@ -132,6 +132,10 @@ export type Restaurant = {
      * Venue's description
      */
     description: string | null;
+    /**
+     * Distance to restaurant
+     */
+    distance_km?: number;
 };
 
 export type Review = {
