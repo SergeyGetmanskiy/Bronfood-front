@@ -135,7 +135,7 @@ export type Restaurant = {
     /**
      * Distance to restaurant
      */
-    distance_km: number;
+    distance_km?: number;
 };
 
 export type Review = {
