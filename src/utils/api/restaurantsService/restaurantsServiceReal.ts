@@ -19,7 +19,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
             const todaysWorkingTimes = restaurant.working_times.filter((time) => time.date === todaysDate)[0];
             const open = todaysWorkingTimes.open_time;
             const close = todaysWorkingTimes.close_time;
-            const workingTime = `${open}-${close}`;
+            const workingTime = open && close ? `${open}-${close}` : 'Закрыт';
             const newRestaurant = {
                 ...restaurant,
                 workingTime,
