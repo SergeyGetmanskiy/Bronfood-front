@@ -14,10 +14,9 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
     const [initialRender, setInitialRender] = useState(true);
     const [center, setCenter] = useState<LngLat>([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
-    const [userLocation, setUserLocation] = useState<LngLat | undefined>(undefined);
     const [activePlaceId, setActivePlaceId] = useState<number | null>(null);
     const navigate = useNavigate();
-    const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds } = useRestaurantsContext();
+    const { restaurantsFiltered, inView, setLastClickedRestaurantId, setBounds, userLocation, setUserLocation } = useRestaurantsContext();
 
     const handleMapUpdate: MapEventUpdateHandler = useCallback(
         (object) => {
@@ -51,7 +50,7 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
                 setCenter([position.coords.longitude, position.coords.latitude]);
             });
         }
-    }, []);
+    }, [setUserLocation]);
 
     useEffect(() => {
         if (inView && activePlaceId !== inView) {
