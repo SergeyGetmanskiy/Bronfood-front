@@ -7,7 +7,6 @@ function RestaurantCard({ card, isTheOnlyOne, lastClickedRestaurantId }: { card:
 
     const isClicked = card.id === lastClickedRestaurantId;
     const distance = card.distance_km.toFixed(1);
-    console.log(distance);
 
     return (
         <div ref={ref} className={`${styles.card} ${isTheOnlyOne || isClicked ? styles.card__active : ''}`}>
