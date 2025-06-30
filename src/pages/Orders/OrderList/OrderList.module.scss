@@ -1,0 +1,10 @@
+@use '../../../styles/variables';
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding: 0 15px;
+    gap: 10px;
+}

@@ -75,6 +75,7 @@ i18n
                             editPersonalData: 'Редактировать личные данные',
                             editBankData: 'Редактировать банковские данные',
                             aboutService: 'О сервисе',
+                            myOrders: 'Мои заказы',
                             signOut: 'Выйти',
                         },
                         confirmationPopup: {
@@ -228,6 +229,15 @@ i18n
                             newPasswordYouCantSetANewPasswordWithoutTheCurrentOne: 'Чтобы установить новый пароль, введите текущий пароль',
                             invalidCodeOrExpired: 'Неправильный код из СМС.',
                             authenticationCredentialsWereNotProvided: 'Вы не авторизованы',
+                        },
+                        order: {
+                            title: 'Мои заказы',
+                            feedback: 'Добавить отзыв',
+                            dateOfIssue: 'Выдан:',
+                            dateOfCanceled: 'Отменен:',
+                            waitingTime: 'Время ожидания',
+                            cancellationReason: 'Причина:',
+                            assignedRating: 'Ваша оценка: ',
                         },
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',

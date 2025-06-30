@@ -1,4 +1,4 @@
-import { Meal } from '../restaurantsService/restaurantsService';
+import { Choice, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export interface OrderedMeal {
     /**
@@ -60,4 +60,43 @@ export interface OrderState {
      * Provides restaurantId for order feedback
      */
     restaurantId: number;
+}
+
+export interface MealChoice {
+    choice: Choice;
+    is_visible: boolean;
+    is_deleted: boolean;
+}
+
+export interface UserOrderMeal {
+    meal: Meal;
+    count: number;
+    choices: MealChoice[];
+    is_visible: boolean;
+    is_deleted: boolean;
+}
+
+export interface UserOrder {
+    id: number;
+    order_code: string | null;
+    amount: number;
+    currency: string;
+    status: string;
+    restaurant: Restaurant;
+    meals: UserOrderMeal[];
+    created_at: string;
+    payed_at?: string | null;
+    waiting_time: string;
+    canceled_at?: string | null;
+    cancellation_reason?: string | null;
+    issued_at?: string | null;
+    rating?: number | null;
+    payment_url?: string | null;
+}
+
+export interface UserOrdersListPagination {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: UserOrder[];
 }

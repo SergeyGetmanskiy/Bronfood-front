@@ -30,6 +30,7 @@ import Administrators from './pages/Catering/Administrators/Administrators';
 import Catering from './pages/Catering/Catering';
 import AddAdministrator from './pages/Catering/Administrators/AddAdministrator/AddAdministrator';
 import EditAdministrator from './pages/Catering/Administrators/EditAdministrator/EditAdministrator';
+import MyOrders from './pages/Orders/Orders';
 
 function App() {
     const [city, setCity] = useState('');
@@ -45,7 +46,8 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
-                <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
+                <Route path="/my-orders" element={<ProtectedRoute component={<MyOrders />} />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="/restaurants" element={<Restaurants />}>
                     <Route path=":restaurantId" element={<Restaurant />}>
                         <Route path="meal/:mealId" element={<MealPage />} />
