@@ -33,13 +33,17 @@ export class RestaurantsServiceReal implements RestaurantsService {
         if (ids.length > 0) {
             endpoint = `api/restaurants/?ids=${ids}&types=${types}`;
         } else {
-            const [userLon, userLat] = userLocation;
+            let userCoordinates;
+            if (userLocation) {
+                const [userLat, userLon] = userLocation;
+                userCoordinates = `&usr_lat=${userLat}&usr_lon=${userLon}`;
+            }
             const coords = bounds.flat();
             const swlat = `swlat=${coords[1]}`;
             const swlon = `swlon=${coords[0]}`;
             const nelat = `nelat=${coords[3]}`;
             const nelon = `nelon=${coords[2]}`;
-            endpoint = `api/restaurants/?${swlat}&${swlon}&${nelat}&${nelon}&usr_lat=${userLat}&usr_lon=${userLon}&types=${types}`;
+            endpoint = `api/restaurants/?${swlat}&${swlon}&${nelat}&${nelon}${userLocation ? userCoordinates : ''} &types=${types}`;
         }
         const responseData = await handleFetch(endpoint);
         const restaurants = this.addWorkingTime(responseData.data);

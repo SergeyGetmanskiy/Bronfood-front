@@ -31,7 +31,7 @@ function RestaurantCardLarge({ card, isFavorite = false, onRestaurantClick }: Re
                     <div className={styles.card__feature}>
                         <div className={`${styles.card__icon} ${styles.card__icon_placemark} ${styles.card__icon_small}`} />
                         <p className={styles.card__feature_title}>{card.address}</p>
-                        <p className={`${styles.card__feature_title_distance} ${styles.card__feature_title}`}>{`${distance} км`}</p>
+                        {distance && <p className={`${styles.card__feature_title_distance} ${styles.card__feature_title}`}>{`${distance} км`}</p>}
                     </div>
                 </div>
             </div>
