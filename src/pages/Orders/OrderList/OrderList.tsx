@@ -5,7 +5,7 @@ import { UserOrder } from '../../../utils/api/orderService/orderService';
 import { useNavigate } from 'react-router-dom';
 
 type OrderListProps = {
-    orders: UserOrder[];
+    orders?: UserOrder[];
 };
 
 const OrderList: FC<OrderListProps> = ({ orders }) => {
@@ -22,11 +22,7 @@ const OrderList: FC<OrderListProps> = ({ orders }) => {
 
     return (
         <>
-            <div className={styles['order-list']}>
-                {orders.map((order) => (
-                    <OrderItem order={order} key={order.id} onClickFeedback={handleFeedback} showDetails={() => toggleShowDetails(order.id)} isShow={showDetails === order.id} />
-                ))}
-            </div>
+            <div className={styles['order-list']}>{orders?.map((order) => <OrderItem order={order} key={order.id} onClickFeedback={handleFeedback} showDetails={() => toggleShowDetails(order.id)} isShow={showDetails === order.id} />)}</div>
         </>
     );
 };

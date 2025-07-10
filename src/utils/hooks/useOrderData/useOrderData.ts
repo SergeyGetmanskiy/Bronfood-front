@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UseQueryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { OrderState } from '../../api/orderService/orderService';
+import { OrderState, UserOrdersListPagination } from '../../api/orderService/orderService';
 import OrderServiceReal from '../../api/orderService/orderSeviceReal';
 import i18n from 'i18next';
 
@@ -73,4 +73,19 @@ export const useOrderData = (userId: number | null, placedOrder: OrderState | nu
         preparationStatus,
         placedOrder,
     };
+};
+
+export const useUserOrders = (limit: number, offset: number) => {
+    const orderService = new OrderServiceReal();
+
+    return useQuery<UserOrdersListPagination, Error>({
+        queryKey: ['userOrders', limit, offset],
+        queryFn: async () => {
+            const response = await orderService.getUserOrders(limit, offset);
+            if (response.status === 'success') {
+                return response.data;
+            }
+            throw new Error(response.error_message || 'Failed to fetch orders');
+        },
+    });
 };

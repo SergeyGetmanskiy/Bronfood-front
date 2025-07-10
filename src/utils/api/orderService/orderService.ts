@@ -1,4 +1,4 @@
-import { Choice, Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { Meal } from '../restaurantsService/restaurantsService';
 
 export interface OrderedMeal {
     /**
@@ -63,17 +63,17 @@ export interface OrderState {
 }
 
 export interface MealChoice {
-    choice: Choice;
-    is_visible: boolean;
-    is_deleted: boolean;
+    id: number;
+    name: string;
 }
 
 export interface UserOrderMeal {
-    meal: Meal;
+    id: number;
+    name: string;
     count: number;
+    price: number;
     choices: MealChoice[];
-    is_visible: boolean;
-    is_deleted: boolean;
+    is_available: boolean;
 }
 
 export interface UserOrder {
@@ -82,16 +82,23 @@ export interface UserOrder {
     amount: number;
     currency: string;
     status: string;
-    restaurant: Restaurant;
+    restaurant: {
+        id: number;
+        photo: string;
+        name: string;
+        rating: number;
+        address: string;
+    };
     meals: UserOrderMeal[];
     created_at: string;
-    payed_at?: string | null;
+    paid_at?: string | null;
     waiting_time: string;
     canceled_at?: string | null;
     cancellation_reason?: string | null;
     issued_at?: string | null;
     rating?: number | null;
     payment_url?: string | null;
+    is_order_repeatable: boolean;
 }
 
 export interface UserOrdersListPagination {
@@ -100,3 +107,15 @@ export interface UserOrdersListPagination {
     previous: string | null;
     results: UserOrder[];
 }
+
+/*
+created - создан
+paid - оплачен
+accepted - готовится
+ready - готов
+completed - завершен
+unclaimed - готов, но клиент не забрали
+cancelled_by_user - отменен клиентом
+cancelled_by_admin - отменен администратором
+cancelled_by_timeout - отменен потому что вышло время принятия заказа
+*/

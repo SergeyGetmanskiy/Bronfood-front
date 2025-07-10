@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './OrderItem.module.scss';
 import { useTranslation } from 'react-i18next';
 import { MealChoice, UserOrder, UserOrderMeal } from '../../../utils/api/orderService/orderService';
+import { formatDateTime } from '../../../utils/serviceFuncs/formatDateTime';
 
 type OrderItemProps = {
     order: UserOrder;
@@ -14,8 +15,8 @@ export const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
     return (
         <ul className={styles['choices']}>
             {choices.map((choice) => (
-                <li key={choice.choice.id}>
-                    <p className={styles['choices__name']}>{choice.choice.name}</p>
+                <li key={choice.id}>
+                    <p className={styles['choices__name']}>{choice.name}</p>
                 </li>
             ))}
         </ul>
@@ -23,94 +24,120 @@ export const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
 };
 
 export const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
+    if (!meal || !meal) return null;
     return (
-        <div className={styles['meal']}>
+        <li className={styles['meal']}>
             <div className={styles['meal__info']}>
                 <p className={styles['meal__name']}>
-                    {meal.meal.name}
+                    {meal.name}
                     <span className={styles['meal__count']}>x{meal.count}</span>
                 </p>
-                <p className={styles['meal__price']}>{meal.meal.price}</p>
+                <p className={styles['meal__price']}>
+                    {meal.price} <span>₸</span>
+                </p>
             </div>
             <Choices choices={meal.choices} />
-        </div>
+            {meal.is_available ? null : <p>блюдо не доступно</p>}
+        </li>
     );
 };
 
 const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, isShow }) => {
     const { t } = useTranslation();
+    const getStatusColor = (status: string) => {
+        if (['ready', 'completed'].includes(status)) return 'green';
+        if (['unclaimed', 'cancelled_by_user', 'cancelled_by_admin', 'cancelled_by_timeout'].includes(status)) return 'red';
+        return 'orange';
+    };
 
     return (
         <div className={styles['card']}>
             <div className={styles['restaurant__container']}>
-                <div className={styles['restaurant__image']} style={{ backgroundImage: `url(${order.restaurant?.photo})` }} />
+                <div className={styles['restaurant__image']} style={{ backgroundImage: `url(${order.restaurant.photo})` }} />
                 <div className={styles['restaurant__description']}>
-                    <p className={styles['restaurant__name']}>{order.restaurant?.name}</p>
+                    <div className={styles['restaurant__title_container']}>
+                        <p className={styles['restaurant__title']}>{order.restaurant.name}</p>
+                        <p className={styles['restaurant__rating']}>{order.restaurant.rating}</p>
+                        <div className={`${styles['restaurant__icon']} ${styles['restaurant__icon_star']} ${styles['restaurant__icon_large']}`} />
+                    </div>
                     <div className={styles['restaurant__feature']}>
                         <div className={`${styles['restaurant__icon']} ${styles['restaurant__icon_placemark']} ${styles['restaurant__icon_small']}`} />
-                        <p className={styles['restaurant__feature_title']}>{order.restaurant?.address}</p>
+                        <p className={styles['restaurant__feature_title']}>{order.restaurant.address}</p>
                     </div>
                 </div>
             </div>
 
-            <div>
-                {order.order_code} от {order.created_at}
+            <div className={styles['card__container_info']}>
+                <div className={styles['card__code']}>
+                    <p className={styles['card__code_text']}># {order.order_code}</p>
+                    <p className={styles['card__code_text']}>{formatDateTime(order.created_at)}</p>
+                </div>
+                <p className={`${styles['card__status']} ${styles[`card__status--${getStatusColor(order.status)}`]}`}>{t(`pages.order.${order.status}`)}</p>
             </div>
-            {order.waiting_time ? (
+            {order.status === 'accepted' && order.waiting_time ? (
                 <div>
                     {t('pages.order.waitingTime')} {order.waiting_time}
                 </div>
             ) : null}
-            <p>статус: {order.status}</p>
+            {!order.rating && order.status === 'completed' ? (
+                <button className={styles['card__button-feedback']} onClick={onClickFeedback}>
+                    {t('pages.order.feedback')}
+                </button>
+            ) : null}
+            {order.rating ? (
+                <div className={styles['card__rating-feedback']}>
+                    {t('pages.order.assignedRating')} {order.rating}
+                </div>
+            ) : null}
+            <p className={styles['card__title']}>Состав заказа</p>
+            <article className={styles['order-item']}>
+                <ul className={styles['order-item__list']}>
+                    {order.meals.map((meal) => (
+                        <OrderMeal meal={meal} key={meal.id} />
+                    ))}
+                </ul>
+            </article>
 
-            <div className={styles['card__button']}>
-                <button onClick={showDetails} className={`${styles['card__button-container']} ${isShow ? styles['card__show-button'] : styles['card__hide-button']}`}>
-                    {isShow ? 'скрыть подробности' : 'подробнее'}
+            <div className={styles['card__button-container']}>
+                <div className={styles['order-item__amount']}>
+                    <h3 className={styles['order-item__title']}>
+                        {order.amount}
+                        <span>₸</span>
+                    </h3>
+                </div>
+                <button onClick={showDetails} className={styles['card__button-info']}>
+                    {isShow ? 'скрыть ⬆' : 'подробнее ⬇'}
                 </button>
             </div>
 
             {isShow && (
-                <>
-                    {order.canceled_at ? (
-                        <div>
-                            {t('pages.order.dateOfCanceled')} {order.canceled_at}
+                <div className={styles['detail-info']}>
+                    <p className={styles['card__title']}>Информация о заказе</p>
+                    <div className={styles['detail-info__contant']}>
+                        {order.canceled_at ? (
+                            <div className={styles['detail-info__conteiner']}>
+                                <p className={styles['detail-info__title']}>{t('pages.order.dateOfCanceled')}</p>
+                                <p className={styles['detail-info__text']}>{order.canceled_at}</p>
+                            </div>
+                        ) : null}
+                        {order.cancellation_reason ? (
+                            <div className={styles['detail-info__conteiner']}>
+                                <p className={styles['detail-info__title']}>{t('pages.order.cancellationReason')}</p>
+                                <p className={styles['detail-info__text']}>{order.cancellation_reason}</p>
+                            </div>
+                        ) : null}
+                        {order.issued_at ? (
+                            <div className={styles['detail-info__conteiner']}>
+                                <p className={styles['detail-info__title']}>{t('pages.order.dateOfIssue')}</p>
+                                <p className={styles['detail-info__text']}>{order.issued_at}</p>
+                            </div>
+                        ) : null}
+                        <div className={styles['detail-info__conteiner']}>
+                            <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
+                            <p className={styles['detail-info__text']}>{order.currency}</p>
                         </div>
-                    ) : null}
-                    {order.cancellation_reason ? (
-                        <div>
-                            {t('pages.order.cancellationReason')} {order.cancellation_reason}
-                        </div>
-                    ) : null}
-                    {order.issued_at ? (
-                        <div>
-                            {t('pages.order.dateOfIssue')} {order.issued_at}
-                        </div>
-                    ) : null}
-                    {order.rating ? (
-                        <div>
-                            {t('pages.order.assignedRating')} {order.rating}
-                        </div>
-                    ) : null}
-                    <article className={styles['order-item']}>
-                        <ul className={styles['order-item__list']}>
-                            {order.meals.map((meal) => (
-                                <OrderMeal meal={meal} key={meal.meal.id} />
-                            ))}
-                        </ul>
-                        <div className={styles['order-item__amount']}>
-                            <h3 className={styles['order-item__title']}>Итого: </h3>
-                            <h3 className={styles['order-item__title']}>{order.amount}</h3>
-                            <h3 className={styles['order-item__title']}>{order.currency}</h3>
-                        </div>
-                    </article>
-                    {order.rating ? null : (
-                        <div className={styles['button']}>
-                            <button className={styles['button__feedback']} onClick={onClickFeedback}>
-                                {t('pages.order.feedback')}
-                            </button>
-                        </div>
-                    )}
-                </>
+                    </div>
+                </div>
             )}
         </div>
     );

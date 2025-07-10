@@ -44,6 +44,11 @@
         justify-content: space-between;
     }
 
+    &__price span {
+        padding-left: 3px;
+        color: variables.$light-gray;
+    }
+
     &__count {
         display: flex;
         color: variables.$light-gray;
@@ -60,23 +65,78 @@
     border-radius: 15px;
     padding: 10px;
 
-    &__button {
+    &__button-container {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    &__button-container {
+    &__button-info {
         padding: 10px;
+        border: none;
+        background-color: transparent;
+        color: variables.$black;
+    }
+
+    &__button-feedback {
+        color: variables.$orange;
+        border-radius: 15px;
         border: none;
         background-color: transparent;
     }
 
-    &__show-button {
+    &__rating-feedback {
         color: variables.$orange;
+        border-radius: 15px;
+        font-weight: normal;
     }
 
-    &__hide-button {
-        color: variables.$black;
+    &__container_info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        padding-bottom: 20px;
+    }
+
+    &__code {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__code_text {
+        color: variables.$light-gray;
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    &__title {
+        padding-top: 20px;
+        border-top: 1px solid variables.$grey-line;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    &__status {
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 500;
+        color: variables.$white;
+        text-transform: uppercase;
+
+        &--green {
+            background-color: variables.$green;
+        }
+
+        &--orange {
+            background-color: variables.$orange;
+        }
+
+        &--red {
+            background-color: variables.$red;
+        }
     }
 }
 
@@ -89,13 +149,7 @@
     max-height: 230px;
 
     &__amount {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        width: 100%;
-        padding: 0;
-        margin: 14px 0 0;
-        gap: 10px;
+        padding-left: 10px;
     }
 
     &__title {
@@ -131,6 +185,7 @@
     &__container {
         display: flex;
         cursor: pointer;
+        align-items: center;
     }
 
     &__image {
@@ -145,18 +200,32 @@
     &__description {
         display: flex;
         flex-direction: column;
+        width: 100%;
         gap: 2px;
-        padding: 10px 10px 10px 13px;
+        padding: 10px;
     }
 
-    &__name {
+    &__title_container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__title {
+        flex-grow: 2;
         font-size: 17px;
         font-weight: 500;
         line-height: 1.4;
-        color: variables.$grey-dark;
+        color: variables.$black;
+        margin-right: 5px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__icon {
+        flex-shrink: 0;
         height: 15px;
         width: 15px;
         background-repeat: no-repeat;
@@ -175,18 +244,48 @@
         line-height: 1.21;
         color: variables.$grey;
     }
+
+    &__rating {
+        margin-right: 5px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: variables.$black;
+    }
+
+    &__icon_star {
+        background-image: url('./../../../vendor/images/icons/restaurant/star.svg');
+    }
+
+    &__icon_large {
+        height: 19px;
+        width: 19px;
+    }
 }
 
-.button {
+.detail-info {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px;
+    flex-direction: column;
 
-    &__feedback {
-        background-color: variables.$orange;
-        color: variables.$white;
-        border-radius: 15px;
-        border: none;
-        padding: 12px 16px;
+    &__contant {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-top: 12px;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__title {
+        font-size: 14px;
+        color: variables.$grey;
+        font-weight: normal;
+    }
+
+    &__text {
+        font-size: 16px;
     }
 }
