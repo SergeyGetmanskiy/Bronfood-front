@@ -35,7 +35,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         } else {
             let userCoordinates;
             if (userLocation) {
-                const [userLat, userLon] = userLocation;
+                const [userLon, userLat] = userLocation;
                 userCoordinates = `&usr_lat=${userLat}&usr_lon=${userLon}`;
             }
             const coords = bounds.flat();
