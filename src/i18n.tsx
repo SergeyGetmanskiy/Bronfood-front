@@ -232,6 +232,7 @@ i18n
                         },
                         order: {
                             title: 'Мои заказы',
+                            titleMyOrdersEmpty: 'Ваш список заказов пуст...',
                             feedback: 'оставить отзыв',
                             dateOfIssue: 'Выдан',
                             dateOfCanceled: 'Отменен',

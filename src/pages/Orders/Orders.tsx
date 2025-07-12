@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
-import OrderList from './OrderList/OrderList';
 import { useNavigate } from 'react-router-dom';
-import Popup from '../../components/Popups/Popup/Popup';
-import { useTranslation } from 'react-i18next';
 import { useUserOrders } from '../../utils/hooks/useOrderData/useOrderData';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { useTranslation } from 'react-i18next';
+import Popup from '../../components/Popups/Popup/Popup';
+import { OrderList, OrderListEmpty } from './OrderList/OrderList';
 
 const MyOrders: FC = () => {
     const navigate = useNavigate();
@@ -32,21 +32,8 @@ const MyOrders: FC = () => {
             }}
         >
             {isLoading && <Preloader />}
-            {!isLoading && userOrders && userOrders.results ? (
-                <>
-                    <OrderList orders={userOrders?.results} />
-                    <div>
-                        <button onClick={handlePrevPage} disabled={page === 0}>
-                            назад
-                        </button>
-                        <button onClick={handleNextPage} disabled={page === 0}>
-                            вперед
-                        </button>
-                    </div>
-                </>
-            ) : (
-                <p>нет заказов</p>
-            )}
+            {!isLoading && (userOrders?.results?.length ? <OrderList orders={userOrders.results} prevPage={handlePrevPage} nextPage={handleNextPage} /> : <OrderListEmpty />)}
+
             {error && <ErrorMessage message={error.message} />}
         </Popup>
     );

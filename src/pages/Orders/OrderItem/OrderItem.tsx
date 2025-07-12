@@ -11,19 +11,19 @@ type OrderItemProps = {
     isShow: boolean;
 };
 
-export const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
+const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
     return (
         <ul className={styles['choices']}>
             {choices.map((choice) => (
                 <li key={choice.id}>
-                    <p className={styles['choices__name']}>{choice.name}</p>
+                    <p className={styles['choices__name']}>• {choice.name}</p>
                 </li>
             ))}
         </ul>
     );
 };
 
-export const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
+const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
     if (!meal || !meal) return null;
     return (
         <li className={styles['meal']}>
@@ -32,12 +32,16 @@ export const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
                     {meal.name}
                     <span className={styles['meal__count']}>x{meal.count}</span>
                 </p>
-                <p className={styles['meal__price']}>
+                <p className={`${styles['meal__price']} ${meal.is_available ? '' : styles['meal__price_unavailable']}`}>
                     {meal.price} <span>₸</span>
                 </p>
             </div>
             <Choices choices={meal.choices} />
-            {meal.is_available ? null : <p>блюдо не доступно</p>}
+            {meal.is_available ? null : (
+                <div className={styles['meal__unavailable']}>
+                    <p className={styles['meal__unavailable_text']}>недоступно</p>
+                </div>
+            )}
         </li>
     );
 };
@@ -70,7 +74,7 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
             <div className={styles['card__container_info']}>
                 <div className={styles['card__code']}>
                     <p className={styles['card__code_text']}># {order.order_code}</p>
-                    <p className={styles['card__code_text']}>{formatDateTime(order.created_at)}</p>
+                    <p className={styles['card__date_text']}>{formatDateTime(order.created_at)}</p>
                 </div>
                 <p className={`${styles['card__status']} ${styles[`card__status--${getStatusColor(order.status)}`]}`}>{t(`pages.order.${order.status}`)}</p>
             </div>
@@ -115,24 +119,24 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                     <p className={styles['card__title']}>Информация о заказе</p>
                     <div className={styles['detail-info__contant']}>
                         {order.canceled_at ? (
-                            <div className={styles['detail-info__conteiner']}>
+                            <div className={styles['detail-info__container']}>
                                 <p className={styles['detail-info__title']}>{t('pages.order.dateOfCanceled')}</p>
-                                <p className={styles['detail-info__text']}>{order.canceled_at}</p>
+                                <p className={styles['detail-info__text']}>{formatDateTime(order.canceled_at)}</p>
                             </div>
                         ) : null}
                         {order.cancellation_reason ? (
-                            <div className={styles['detail-info__conteiner']}>
+                            <div className={styles['detail-info__container']}>
                                 <p className={styles['detail-info__title']}>{t('pages.order.cancellationReason')}</p>
                                 <p className={styles['detail-info__text']}>{order.cancellation_reason}</p>
                             </div>
                         ) : null}
                         {order.issued_at ? (
-                            <div className={styles['detail-info__conteiner']}>
+                            <div className={styles['detail-info__container']}>
                                 <p className={styles['detail-info__title']}>{t('pages.order.dateOfIssue')}</p>
-                                <p className={styles['detail-info__text']}>{order.issued_at}</p>
+                                <p className={styles['detail-info__text']}>{formatDateTime(order.issued_at)}</p>
                             </div>
                         ) : null}
-                        <div className={styles['detail-info__conteiner']}>
+                        <div className={styles['detail-info__container']}>
                             <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
                             <p className={styles['detail-info__text']}>{order.currency}</p>
                         </div>
