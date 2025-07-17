@@ -7,11 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 type OrderListProps = {
     orders?: UserOrder[];
-    prevPage: () => void;
-    nextPage: () => void;
 };
 
-export const OrderList: FC<OrderListProps> = ({ orders, prevPage, nextPage }) => {
+export const OrderList: FC<OrderListProps> = ({ orders }) => {
     const navigate = useNavigate();
     const [showDetails, setShowDetails] = useState<number | null>(null);
 
@@ -19,23 +17,11 @@ export const OrderList: FC<OrderListProps> = ({ orders, prevPage, nextPage }) =>
         setShowDetails((prev) => (prev === orderId ? null : orderId));
     };
 
-    const handleFeedback = () => {
-        navigate('/leave-order-feedback');
+    const handleFeedback = (order: UserOrder) => {
+        navigate('/leave-order-feedback', { state: { orderId: order.id, restaurantId: order.restaurant.id } });
     };
 
-    return (
-        <div className={styles['order-list']}>
-            {orders?.map((order) => <OrderItem order={order} key={order.id} onClickFeedback={handleFeedback} showDetails={() => toggleShowDetails(order.id)} isShow={showDetails === order.id} />)}
-            <div className={styles['order-list_button-container']}>
-                <button className={styles['order-list_button']} onClick={prevPage}>
-                    назад
-                </button>
-                <button className={styles['order-list_button']} onClick={nextPage}>
-                    вперед
-                </button>
-            </div>
-        </div>
-    );
+    return <ul className={styles['order-list']}>{orders?.map((order) => <OrderItem order={order} key={order.id} onClickFeedback={() => handleFeedback(order)} showDetails={() => toggleShowDetails(order.id)} isShow={showDetails === order.id} />)}</ul>;
 };
 
 export function OrderListEmpty() {

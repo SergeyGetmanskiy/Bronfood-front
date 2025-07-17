@@ -14,8 +14,8 @@ type OrderItemProps = {
 const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
     return (
         <ul className={styles['choices']}>
-            {choices.map((choice) => (
-                <li key={choice.id}>
+            {choices.map((choice, index) => (
+                <li key={index}>
                     <p className={styles['choices__name']}>• {choice.name}</p>
                 </li>
             ))}
@@ -24,9 +24,9 @@ const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
 };
 
 const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
-    if (!meal || !meal) return null;
+    const { t } = useTranslation();
     return (
-        <li className={styles['meal']}>
+        <li className={`${meal.is_available ? styles['meal'] : styles['meal-unavailable']}`}>
             <div className={styles['meal__info']}>
                 <p className={styles['meal__name']}>
                     {meal.name}
@@ -38,9 +38,12 @@ const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
             </div>
             <Choices choices={meal.choices} />
             {meal.is_available ? null : (
-                <div className={styles['meal__unavailable']}>
-                    <p className={styles['meal__unavailable_text']}>недоступно</p>
-                </div>
+                <>
+                    <div className={styles['meal__unavailable-wrapper']}></div>
+                    <div className={styles['meal__unavailable']}>
+                        <p className={styles['meal__unavailable_text']}>{t('pages.order.mealUnavailable')}</p>
+                    </div>
+                </>
             )}
         </li>
     );
@@ -55,8 +58,8 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
     };
 
     return (
-        <div className={styles['card']}>
-            <div className={styles['restaurant__container']}>
+        <li className={styles['card']}>
+            <div className={styles['restaurant']}>
                 <div className={styles['restaurant__image']} style={{ backgroundImage: `url(${order.restaurant.photo})` }} />
                 <div className={styles['restaurant__description']}>
                     <div className={styles['restaurant__title_container']}>
@@ -71,52 +74,92 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                 </div>
             </div>
 
-            <div className={styles['card__container_info']}>
+            <div className={styles['card__container-info']}>
                 <div className={styles['card__code']}>
                     <p className={styles['card__code_text']}># {order.order_code}</p>
                     <p className={styles['card__date_text']}>{formatDateTime(order.created_at)}</p>
                 </div>
                 <p className={`${styles['card__status']} ${styles[`card__status--${getStatusColor(order.status)}`]}`}>{t(`pages.order.${order.status}`)}</p>
             </div>
+
             {order.status === 'accepted' && order.waiting_time ? (
-                <div>
-                    {t('pages.order.waitingTime')} {order.waiting_time}
+                <div className={`${styles['waiting-time']}`}>
+                    <p className={`${styles['waiting-time_title']}`}>{t('pages.order.waitingTime')}</p>
+                    <div className={`${styles['waiting-time_container']}`}>
+                        <div className={`${styles['waiting-time_image']}`}></div>
+                        <p className={`${styles['waiting-time_text']}`}>{order.waiting_time}</p>
+                    </div>
                 </div>
             ) : null}
+
+            {order.status === 'created' && order.payment_url !== null ? (
+                <div className={`${styles['payment']}`}>
+                    <p className={`${styles['payment_title']}`}>{t('pages.order.paymentLink')}</p>
+                    <a href={order.payment_url} target="_blank" className={`${styles['payment_link']}`}>
+                        <div className={`${styles['payment_image']}`}></div>
+                        <p className={`${styles['payment_text']}`}>{t('pages.order.proceedToPayment')}</p>
+                    </a>
+                </div>
+            ) : null}
+
             {!order.rating && order.status === 'completed' ? (
-                <button className={styles['card__button-feedback']} onClick={onClickFeedback}>
-                    {t('pages.order.feedback')}
-                </button>
-            ) : null}
-            {order.rating ? (
-                <div className={styles['card__rating-feedback']}>
-                    {t('pages.order.assignedRating')} {order.rating}
+                <div className={`${styles['feedback']}`}>
+                    <p className={`${styles['feedback_title']}`}>{t('pages.order.howDoYouLikeTheOrder')}</p>
+                    <div className={`${styles['feedback_container']}`} onClick={onClickFeedback}>
+                        <div className={`${styles['feedback_image']}`}></div>
+                        <p className={`${styles['feedback_text']}`}>{t('pages.order.feedback')}</p>
+                    </div>
                 </div>
             ) : null}
+
+            {order.rating ? (
+                <div className={`${styles['rating']}`}>
+                    <p className={`${styles['rating__title']}`}>{t('pages.order.assignedRating')}</p>
+                    <div className={`${styles['rating__container']}`}>
+                        {[...Array(5)].map((_, index) => (
+                            <div key={index} className={`${styles['rating__image']} ${index < order.rating! ? styles['rating__image_orange'] : styles['rating__image_gray']}`}></div>
+                        ))}
+                    </div>
+                </div>
+            ) : null}
+
             <p className={styles['card__title']}>Состав заказа</p>
+
             <article className={styles['order-item']}>
                 <ul className={styles['order-item__list']}>
-                    {order.meals.map((meal) => (
-                        <OrderMeal meal={meal} key={meal.id} />
+                    {order.meals.map((meal, index) => (
+                        <OrderMeal meal={meal} key={index} />
                     ))}
                 </ul>
             </article>
 
-            <div className={styles['card__button-container']}>
+            <div className={styles['card__amount-container']}>
                 <div className={styles['order-item__amount']}>
-                    <h3 className={styles['order-item__title']}>
+                    <p className={styles['order-item__title']}>
                         {order.amount}
                         <span>₸</span>
-                    </h3>
+                    </p>
                 </div>
-                <button onClick={showDetails} className={styles['card__button-info']}>
-                    {isShow ? 'скрыть ⬆' : 'подробнее ⬇'}
-                </button>
+                {order.status !== 'created' && (
+                    <button onClick={showDetails} className={styles['card__button-info']}>
+                        {isShow ? (
+                            <div className={styles['card__button-container']}>
+                                <p className={styles['card__button-container_text']}>{t('pages.order.buttonHide')}</p>
+                                <div className={styles['card__button-container_image-hide']}></div>
+                            </div>
+                        ) : (
+                            <div className={styles['card__button-container']}>
+                                <p className={styles['card__button-container_text']}>{t('pages.order.buttonShow')}</p>
+                                <div className={styles['card__button-container_image-show']}></div>
+                            </div>
+                        )}
+                    </button>
+                )}
             </div>
 
-            {isShow && (
+            {isShow && order.status !== 'created' && (
                 <div className={styles['detail-info']}>
-                    <p className={styles['card__title']}>Информация о заказе</p>
+                    <p className={styles['card__title']}>{t('pages.order.titleOrderInfo')}</p>
                     <div className={styles['detail-info__contant']}>
                         {order.canceled_at ? (
                             <div className={styles['detail-info__container']}>
@@ -130,20 +173,30 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                                 <p className={styles['detail-info__text']}>{order.cancellation_reason}</p>
                             </div>
                         ) : null}
+                        {order.paid_at ? (
+                            <div className={styles['detail-info__container']}>
+                                <p className={styles['detail-info__title']}>{t('pages.order.paidFor')}</p>
+                                <p className={styles['detail-info__text']}>{formatDateTime(order.paid_at)}</p>
+                            </div>
+                        ) : null}
                         {order.issued_at ? (
                             <div className={styles['detail-info__container']}>
                                 <p className={styles['detail-info__title']}>{t('pages.order.dateOfIssue')}</p>
                                 <p className={styles['detail-info__text']}>{formatDateTime(order.issued_at)}</p>
                             </div>
                         ) : null}
-                        <div className={styles['detail-info__container']}>
-                            <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
-                            <p className={styles['detail-info__text']}>{order.currency}</p>
-                        </div>
+                        {order.status !== 'created' && order.currency ? (
+                            <div className={styles['detail-info__container']}>
+                                <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
+                                <p className={styles['detail-info__text']}>{order.currency}</p>
+                            </div>
+                        ) : null}
                     </div>
+
+                    {!order.is_order_repeatable ? <div className={styles['detail-info__not-repeat']}>{t('pages.order.notRepeatOrder')}</div> : <button className={styles['detail-info__repeat']}>{t('pages.order.buttonRepeatOrder')}</button>}
                 </div>
             )}
-        </div>
+        </li>
     );
 };
 

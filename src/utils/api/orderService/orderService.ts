@@ -107,15 +107,3 @@ export interface UserOrdersListPagination {
     previous: string | null;
     results: UserOrder[];
 }
-
-/*
-created - создан
-paid - оплачен
-accepted - готовится
-ready - готов
-completed - завершен
-unclaimed - готов, но клиент не забрали
-cancelled_by_user - отменен клиентом
-cancelled_by_admin - отменен администратором
-cancelled_by_timeout - отменен потому что вышло время принятия заказа
-*/

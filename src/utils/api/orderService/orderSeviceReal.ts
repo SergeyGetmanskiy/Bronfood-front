@@ -30,16 +30,16 @@ export class OrderServiceReal {
         return handleFetch(`api/restaurants/orders?id=${orderId}`);
     }
 
-    async submitOrderFeedback(restaurantId: number, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
-        const options = comment
-            ? {
-                  method: 'POST',
-                  data: { rating, comment },
-              }
-            : {
-                  method: 'POST',
-                  data: { rating },
-              };
+    async submitOrderFeedback(restaurantId: number, orderId: number, rating: number, comment: string): Promise<{ status: 'success'; data: void } | { status: 'error'; error_message: string }> {
+        const payload = {
+            rating,
+            order_id: orderId,
+            ...(comment && { comment }),
+        };
+        const options = {
+            method: 'POST',
+            data: payload,
+        };
         return handleFetch(`api/restaurants/${restaurantId}/reviews/`, options);
     }
 }
