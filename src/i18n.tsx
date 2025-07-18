@@ -25,6 +25,7 @@ i18n
                             signIn: 'Войти',
                             signInAsAdmin: 'Войти как админ заведения',
                             aboutService: 'О сервисе',
+                            partnership: 'Стать партнёром',
                         },
                         header: {
                             burgerTitleHover: 'Меню',
@@ -338,6 +339,21 @@ i18n
                             copyInvitationText: 'После отправки формы данные будут сохранены и скопированы в буфер обмена.',
                             successMessage: 'Данные добавлены и скопированы в буфер обмена. Сохраните их в безопасном месте.',
                             chooseAnRestaurant: 'Выберите заведение',
+                        },
+
+                        partnership: {
+                            title: 'Стать партнёром',
+                            nameLabelNameCompany: 'Название заведения',
+                            placeholderNameCompany: 'Введите название заведения',
+                            nameLabelAddress: 'Адрес заведения',
+                            placeholderAddress: 'Введите адрес заведения',
+                            nameLabelNameContact: 'Имя контактного лица',
+                            placeholderNameContact: 'Введите ваше имя',
+                            buttonSendRequest: 'Отправить заявку',
+                            nameLabelEmail: 'Email',
+                            placeholderEmail: 'email@example.com',
+                            nameLabelMessage: 'Сообщение',
+                            placeholderMessage: 'Расскажите о вашем предложении',
                         },
                     },
                     errors: {
