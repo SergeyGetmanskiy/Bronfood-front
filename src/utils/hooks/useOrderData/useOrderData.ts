@@ -87,5 +87,8 @@ export const useUserOrders = (limit: number, offset: number) => {
             }
             throw new Error(response.error_message || 'Failed to fetch orders');
         },
+        staleTime: 0,
+        gcTime: 0,
+        placeholderData: (prevData) => prevData,
     });
 };

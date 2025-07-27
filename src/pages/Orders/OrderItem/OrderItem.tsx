@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import styles from './OrderItem.module.scss';
 import { useTranslation } from 'react-i18next';
-import { MealChoice, UserOrder, UserOrderMeal } from '../../../utils/api/orderService/orderService';
+import { UserOrder } from '../../../utils/api/orderService/orderService';
 import { formatDateTime } from '../../../utils/serviceFuncs/formatDateTime';
+import OrderMeal from './OrderMeal/OrderMeal';
 
 type OrderItemProps = {
     order: UserOrder;
@@ -11,46 +12,9 @@ type OrderItemProps = {
     isShow: boolean;
 };
 
-const Choices: FC<{ choices: MealChoice[] }> = ({ choices }) => {
-    return (
-        <ul className={styles['choices']}>
-            {choices.map((choice, index) => (
-                <li key={index}>
-                    <p className={styles['choices__name']}>• {choice.name}</p>
-                </li>
-            ))}
-        </ul>
-    );
-};
-
-const OrderMeal: FC<{ meal: UserOrderMeal }> = ({ meal }) => {
-    const { t } = useTranslation();
-    return (
-        <li className={`${meal.is_available ? styles['meal'] : styles['meal-unavailable']}`}>
-            <div className={styles['meal__info']}>
-                <p className={styles['meal__name']}>
-                    {meal.name}
-                    <span className={styles['meal__count']}>x{meal.count}</span>
-                </p>
-                <p className={`${styles['meal__price']} ${meal.is_available ? '' : styles['meal__price_unavailable']}`}>
-                    {meal.price} <span>₸</span>
-                </p>
-            </div>
-            <Choices choices={meal.choices} />
-            {meal.is_available ? null : (
-                <>
-                    <div className={styles['meal__unavailable-wrapper']}></div>
-                    <div className={styles['meal__unavailable']}>
-                        <p className={styles['meal__unavailable_text']}>{t('pages.order.mealUnavailable')}</p>
-                    </div>
-                </>
-            )}
-        </li>
-    );
-};
-
 const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, isShow }) => {
     const { t } = useTranslation();
+
     const getStatusColor = (status: string) => {
         if (['ready', 'completed'].includes(status)) return 'green';
         if (['unclaimed', 'cancelled_by_user', 'cancelled_by_admin', 'cancelled_by_timeout'].includes(status)) return 'red';
@@ -185,7 +149,7 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                                 <p className={styles['detail-info__text']}>{formatDateTime(order.issued_at)}</p>
                             </div>
                         ) : null}
-                        {order.status !== 'created' && order.currency ? (
+                        {order.status !== 'created' && order.paid_at && order.currency ? (
                             <div className={styles['detail-info__container']}>
                                 <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
                                 <p className={styles['detail-info__text']}>{order.currency}</p>

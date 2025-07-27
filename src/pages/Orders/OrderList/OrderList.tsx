@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 type OrderListProps = {
-    orders?: UserOrder[];
+    orders: UserOrder[];
 };
 
 export const OrderList: FC<OrderListProps> = ({ orders }) => {
