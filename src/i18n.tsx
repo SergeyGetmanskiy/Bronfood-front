@@ -24,6 +24,7 @@ i18n
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
                             signInAsAdmin: 'Войти как админ заведения',
+                            signInAsCatering: 'Войти как заведение общественного питания',
                             aboutService: 'О сервисе',
                         },
                         header: {
