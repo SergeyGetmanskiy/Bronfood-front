@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { UserOrder } from '../../../utils/api/orderService/orderService';
 import { formatDateTime } from '../../../utils/serviceFuncs/formatDateTime';
 import OrderMeal from './OrderMeal/OrderMeal';
+import OrderTimer from './OrderTimer/OrderTimer';
 
 type OrderItemProps = {
     order: UserOrder;
@@ -46,12 +47,12 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                 <p className={`${styles['card__status']} ${styles[`card__status--${getStatusColor(order.status)}`]}`}>{t(`pages.order.${order.status}`)}</p>
             </div>
 
-            {order.status === 'accepted' && order.waiting_time ? (
+            {order.status === 'accepted' && order.accepted_at && order.waiting_time ? (
                 <div className={`${styles['waiting-time']}`}>
                     <p className={`${styles['waiting-time_title']}`}>{t('pages.order.waitingTime')}</p>
                     <div className={`${styles['waiting-time_container']}`}>
                         <div className={`${styles['waiting-time_image']}`}></div>
-                        <p className={`${styles['waiting-time_text']}`}>{order.waiting_time}</p>
+                        <OrderTimer startTime={order.accepted_at} waitingTime={order.waiting_time} />{' '}
                     </div>
                 </div>
             ) : null}
@@ -63,6 +64,16 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                         <div className={`${styles['payment_image']}`}></div>
                         <p className={`${styles['payment_text']}`}>{t('pages.order.proceedToPayment')}</p>
                     </a>
+                </div>
+            ) : null}
+
+            {order.status === 'created' || order.status === 'paid' ? (
+                <div className={`${styles['cancel-button']}`}>
+                    <p className={`${styles['payment_title']}`}>{t('pages.order.paymentLink')}</p>
+                    <div className={`${styles['payment_link']}`}>
+                        <div className={`${styles['payment_image']}`}></div>
+                        <p className={`${styles['payment_text']}`}>{t('pages.order.proceedToPayment')}</p>
+                    </div>
                 </div>
             ) : null}
 

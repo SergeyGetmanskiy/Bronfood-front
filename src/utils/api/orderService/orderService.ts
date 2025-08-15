@@ -160,6 +160,10 @@ export interface UserOrder {
      */
     issued_at?: string | null;
     /**
+     * Order's accepted
+     */
+    accepted_at: string | null;
+    /**
      * Order's rating
      */
     rating?: number | null;
