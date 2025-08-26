@@ -263,12 +263,14 @@
     }
 
     &__repeat {
+        flex: 1;
         margin-top: 16px;
         border: none;
         background-color: variables.$grey-line;
         color: variables.$grey-dark;
         padding: 7px;
         border-radius: 15px;
+        font-size: 13px;
     }
 
     &__not-repeat {
@@ -286,26 +288,26 @@
     margin-top: 15px;
     border-radius: 10px;
 
-    &_title {
+    &__title {
         font-size: 14px;
         color: variables.$grey-dark;
     }
 
-    &_container {
+    &__container {
         display: flex;
         gap: 10px;
         margin-left: 11px;
         width: fit-content;
     }
 
-    &_image {
+    &__image {
         background-image: url('../../../vendor/images/icons/clock-icon.svg');
         width: 21px;
         height: 21px;
         background-size: cover;
     }
 
-    &_text {
+    &__text {
         font-size: 14px;
         color: variables.$grey-subtitle;
     }
@@ -319,12 +321,12 @@
     margin-top: 15px;
     border-radius: 10px;
 
-    &_title {
+    &__title {
         font-size: 14px;
         color: variables.$grey-dark;
     }
 
-    &_link {
+    &__link {
         display: flex;
         gap: 10px;
         margin-left: 12px;
@@ -332,7 +334,7 @@
         cursor: pointer;
     }
 
-    &_image {
+    &__image {
         background-image: url('../../../vendor/images/icons/icon-link.svg');
         width: 19px;
         height: 19px;
@@ -340,7 +342,7 @@
         margin-left: 1px;
     }
 
-    &_text {
+    &__text {
         font-size: 14px;
         color: variables.$grey-subtitle;
     }
@@ -354,12 +356,12 @@
     margin-top: 15px;
     border-radius: 10px;
 
-    &_title {
+    &__title {
         font-size: 14px;
         color: variables.$grey-dark;
     }
 
-    &_container {
+    &__container {
         display: flex;
         gap: 10px;
         margin-left: 11px;
@@ -367,14 +369,14 @@
         cursor: pointer;
     }
 
-    &_image {
+    &__image {
         background-image: url('../../../vendor/images/icons/star-orange.svg');
         width: 20px;
         height: 20px;
         background-size: cover;
     }
 
-    &_text {
+    &__text {
         font-size: 14px;
         color: variables.$grey-subtitle;
     }

@@ -11,10 +11,13 @@ type OrderItemProps = {
     onClickFeedback: () => void;
     showDetails: () => void;
     isShow: boolean;
+    onClickCancel: (orderId: number) => void;
 };
 
-const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, isShow }) => {
+const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, isShow, onClickCancel }) => {
     const { t } = useTranslation();
+
+    const isDetailInfo = (order.canceled_at || order.cancellation_reason || order.paid_at || order.issued_at || (order.paid_at && order.currency)) && order.status !== 'created';
 
     const getStatusColor = (status: string) => {
         if (['ready', 'completed'].includes(status)) return 'green';
@@ -49,9 +52,9 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
 
             {order.status === 'accepted' && order.accepted_at && order.waiting_time ? (
                 <div className={`${styles['waiting-time']}`}>
-                    <p className={`${styles['waiting-time_title']}`}>{t('pages.order.waitingTime')}</p>
-                    <div className={`${styles['waiting-time_container']}`}>
-                        <div className={`${styles['waiting-time_image']}`}></div>
+                    <p className={`${styles['waiting-time__title']}`}>{t('pages.order.waitingTime')}</p>
+                    <div className={`${styles['waiting-time__container']}`}>
+                        <div className={`${styles['waiting-time__image']}`}></div>
                         <OrderTimer startTime={order.accepted_at} waitingTime={order.waiting_time} />{' '}
                     </div>
                 </div>
@@ -59,35 +62,25 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
 
             {order.status === 'created' && order.payment_url !== null ? (
                 <div className={`${styles['payment']}`}>
-                    <p className={`${styles['payment_title']}`}>{t('pages.order.paymentLink')}</p>
-                    <a href={order.payment_url} target="_blank" className={`${styles['payment_link']}`}>
-                        <div className={`${styles['payment_image']}`}></div>
-                        <p className={`${styles['payment_text']}`}>{t('pages.order.proceedToPayment')}</p>
+                    <p className={`${styles['payment__title']}`}>{t('pages.order.paymentLink')}</p>
+                    <a href={order.payment_url} target="_blank" className={`${styles['payment__link']}`}>
+                        <div className={`${styles['payment__image']}`}></div>
+                        <p className={`${styles['payment__text']}`}>{t('pages.order.proceedToPayment')}</p>
                     </a>
-                </div>
-            ) : null}
-
-            {order.status === 'created' || order.status === 'paid' ? (
-                <div className={`${styles['cancel-button']}`}>
-                    <p className={`${styles['payment_title']}`}>{t('pages.order.paymentLink')}</p>
-                    <div className={`${styles['payment_link']}`}>
-                        <div className={`${styles['payment_image']}`}></div>
-                        <p className={`${styles['payment_text']}`}>{t('pages.order.proceedToPayment')}</p>
-                    </div>
                 </div>
             ) : null}
 
             {!order.rating && order.status === 'completed' ? (
                 <div className={`${styles['feedback']}`}>
-                    <p className={`${styles['feedback_title']}`}>{t('pages.order.howDoYouLikeTheOrder')}</p>
-                    <div className={`${styles['feedback_container']}`} onClick={onClickFeedback}>
-                        <div className={`${styles['feedback_image']}`}></div>
-                        <p className={`${styles['feedback_text']}`}>{t('pages.order.feedback')}</p>
+                    <p className={`${styles['feedback__title']}`}>{t('pages.order.howDoYouLikeTheOrder')}</p>
+                    <div className={`${styles['feedback__container']}`} onClick={onClickFeedback}>
+                        <div className={`${styles['feedback__image']}`}></div>
+                        <p className={`${styles['feedback__text']}`}>{t('pages.order.feedback')}</p>
                     </div>
                 </div>
             ) : null}
 
-            {order.rating ? (
+            {order.status === 'completed' && order.rating ? (
                 <div className={`${styles['rating']}`}>
                     <p className={`${styles['rating__title']}`}>{t('pages.order.assignedRating')}</p>
                     <div className={`${styles['rating__container']}`}>
@@ -115,7 +108,7 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                         <span>₸</span>
                     </p>
                 </div>
-                {order.status !== 'created' && (
+                {isDetailInfo && (
                     <button onClick={showDetails} className={styles['card__button-info']}>
                         {isShow ? (
                             <div className={styles['card__button-container']}>
@@ -132,45 +125,68 @@ const OrderItem: FC<OrderItemProps> = ({ order, onClickFeedback, showDetails, is
                 )}
             </div>
 
-            {isShow && order.status !== 'created' && (
-                <div className={styles['detail-info']}>
-                    <p className={styles['card__title']}>{t('pages.order.titleOrderInfo')}</p>
-                    <div className={styles['detail-info__contant']}>
-                        {order.canceled_at ? (
+            <div className={styles['detail-info']}>
+                {isShow && isDetailInfo && (
+                    <>
+                        <p className={styles['card__title']}>{t('pages.order.titleOrderInfo')}</p>
+                        <div className={styles['detail-info__contant']}>
+                            {order.canceled_at ? (
+                                <div className={styles['detail-info__container']}>
+                                    <p className={styles['detail-info__title']}>{t('pages.order.dateOfCanceled')}</p>
+                                    <p className={styles['detail-info__text']}>{formatDateTime(order.canceled_at)}</p>
+                                </div>
+                            ) : null}
+                            {order.cancellation_reason ? (
+                                <div className={styles['detail-info__container']}>
+                                    <p className={styles['detail-info__title']}>{t('pages.order.cancellationReason')}</p>
+                                    <p className={styles['detail-info__text']}>{order.cancellation_reason}</p>
+                                </div>
+                            ) : null}
+                            {order.paid_at ? (
+                                <div className={styles['detail-info__container']}>
+                                    <p className={styles['detail-info__title']}>{t('pages.order.paidFor')}</p>
+                                    <p className={styles['detail-info__text']}>{formatDateTime(order.paid_at)}</p>
+                                </div>
+                            ) : null}
+                            {order.issued_at ? (
+                                <div className={styles['detail-info__container']}>
+                                    <p className={styles['detail-info__title']}>{t('pages.order.dateOfIssue')}</p>
+                                    <p className={styles['detail-info__text']}>{formatDateTime(order.issued_at)}</p>
+                                </div>
+                            ) : null}
+                            {order.status !== 'created' && order.paid_at && order.currency ? (
+                                <div className={styles['detail-info__container']}>
+                                    <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
+                                    <p className={styles['detail-info__text']}>{order.currency}</p>
+                                </div>
+                            ) : null}
+                            {order.status === 'created' || order.status === 'paid' ? <p className={`${styles['detail-info__not-repeat']}`}>*** Вы можете отменить заказ, пока его не начали готовить</p> : null}
                             <div className={styles['detail-info__container']}>
-                                <p className={styles['detail-info__title']}>{t('pages.order.dateOfCanceled')}</p>
-                                <p className={styles['detail-info__text']}>{formatDateTime(order.canceled_at)}</p>
+                                {!order.is_order_repeatable ? <div className={styles['detail-info__not-repeat']}>{t('pages.order.notRepeatOrder')}</div> : <button className={styles['detail-info__repeat']}>{t('pages.order.buttonRepeatOrder')}</button>}
+                                {order.status === 'created' || order.status === 'paid' ? (
+                                    <button className={`${styles['detail-info__repeat']}`} onClick={() => onClickCancel(order.id)}>
+                                        Отменить заказ
+                                    </button>
+                                ) : null}
                             </div>
-                        ) : null}
-                        {order.cancellation_reason ? (
-                            <div className={styles['detail-info__container']}>
-                                <p className={styles['detail-info__title']}>{t('pages.order.cancellationReason')}</p>
-                                <p className={styles['detail-info__text']}>{order.cancellation_reason}</p>
-                            </div>
-                        ) : null}
-                        {order.paid_at ? (
-                            <div className={styles['detail-info__container']}>
-                                <p className={styles['detail-info__title']}>{t('pages.order.paidFor')}</p>
-                                <p className={styles['detail-info__text']}>{formatDateTime(order.paid_at)}</p>
-                            </div>
-                        ) : null}
-                        {order.issued_at ? (
-                            <div className={styles['detail-info__container']}>
-                                <p className={styles['detail-info__title']}>{t('pages.order.dateOfIssue')}</p>
-                                <p className={styles['detail-info__text']}>{formatDateTime(order.issued_at)}</p>
-                            </div>
-                        ) : null}
-                        {order.status !== 'created' && order.paid_at && order.currency ? (
-                            <div className={styles['detail-info__container']}>
-                                <p className={styles['detail-info__title']}>{t('pages.order.currency')}</p>
-                                <p className={styles['detail-info__text']}>{order.currency}</p>
-                            </div>
-                        ) : null}
-                    </div>
+                        </div>
+                    </>
+                )}
 
-                    {!order.is_order_repeatable ? <div className={styles['detail-info__not-repeat']}>{t('pages.order.notRepeatOrder')}</div> : <button className={styles['detail-info__repeat']}>{t('pages.order.buttonRepeatOrder')}</button>}
-                </div>
-            )}
+                {!isDetailInfo && (
+                    <>
+                        <div className={styles['detail-info__container']}>
+                            {!order.is_order_repeatable ? <div className={styles['detail-info__not-repeat']}>{t('pages.order.notRepeatOrder')}</div> : <button className={styles['detail-info__repeat']}>{t('pages.order.buttonRepeatOrder')}</button>}
+                            {order.status === 'created' || order.status === 'paid' ? (
+                                <button className={`${styles['detail-info__repeat']}`} onClick={() => onClickCancel(order.id)}>
+                                    Отменить заказ
+                                </button>
+                            ) : null}
+                        </div>
+                        {order.status === 'created' || order.status === 'paid' ? <p className={`${styles['detail-info__not-repeat']}`}>*** Вы можете отменить заказ, пока его не начали готовить</p> : null}
+                    </>
+                )}
+            </div>
         </li>
     );
 };
