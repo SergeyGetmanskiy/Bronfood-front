@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState, useMemo, useCallback } from 'react';
-import { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } from '../../lib/ymaps';
 import { type MapEventUpdateHandler, type BehaviorMapEventHandler, LngLat } from '@yandex/ymaps3-types';
 import styles from './YandexMap.module.scss';
 import { useRestaurantsContext } from '../../utils/hooks/useRestaurants/useRestaurantsContext';
@@ -9,8 +8,12 @@ import markerActive from '../../vendor/images/icons/navigation_active.png';
 import userMarker from '../../vendor/images/icons/navigation_grey.svg';
 import { debounce } from 'lodash';
 import { DEBOUNCE_VALUE } from '../../utils/consts';
+import Preloader from '../Preloader/Preloader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { useYmapsContext } from '../../utils/hooks/useYandexMaps/useYmapsContext';
 
 export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) {
+    const { components, isLoading, error } = useYmapsContext();
     const [initialRender, setInitialRender] = useState(true);
     const [center, setCenter] = useState<LngLat>([76.921552, 43.246345]);
     const [zoom, setZoom] = useState(12);
@@ -42,6 +45,8 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
         setCenter([longitude, latitude]);
         navigate(`/restaurants/${placeId}`);
     };
+
+    const memoActionEnd = useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler]);
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -86,12 +91,26 @@ export default function YandexMap({ setCity }: { setCity: Dispatch<SetStateActio
         };
     }, [userLocation, setCity]);
 
+    if (isLoading) {
+        return <Preloader />;
+    }
+
+    if (error) {
+        return <ErrorMessage message={error} />;
+    }
+
+    if (!components) {
+        return <Preloader />;
+    }
+
+    const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener } = components;
+
     return (
         <div className={styles.yamap}>
             <YMap location={{ center: center, zoom: zoom }} margin={[0, 20, 360, 0]}>
                 <YMapDefaultSchemeLayer />
                 <YMapDefaultFeaturesLayer />
-                <YMapListener onActionEnd={useMemo(() => createBehaviorEventHandler(), [createBehaviorEventHandler])} onUpdate={initialRender ? handleMapUpdate : null} />
+                <YMapListener onActionEnd={memoActionEnd} onUpdate={initialRender ? handleMapUpdate : null} />
                 {restaurantsFiltered.map((place) => {
                     const active = activePlaceId === place.id;
                     return (

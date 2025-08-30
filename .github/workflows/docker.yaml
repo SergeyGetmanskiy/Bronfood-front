@@ -3,7 +3,7 @@ name: Bronfood Frontend Workflow
 on:
     push:
         branches:
-            - develop
+            - future/dockerfile
 
 jobs:
     build-and-push:
@@ -27,7 +27,7 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                   context: .
-                  file: infra/nginx/Dockerfile
+                  file: Dockerfile
                   push: true
                   tags: ghcr.io/bronfood/bronfood:frontend
     deploy:
@@ -38,18 +38,6 @@ jobs:
             packages: read
 
         steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
-
-            - name: Copy docker compose via ssh
-              uses: appleboy/scp-action@master
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USER }}
-                  key: ${{ secrets.SSH_PRIVATE_KEY }}
-                  source: 'infra/docker-compose.yml'
-                  target: 'bronfood-frontend'
-
             - name: Executing remote ssh commands to deploy
               uses: appleboy/ssh-action@master
               with:
@@ -57,7 +45,7 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
-                      cd bronfood-frontend
-                      docker compose down
-                      docker compose pull
-                      docker compose up -d
+                      cd bronfood
+                      docker compose -f infra/docker-compose.image.dev.yaml down
+                      docker compose -f infra/docker-compose.image.dev.yaml pull
+                      docker compose -f infra/docker-compose.image.dev.yaml up -d

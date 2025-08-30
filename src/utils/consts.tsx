@@ -9,7 +9,6 @@ export const regexPassword: RegExp = /^[A-Za-z\d!@#$%^&*()-_+=<>?]{4,256}$/;
 export const regexPhoneNumberKazakhstan: RegExp = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
 export const regexCaptcha: RegExp = /^[A-Za-z0-9]+$/;
 
-export const API_URL = 'https://80.90.183.184';
 export const mealTypes: MealType[] = ['food', 'drink', 'dessert'];
 export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
     return { id: increment(), name: type, selected: false };
